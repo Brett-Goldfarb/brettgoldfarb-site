@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centre Music House — Case Study · Brett Goldfarb</title>
+  <meta name="description" content="How BJG Creations restarted Centre Music House's social presence — education-first content, a Record Store Day reel that reached 240k+ accounts, and an 8.5% lift in Google Reviews." />
+
+  <!-- Same fonts as the main site:
+       Architects Daughter (handwritten display: titles, headings, labels, brand),
+       Nunito (warm, rounded body). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       BJG — Centre Music House case study
+       Inherits the personal-site design system verbatim so this page
+       reads as clicking deeper into the same site, not a bolt-on.
+       Warm "paper" bg, cocoa→caramel accent, hand-drawn display type.
+       Dark mode auto-applies via prefers-color-scheme.
+       ============================================================ */
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+
+      --navy: #5d4037;        /* deep cocoa — primary ink accent */
+      --navy-2: #a9744c;      /* caramel — gradient end / hover */
+      --navy-grad: linear-gradient(95deg, #5d4037 0%, #a9744c 100%);
+      --cream: #f3eac8;       /* warm highlight */
+      --on-accent: #ffffff;
+
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --text: #3a3a3a;
+      --text-soft: #585858;
+      --border: #d6cfc2;
+      --border-strong: #8c8578;
+      --accent: var(--navy);
+      --accent-hover: var(--navy-2);
+      --accent-soft: rgba(243, 234, 200, 0.55);
+      --nav-bg: rgba(249, 249, 249, 0.82);
+      --paper-dot: rgba(93, 64, 55, 0.05);
+      --shadow-1: 0 1px 2px rgba(60, 40, 30, 0.05), 0 4px 14px rgba(60, 40, 30, 0.07);
+      --shadow-2: 0 2px 6px rgba(60, 40, 30, 0.08), 0 16px 36px rgba(60, 40, 30, 0.13);
+
+      --s-1: 4px;
+      --s-2: 8px;
+      --s-3: 16px;
+      --s-4: 24px;
+      --s-5: 36px;
+      --s-6: 56px;
+      --s-7: 80px;
+
+      --radius: 14px;
+      --radius-sm: 10px;
+      --maxw: 1120px;
+
+      --font-title: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --font-heading: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --font-body: 'Nunito', system-ui, sans-serif;
+
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --navy: #e0b083;
+        --navy-2: #f0cda6;
+        --navy-grad: linear-gradient(95deg, #e0b083 0%, #f0cda6 100%);
+        --cream: #5a4a2e;
+        --on-accent: #2b2b2b;
+
+        --bg: #2b2b2b;
+        --surface: #333333;
+        --text: #dcdcdc;
+        --text-soft: #a8a8a8;
+        --border: #474747;
+        --border-strong: #5f5f5f;
+        --accent: var(--navy);
+        --accent-hover: var(--navy-2);
+        --accent-soft: rgba(243, 234, 200, 0.12);
+        --nav-bg: rgba(43, 43, 43, 0.82);
+        --paper-dot: rgba(255, 255, 255, 0.035);
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
+        --shadow-2: 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--paper-dot) 1.1px, transparent 1.1px);
+      background-size: 22px 22px;
+      background-position: -11px -11px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .hero h1, .section-head h2 {
+      font-family: var(--font-title);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0; }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s var(--ease); }
+    a:hover { color: var(--accent-hover); }
+
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-left: var(--s-4);
+      padding-right: var(--s-4);
+    }
+
+    .grad-text {
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      margin-bottom: var(--s-2);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--navy-grad);
+      display: inline-block;
+    }
+
+    /* ============================================================ NAV ============================================================ */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: 1.15rem;
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    .nav-links { display: none; align-items: center; gap: var(--s-4); }
+    .nav-links a {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      font-weight: 500;
+      position: relative;
+      padding: 4px 0;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 2px;
+      background: var(--navy-grad);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after { transform: scaleX(1); }
+
+    .nav-right { display: flex; align-items: center; gap: var(--s-3); }
+
+    .nav-burger {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .nav-burger:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .nav-burger:active { transform: translateY(0) scale(0.95); }
+    .nav-burger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .nav-burger .icon-x { display: none; }
+    .nav-burger[aria-expanded="true"] .icon-bars { display: none; }
+    .nav-burger[aria-expanded="true"] .icon-x { display: block; }
+    .nav-burger svg { width: 18px; height: 18px; }
+
+    .mobile-menu {
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      background: var(--surface);
+      box-shadow: var(--shadow-2);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(-8px);
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s linear 0.25s;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s;
+    }
+    .mobile-menu .wrap { display: flex; flex-direction: column; padding-top: var(--s-2); padding-bottom: var(--s-2); }
+    .mobile-menu a {
+      color: var(--text);
+      font-weight: 500;
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+    }
+    .mobile-menu a:last-child { border-bottom: 0; }
+    .mobile-menu a:hover {
+      padding-left: 8px;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+
+    /* ============================================================ BUTTONS ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      box-shadow: var(--shadow-1);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); background: var(--navy-grad); color: var(--on-accent); }
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+    .btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: var(--navy-2);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .btn-ghost:active { transform: translateY(0) scale(0.98); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ============================================================ SECTIONS ============================================================ */
+    section { padding: var(--s-5) 0; position: relative; }
+    .section-head { max-width: 620px; margin-bottom: var(--s-4); }
+    .section-head h2 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); margin-bottom: var(--s-2); }
+    .section-head p { color: var(--text-soft); font-size: 1.02rem; }
+
+    /* ---- BACK LINK ---- */
+    .backbar { padding-top: var(--s-4); padding-bottom: 0; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      padding: 6px 2px;
+      border-radius: 8px;
+    }
+    .back-link svg { width: 18px; height: 18px; transition: transform 0.2s var(--ease); }
+    .back-link:hover { color: var(--accent); }
+    .back-link:hover svg { transform: translateX(-4px); }
+    .back-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ---- HERO ---- */
+    .hero { padding-top: var(--s-5); padding-bottom: var(--s-5); }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-5);
+      align-items: center;
+    }
+    .hero-tag {
+      align-self: flex-start;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--accent-soft);
+      color: var(--navy);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: var(--s-3);
+      width: fit-content;
+    }
+    @media (prefers-color-scheme: dark) { .hero-tag { color: var(--navy); } }
+    .hero h1 {
+      font-size: clamp(2.3rem, 7vw, 3.8rem);
+      margin-bottom: var(--s-3);
+    }
+    .hero h1 .name {
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .hero-lead {
+      font-size: clamp(1.05rem, 2.4vw, 1.25rem);
+      color: var(--text-soft);
+      max-width: 46ch;
+      margin-bottom: var(--s-4);
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+    /* Hero logo — sits directly on the page (no frame) for a clean, open look. */
+    .hero-media {
+      display: grid;
+      place-items: center;
+      padding: var(--s-2);
+    }
+    .hero-media img {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 24px rgba(60, 40, 30, 0.16));
+      transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
+      cursor: pointer;
+    }
+    .hero-media img:hover {
+      transform: translateY(-6px) rotate(-2deg) scale(1.04);
+      filter: drop-shadow(0 18px 34px rgba(60, 40, 30, 0.24));
+    }
+    @media (prefers-color-scheme: dark) {
+      .hero-media img { filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.5)); }
+      .hero-media img:hover { filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.6)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-media img:hover { transform: none; }
+    }
+
+    @media (min-width: 860px) {
+      .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: var(--s-6); }
+    }
+
+    /* ---- SUMMARY ---- */
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--s-5);
+      box-shadow: var(--shadow-1);
+    }
+    .summary-card .eyebrow { margin-bottom: var(--s-3); }
+    .summary-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--s-3);
+    }
+    .summary-list li {
+      display: flex;
+      gap: var(--s-3);
+      align-items: flex-start;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+    .summary-list li::before {
+      content: "";
+      flex-shrink: 0;
+      width: 12px; height: 12px;
+      margin-top: 7px;
+      border-radius: 4px;
+      background: var(--navy-grad);
+    }
+    .summary-list strong { font-weight: 800; }
+
+    /* ---- WHAT I DID — service cards ---- */
+    .grid { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--s-4);
+      box-shadow: var(--shadow-1);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); }
+    .card .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      background: var(--accent-soft);
+      color: var(--navy);
+      margin-bottom: var(--s-3);
+    }
+    .card .card-icon svg { width: 22px; height: 22px; }
+    .card h3 { font-size: 1.25rem; margin-bottom: var(--s-2); }
+    .card p { color: var(--text-soft); font-size: 0.96rem; }
+
+    /* ---- RESULTS — the proof. Most prominent thing after the hero. ---- */
+    #results { padding-top: var(--s-6); padding-bottom: var(--s-6); }
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+    }
+    @media (min-width: 720px) { .results-grid { grid-template-columns: 1fr 1fr; } }
+    .stat {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--s-4);
+      overflow: hidden;
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      border-radius: 22px;
+      padding: var(--s-5);
+      box-shadow: var(--shadow-2);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    .stat:hover { transform: translateY(-5px); box-shadow: var(--shadow-2), 0 24px 60px rgba(60, 40, 30, 0.28); }
+    .stat-info { position: relative; z-index: 1; flex: 1 1 190px; min-width: 0; }
+    .stat .stat-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: var(--s-4);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--on-accent);
+      opacity: 0.92;
+    }
+    .stat .stat-link:hover { opacity: 1; color: var(--on-accent); }
+    .stat .stat-link svg { transition: transform 0.2s var(--ease); }
+    .stat .stat-link:hover svg,
+    .stat .stat-link:focus-visible svg { transform: translate(2px, -2px); }
+
+    /* Compact reel preview, sitting inside the stat card — just the post, no frame.
+       Reels are vertical video, so the frame is a 9:16 portrait. */
+    .stat-embed {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 auto;
+      width: clamp(150px, 32%, 188px);
+      aspect-ratio: 9 / 16;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+      border: 0;
+    }
+    /* Instagram's embed wraps the reel in 54px of header chrome and pillarboxes
+       the 9:16 video inside a 4:5 media box (black bars ~14.84% of the iframe
+       width on each side). Over-size the iframe and shift it so only the
+       centred 9:16 video fills the frame — no chrome, no letterbox bars. */
+    .stat-embed iframe {
+      position: absolute;
+      top: -54px;
+      left: -21.1%;
+      width: 142.25%;
+      height: calc(100% + 54px);
+      border: 0;
+      display: block;
+    }
+    @media (max-width: 460px) {
+      .stat-embed { width: min(220px, 70%); flex-basis: auto; }
+    }
+    /* faint dot-grid texture echoing the page paper, on the accent panel */
+    .stat::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.10) 1.4px, transparent 1.4px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+    .stat .stat-eyebrow {
+      position: relative;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 800;
+      opacity: 0.9;
+      margin-bottom: var(--s-3);
+    }
+    .stat .stat-num {
+      position: relative;
+      font-family: var(--font-title);
+      font-weight: 400;
+      font-size: clamp(2.8rem, 9vw, 4.4rem);
+      line-height: 1;
+      margin-bottom: var(--s-2);
+    }
+    .stat .stat-label {
+      position: relative;
+      font-size: 1.05rem;
+      font-weight: 600;
+      opacity: 0.95;
+      max-width: 26ch;
+    }
+
+    /* ---- LEAD MAGNET + LANDING PAGE case-study block ---- */
+    .casestudy {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--s-5);
+      box-shadow: var(--shadow-1);
+    }
+    .cs-media-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+      margin-bottom: var(--s-5);
+      align-items: center;
+    }
+    @media (min-width: 760px) {
+      .cs-media-row { grid-template-columns: 1.4fr 1fr; gap: var(--s-5); }
+    }
+    .cs-figure { margin: 0; }
+    .cs-frame {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      box-shadow: var(--shadow-1);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .cs-frame:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); }
+    .cs-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    /* Natural ratio of the screenshot so the whole landing page is visible. */
+    .cs-frame.is-landing { aspect-ratio: 2356 / 2132; }
+    .cs-frame.is-pdf { aspect-ratio: 3 / 4; }
+    .cs-frame img,
+    .cs-frame embed { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; border: 0; }
+    .cs-pdf-badge, .cs-expand-badge {
+      position: absolute;
+      left: 50%; bottom: 12px;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--on-accent);
+      background: var(--navy-grad);
+      padding: 7px 13px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-1);
+      opacity: 0;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+    .cs-frame:hover .cs-pdf-badge,
+    .cs-frame:focus-visible .cs-pdf-badge,
+    .cs-frame:hover .cs-expand-badge,
+    .cs-frame:focus-visible .cs-expand-badge { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+    @media (prefers-reduced-motion: reduce) { .cs-pdf-badge, .cs-expand-badge { opacity: 1; } }
+    .cs-caption {
+      margin-top: var(--s-2);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-soft);
+      text-transform: uppercase;
+    }
+    .cs-desc { color: var(--text-soft); font-size: 1.05rem; max-width: 62ch; margin: 0 auto; text-align: center; }
+    .cs-desc strong { color: var(--text); font-weight: 800; }
+
+    /* ---- LIGHTBOX (expands the screenshot in-page) ---- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 48px);
+      background: rgba(20, 14, 10, 0.82);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s var(--ease), visibility 0s linear 0.25s;
+    }
+    .lightbox.open { opacity: 1; visibility: visible; transition: opacity 0.25s var(--ease); }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      width: auto;
+      border-radius: var(--radius);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+      transform: scale(0.96);
+      transition: transform 0.25s var(--ease);
+    }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-close {
+      position: absolute;
+      top: clamp(12px, 3vw, 24px);
+      right: clamp(12px, 3vw, 24px);
+      width: 46px; height: 46px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .lightbox-close:hover { transform: scale(1.06); background: rgba(255, 255, 255, 0.22); }
+    .lightbox-close:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .lightbox-close svg { width: 22px; height: 22px; }
+    @media (prefers-reduced-motion: reduce) { .lightbox img { transform: none; } }
+
+    /* ---- TESTIMONIAL pull quote ---- */
+    .pullquote {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: var(--s-6) var(--s-5);
+      box-shadow: var(--shadow-2);
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .pullquote .mark {
+      font-family: var(--font-title);
+      font-size: 4rem;
+      line-height: 0.6;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+      display: block;
+      margin-bottom: var(--s-2);
+    }
+    .pullquote blockquote {
+      margin: 0 0 var(--s-4);
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      line-height: 1.45;
+      color: var(--text);
+      font-style: italic;
+    }
+    .pullquote .cite {
+      font-style: normal;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+    .pullquote .cite span { display: block; font-weight: 600; color: var(--text-soft); font-size: 0.92rem; }
+
+    /* ============================================================ FOOTER ============================================================ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: var(--s-5) 0 var(--s-4);
+      margin-top: var(--s-4);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-5);
+    }
+    @media (min-width: 640px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+    }
+    .footer-label { margin-bottom: var(--s-3); }
+    .link-list { display: flex; flex-direction: column; gap: var(--s-1); }
+    .link-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-3);
+      padding: 13px 4px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+    }
+    .link-list a:hover {
+      padding-left: 10px;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .link-list a .arrow { color: var(--text-soft); transition: transform 0.2s var(--ease); }
+    .link-list a:hover .arrow { transform: translateX(4px); }
+    .footer-bottom { margin-top: var(--s-4); color: var(--text-soft); font-size: 0.82rem; }
+
+    /* ============================================================ SCROLL REVEAL ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      will-change: transform, opacity;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.07s; }
+    .reveal.d2 { transition-delay: 0.14s; }
+    .reveal.d3 { transition-delay: 0.21s; }
+
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: 8px;
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      padding: 10px 16px;
+      border-radius: 8px;
+      z-index: 100;
+    }
+    .skip:focus { left: 12px; }
+
+    /* ============================================================ RESPONSIVE ============================================================ */
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 860px) {
+      .nav-links { display: flex; }
+      .nav-burger { display: none; }
+      .mobile-menu { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      section { padding: var(--s-6) 0; }
+    }
+    @media (min-width: 1040px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <a href="#hero" class="skip">Skip to content</a>
+
+  <!-- ============================ NAV ============================ -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html#hero" aria-label="Brett Goldfarb — home">
+        <span>Brett Goldfarb</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html#ai-tools">Tools</a>
+        <a href="../index.html#marketing">Marketing</a>
+        <a href="../index.html#writing">Writing</a>
+        <a href="../index.html#connect">Connect</a>
+      </nav>
+      <div class="nav-right">
+        <button class="nav-burger" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
+          <svg class="icon-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="wrap">
+        <a href="../index.html#ai-tools">Tools</a>
+        <a href="../index.html#marketing">Marketing</a>
+        <a href="../index.html#writing">Writing</a>
+        <a href="../index.html#connect">Connect</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================ BACK LINK ============================ -->
+  <div class="backbar">
+    <div class="wrap">
+      <a class="back-link" href="../index.html#marketing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Back to portfolio
+      </a>
+    </div>
+  </div>
+
+  <main id="hero">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="hero-tag reveal">Marketing · Client Case Study</span>
+          <h1 class="reveal d1"><span class="name">Centre Music House</span></h1>
+          <p class="hero-lead reveal d1">A respected local music store in Framingham, MA. Their social presence fell by the wayside, so I took it over and turned it into a lead creation and community development tool.</p>
+          <div class="hero-cta reveal d2">
+            <a href="https://www.centremusic.com" target="_blank" rel="noopener" class="btn btn-primary">Visit website
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a href="https://instagram.com/centremusichouse" target="_blank" rel="noopener" class="btn btn-ghost">Instagram
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+            <a href="https://www.facebook.com/centremusichouse/" target="_blank" rel="noopener" class="btn btn-ghost">Facebook
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hero-media reveal d2">
+          <img src="../assets/CMH%20portfolio%20page/cmh-alt-logo.png" alt="Centre Music House logo" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ RESULTS — proof first ============================ -->
+    <section id="results">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">The proof</p>
+          <h2>Results that landed</h2>
+        </div>
+        <div class="results-grid">
+          <div class="stat reveal d1">
+            <div class="stat-info">
+              <p class="stat-eyebrow">Google Reviews</p>
+              <p class="stat-num">+8.5%</p>
+              <p class="stat-label">A single review-request post lifted their Google Reviews in just 2 days.</p>
+              <a class="stat-link" href="https://www.instagram.com/p/DMioESlPiqo/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+            </div>
+            <div class="stat-embed">
+              <iframe src="https://www.instagram.com/p/DMioESlPiqo/embed/" title="Instagram post — Google review request" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+            </div>
+          </div>
+          <div class="stat reveal d2">
+            <div class="stat-info">
+              <p class="stat-eyebrow">Record Store Day reel</p>
+              <p class="stat-num">240k+</p>
+              <p class="stat-label">One reel reached over 240,000 unique accounts.</p>
+              <a class="stat-link" href="https://www.instagram.com/reels/DXKqnffAHpz/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+            </div>
+            <div class="stat-embed">
+              <iframe src="https://www.instagram.com/reel/DXKqnffAHpz/embed/" title="Instagram reel — Record Store Day" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SUMMARY ============================ -->
+    <section id="summary">
+      <div class="wrap">
+        <div class="summary-card reveal">
+          <p class="eyebrow">The story</p>
+          <ul class="summary-list">
+            <li><span>When I was in elementary school I took guitar and drum lessons at Centre Music House. When I noticed their lack of an online presence, I saw a full-circle moment waiting to happen.</span></li>
+            <li><span>I've worked with Centre Music House since <strong>March 2025</strong>.</span></li>
+            <li><span>I got in the door by offering a <strong>free one-month trial</strong>.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ WHAT I DID ============================ -->
+    <section id="what-i-did">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">What I did</p>
+          <h2>Four ways I helped</h2>
+        </div>
+        <div class="grid">
+          <article class="card reveal">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+            </div>
+            <h3>Marketing Strategy</h3>
+            <p>Restarted their accounts with a mix of education, comedy, and event promo/recap posts. I balanced attracting new students with engaging our current community.</p>
+          </article>
+          <article class="card reveal d1">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H8l-4 4V4z"/></svg>
+            </div>
+            <h3>Social Media Management</h3>
+            <p>Built an inbound funnel with educational content on Instagram and Facebook. I set up systems to post consistently, without causing a headache for the staff.</p>
+          </article>
+          <article class="card reveal d2">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+            <h3>Content Creation</h3>
+            <p>Planned, filmed, and edited content that stayed true to the brand. Worked closely with teachers, students, and the CMH owners to bring it to life.</p>
+          </article>
+          <article class="card reveal d3">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Community Development</h3>
+            <p>Featured CMH students to strengthen their connection to the school and kept the community in the loop on upcoming events. I stayed engaged through comments and DMs to build real relationships.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ LEAD MAGNET + LANDING PAGE ============================ -->
+    <section id="lead-magnet">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Lead magnet + landing page</p>
+          <h2>A parent's guide that turns followers into leads</h2>
+        </div>
+        <div class="casestudy reveal d1">
+          <div class="cs-media-row">
+            <figure class="cs-figure">
+              <button type="button" class="cs-frame is-landing" data-lightbox="../assets/CMH%20portfolio%20page/cmh-landing-page.png" aria-label="Expand the Centre Music House landing page screenshot">
+                <img src="../assets/CMH%20portfolio%20page/cmh-landing-page.png" alt="Centre Music House parent's guide landing page — 'Start music lessons with confidence'" loading="lazy" />
+                <span class="cs-expand-badge">Expand<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+              </button>
+              <figcaption class="cs-caption">Landing page</figcaption>
+            </figure>
+            <figure class="cs-figure">
+              <a class="cs-frame is-pdf" href="../assets/CMH%20portfolio%20page/cmh-parents-guide.pdf" target="_blank" rel="noopener" aria-label="Open the parent's guide PDF">
+                <img src="../assets/CMH%20portfolio%20page/cmh-parents-guide-cover.png" alt="A Parent's Guide to Starting Music Lessons, ages 5–9 — lead magnet PDF cover" loading="lazy" />
+                <span class="cs-pdf-badge">Open PDF<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              </a>
+              <figcaption class="cs-caption">Lead magnet — Parent's Guide (PDF)</figcaption>
+            </figure>
+          </div>
+          <p class="cs-desc">Here's the funnel. We offer parents a <strong>free guide</strong> they actually want — a simple roadmap for starting their kid in music. A dedicated <strong>landing page</strong> captures their interest and email. That turns CMH's everyday audience into real leads the store can follow up with, instead of likes that go nowhere.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ TESTIMONIAL ============================ -->
+    <section id="testimonial">
+      <div class="wrap">
+        <div class="pullquote reveal">
+          <span class="mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>I am mainly writing to say how impressed I am with your social media presence! Your snippets from the faculty and students are great! Thanks for being a great example of how to use social media!</blockquote>
+          <p class="cite">A Centre Music House customer<span>In an email to Max Larson, Owner of Centre Music House</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CTA back ============================ -->
+    <section id="more">
+      <div class="wrap" style="text-align:center;">
+        <div class="hero-cta reveal" style="justify-content:center;">
+          <a href="../index.html#marketing" class="btn btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+            Back
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ LIGHTBOX ============================ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded image">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close expanded image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer id="connect">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col reveal">
+          <p class="eyebrow footer-label">Connect</p>
+          <div class="link-list">
+            <a href="mailto:brett@bjgcreations.com">brett@bjgcreations.com <span class="arrow">→</span></a>
+            <a href="tel:+15087453108">(508) 745-3108 <span class="arrow">→</span></a>
+            <a href="https://www.linkedin.com/in/brett-j-goldfarb/" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
+          </div>
+        </div>
+        <div class="footer-col reveal d1">
+          <p class="eyebrow footer-label">Centre Music House</p>
+          <div class="link-list">
+            <a href="https://www.centremusic.com" target="_blank" rel="noopener">Website <span class="arrow">↗</span></a>
+            <a href="https://instagram.com/centremusichouse" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a>
+            <a href="https://www.facebook.com/centremusichouse/" target="_blank" rel="noopener">Facebook <span class="arrow">↗</span></a>
+          </div>
+        </div>
+      </div>
+      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb</p>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Mobile menu ----
+    var navToggle = document.getElementById('navToggle');
+    var mobileMenu = document.getElementById('mobileMenu');
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+    navToggle.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    // ---- Scroll reveal ----
+    var revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    // ---- Lightbox (expands the screenshot in-page) ----
+    (function () {
+      var lb = document.getElementById('lightbox');
+      var lbImg = document.getElementById('lightboxImg');
+      var lbClose = document.getElementById('lightboxClose');
+      if (!lb || !lbImg) return;
+      var lastFocus = null;
+
+      function open(src, alt) {
+        lastFocus = document.activeElement;
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        lbClose.focus();
+      }
+      function close() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+
+      document.querySelectorAll('[data-lightbox]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var img = btn.querySelector('img');
+          open(btn.getAttribute('data-lightbox'), img ? img.alt : '');
+        });
+      });
+      lbClose.addEventListener('click', close);
+      lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lb.classList.contains('open')) close();
+      });
+    })();
+
+    // ---- Footer year ----
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

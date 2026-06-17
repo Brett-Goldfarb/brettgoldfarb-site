@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Markup & Review</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+#drop-zone {
+  width: 80vw; max-width: 960px; height: 300px; border: 3px dashed #555;
+  border-radius: 12px; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; cursor: pointer; transition: border-color .2s;
+}
+#drop-zone.over { border-color: #7c5cfc; }
+#drop-zone p { font-size: 1.1rem; color: #aaa; }
+#drop-zone.hidden { display: none; }
+
+#workspace { display: none; width: 100vw; height: 100vh; position: relative; }
+#video-container {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: #000; border-radius: 4px; overflow: hidden;
+}
+#video-container video { display: block; width: 100%; height: 100%; }
+#overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  cursor: crosshair; touch-action: none;
+}
+
+/* Floating toolbar */
+#floating-toolbar {
+  position: fixed; z-index: 1000; background: #1e1e32; border: 1px solid #444;
+  border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.5);
+  user-select: none; overflow: hidden; display: none;
+}
+#toolbar-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; cursor: grab; background: #2a2a44;
+  border-bottom: 1px solid #444; font-size: .8rem; color: #aaa;
+  min-height: 30px;
+}
+#toolbar-header:active { cursor: grabbing; }
+#toolbar-header .collapse-btn {
+  background: none; border: none; color: #aaa; font-size: 1rem; cursor: pointer;
+  padding: 0 4px; line-height: 1;
+}
+#toolbar-header .collapse-btn:hover { color: #fff; }
+#toolbar-header .header-label { display: flex; align-items: center; gap: 6px; }
+#mini-tool-icon {
+  display: none; font-size: .75rem; background: #7c5cfc; color: #fff;
+  padding: 2px 8px; border-radius: 4px; pointer-events: none;
+}
+#toolbar-body {
+  padding: 8px; overflow: auto;
+}
+#toolbar-body.collapsed { display: none; }
+
+#toolbar-body .tool-items { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+#toolbar-body button {
+  background: #2a2a40; border: 1px solid #444; color: #ddd; padding: 5px 10px;
+  border-radius: 5px; cursor: pointer; font-size: .78rem; white-space: nowrap;
+}
+#toolbar-body button:hover { background: #3a3a55; }
+#toolbar-body button.active { background: #7c5cfc; border-color: #7c5cfc; color: #fff; }
+.color-btn {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid #555;
+  cursor: pointer; padding: 0; flex-shrink: 0;
+}
+.color-btn.active { border-color: #fff; box-shadow: 0 0 4px #fff; }
+#custom-color { width: 28px; height: 24px; border: none; background: none; cursor: pointer; }
+#thickness { width: 70px; accent-color: #7c5cfc; }
+
+/* Size preview dot */
+#size-preview {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; flex-shrink: 0;
+}
+#size-preview .dot {
+  border-radius: 50%; background: currentColor;
+}
+
+/* Resize handle */
+#resize-handle {
+  position: absolute; bottom: 0; right: 0; width: 16px; height: 16px;
+  cursor: nwse-resize; opacity: .4;
+}
+#resize-handle:hover { opacity: .8; }
+#resize-handle::after {
+  content: ''; position: absolute; bottom: 3px; right: 3px;
+  width: 8px; height: 8px;
+  border-right: 2px solid #aaa; border-bottom: 2px solid #aaa;
+}
+
+/* Playback controls - bottom bar */
+#controls {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+  display: none; align-items: center; gap: 8px; padding: 8px 16px;
+  background: rgba(26,26,46,.92); backdrop-filter: blur(8px);
+  border-top: 1px solid #333;
+}
+#controls button {
+  background: #2a2a40; border: 1px solid #444; color: #ddd; padding: 6px 12px;
+  border-radius: 6px; cursor: pointer; font-size: .82rem; white-space: nowrap;
+}
+#controls button:hover { background: #3a3a55; }
+#scrub { flex: 1; min-width: 80px; accent-color: #7c5cfc; }
+#timestamp { font-size: .82rem; min-width: 90px; text-align: center; }
+#volume-slider { width: 70px; accent-color: #7c5cfc; }
+
+/* Recording controls */
+#rec-controls {
+  position: fixed; top: 12px; right: 12px; z-index: 1001;
+  display: none; align-items: center; gap: 8px;
+}
+#rec-controls button {
+  padding: 8px 16px; border-radius: 8px; border: none; font-size: .85rem;
+  cursor: pointer; font-weight: 600;
+}
+#btn-start-rec { background: #e53935; color: #fff; }
+#btn-stop-rec { background: #ff9800; color: #fff; display: none; }
+#rec-indicator {
+  display: none; align-items: center; gap: 6px; font-size: .85rem; color: #e53935;
+}
+#rec-indicator .dot {
+  width: 10px; height: 10px; background: #e53935; border-radius: 50%;
+  animation: blink 1s infinite;
+}
+@keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:.2; } }
+</style>
+</head>
+<body>
+
+<div id="drop-zone">
+  <p>Drop a video file here or click to browse</p>
+  <p style="font-size:.85rem; color:#666; margin-top:8px;">MP4, MOV, WebM</p>
+  <input type="file" id="file-input" accept="video/*" style="display:none;">
+</div>
+
+<div id="workspace">
+  <div id="video-container">
+    <video id="video" playsinline></video>
+    <canvas id="overlay"></canvas>
+  </div>
+</div>
+
+<div id="floating-toolbar">
+  <div id="toolbar-header">
+    <span class="header-label">
+      <span>Tools</span>
+      <span id="mini-tool-icon"></span>
+    </span>
+    <button class="collapse-btn" id="btn-collapse" title="Collapse">−</button>
+  </div>
+  <div id="toolbar-body">
+    <div class="tool-items">
+      <button class="tool-btn active" data-tool="pen">✏️ Pen</button>
+      <button class="tool-btn" data-tool="line">— Line</button>
+      <button class="tool-btn" data-tool="arrow">→ Arrow</button>
+      <button class="tool-btn" data-tool="rect">▭ Rect</button>
+      <button class="tool-btn" data-tool="ellipse">⬭ Ellipse</button>
+      <button class="tool-btn" data-tool="eraser">🧹 Eraser</button>
+      <span style="width:4px;"></span>
+      <button class="color-btn active" data-color="#e53935" style="background:#e53935;"></button>
+      <button class="color-btn" data-color="#ff9800" style="background:#ff9800;"></button>
+      <button class="color-btn" data-color="#fdd835" style="background:#fdd835;"></button>
+      <button class="color-btn" data-color="#43a047" style="background:#43a047;"></button>
+      <button class="color-btn" data-color="#1e88e5" style="background:#1e88e5;"></button>
+      <button class="color-btn" data-color="#8e24aa" style="background:#8e24aa;"></button>
+      <button class="color-btn" data-color="#ffffff" style="background:#ffffff;"></button>
+      <button class="color-btn" data-color="#000000" style="background:#000000;"></button>
+      <input type="color" id="custom-color" value="#e53935" title="Custom color">
+      <span style="width:4px;"></span>
+      <span style="font-size:.75rem; color:#888;">Size</span>
+      <input type="range" id="thickness" min="1" max="20" value="4">
+      <span id="size-preview"><span class="dot"></span></span>
+      <span style="width:4px;"></span>
+      <button id="btn-undo">↩ Undo</button>
+      <button id="btn-clear">🗑 Clear</button>
+    </div>
+  </div>
+  <div id="resize-handle"></div>
+</div>
+
+<div id="controls">
+  <button id="btn-play">▶ Play</button>
+  <input type="range" id="scrub" min="0" max="1000" value="0">
+  <span id="timestamp">0:00 / 0:00</span>
+  <button id="btn-mute">🔊</button>
+  <input type="range" id="volume-slider" min="0" max="100" value="80">
+</div>
+
+<div id="rec-controls">
+  <button id="btn-start-rec">⏺ Record</button>
+  <button id="btn-stop-rec">⏹ Stop & Save</button>
+  <div id="rec-indicator"><span class="dot"></span> REC</div>
+</div>
+
+<script>
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const workspace = document.getElementById('workspace');
+const video = document.getElementById('video');
+const videoContainer = document.getElementById('video-container');
+const canvas = document.getElementById('overlay');
+const ctx = canvas.getContext('2d');
+const floatingToolbar = document.getElementById('floating-toolbar');
+const controls = document.getElementById('controls');
+const recControls = document.getElementById('rec-controls');
+
+// --- File loading ---
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); loadVideo(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', e => { if (e.target.files[0]) loadVideo(e.target.files[0]); });
+
+function loadVideo(file) {
+  video.src = URL.createObjectURL(file);
+  video.load();
+  video.addEventListener('loadedmetadata', () => {
+    dropZone.classList.add('hidden');
+    workspace.style.display = 'block';
+    controls.style.display = 'flex';
+    recControls.style.display = 'flex';
+    floatingToolbar.style.display = 'block';
+    sizeVideoToViewport();
+  }, { once: true });
+}
+
+function sizeVideoToViewport() {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight - 44;
+  const vRatio = video.videoWidth / video.videoHeight;
+  let w, h;
+  if (vw / vh > vRatio) { h = vh; w = h * vRatio; }
+  else { w = vw; h = w / vRatio; }
+  videoContainer.style.width = w + 'px';
+  videoContainer.style.height = h + 'px';
+  canvas.width = w;
+  canvas.height = h;
+  redraw();
+}
+window.addEventListener('resize', () => { if (workspace.style.display === 'block') sizeVideoToViewport(); });
+
+// --- Playback controls ---
+const btnPlay = document.getElementById('btn-play');
+const scrub = document.getElementById('scrub');
+const timestamp = document.getElementById('timestamp');
+const btnMute = document.getElementById('btn-mute');
+const volumeSlider = document.getElementById('volume-slider');
+
+video.volume = 0.8;
+btnPlay.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
+video.addEventListener('play', () => btnPlay.textContent = '⏸ Pause');
+video.addEventListener('pause', () => btnPlay.textContent = '▶ Play');
+video.addEventListener('timeupdate', () => {
+  if (!scrubbing) scrub.value = (video.currentTime / video.duration) * 1000 || 0;
+  timestamp.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
+});
+let scrubbing = false;
+scrub.addEventListener('pointerdown', () => scrubbing = true);
+scrub.addEventListener('pointerup', () => { scrubbing = false; video.currentTime = (scrub.value / 1000) * video.duration; });
+scrub.addEventListener('input', () => { if (scrubbing) video.currentTime = (scrub.value / 1000) * video.duration; });
+btnMute.addEventListener('click', () => { video.muted = !video.muted; btnMute.textContent = video.muted ? '🔇' : '🔊'; });
+volumeSlider.addEventListener('input', () => { video.volume = volumeSlider.value / 100; });
+
+function fmt(s) { if (!s || isNaN(s)) return '0:00'; const m = Math.floor(s/60), sec = Math.floor(s%60); return m + ':' + String(sec).padStart(2,'0'); }
+
+// --- Draggable toolbar ---
+floatingToolbar.style.top = '12px';
+floatingToolbar.style.left = '12px';
+
+let dragging = false, dragOffX = 0, dragOffY = 0;
+const header = document.getElementById('toolbar-header');
+header.addEventListener('pointerdown', e => {
+  if (e.target.closest('.collapse-btn')) return;
+  dragging = true;
+  const r = floatingToolbar.getBoundingClientRect();
+  dragOffX = e.clientX - r.left;
+  dragOffY = e.clientY - r.top;
+  header.setPointerCapture(e.pointerId);
+});
+header.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  floatingToolbar.style.left = (e.clientX - dragOffX) + 'px';
+  floatingToolbar.style.top = (e.clientY - dragOffY) + 'px';
+});
+header.addEventListener('pointerup', () => dragging = false);
+
+// --- Resizable toolbar ---
+const resizeHandle = document.getElementById('resize-handle');
+let resizing = false, resizeStartX, resizeStartY, resizeStartW, resizeStartH;
+resizeHandle.addEventListener('pointerdown', e => {
+  e.stopPropagation();
+  resizing = true;
+  const r = floatingToolbar.getBoundingClientRect();
+  resizeStartX = e.clientX; resizeStartY = e.clientY;
+  resizeStartW = r.width; resizeStartH = r.height;
+  resizeHandle.setPointerCapture(e.pointerId);
+});
+resizeHandle.addEventListener('pointermove', e => {
+  if (!resizing) return;
+  const newW = Math.max(120, resizeStartW + (e.clientX - resizeStartX));
+  const newH = Math.max(60, resizeStartH + (e.clientY - resizeStartY));
+  floatingToolbar.style.width = newW + 'px';
+  floatingToolbar.style.height = newH + 'px';
+});
+resizeHandle.addEventListener('pointerup', () => resizing = false);
+
+// --- Collapse / expand ---
+const toolbarBody = document.getElementById('toolbar-body');
+const btnCollapse = document.getElementById('btn-collapse');
+const miniToolIcon = document.getElementById('mini-tool-icon');
+const toolLabels = { pen: '✏️ Pen', line: '— Line', arrow: '→ Arrow', rect: '▭ Rect', ellipse: '⬭ Ellipse', eraser: '🧹 Eraser' };
+
+function updateMiniIcon() {
+  miniToolIcon.textContent = toolLabels[currentTool] || currentTool;
+}
+
+btnCollapse.addEventListener('click', () => {
+  const collapsed = toolbarBody.classList.toggle('collapsed');
+  btnCollapse.textContent = collapsed ? '+' : '−';
+  resizeHandle.style.display = collapsed ? 'none' : 'block';
+  if (collapsed) {
+    floatingToolbar.style.width = 'auto';
+    floatingToolbar.style.height = 'auto';
+    header.style.borderBottom = 'none';
+    miniToolIcon.style.display = 'inline-block';
+    updateMiniIcon();
+  } else {
+    header.style.borderBottom = '1px solid #444';
+    miniToolIcon.style.display = 'none';
+  }
+});
+
+// --- Drawing state ---
+let currentTool = 'pen';
+let currentColor = '#e53935';
+let lineWidth = 4;
+let strokes = [];
+let drawingActive = false;
+let currentStroke = null;
+
+// Size preview
+const thicknessSlider = document.getElementById('thickness');
+const sizePreviewDot = document.querySelector('#size-preview .dot');
+function updateSizePreview() {
+  const sz = currentTool === 'eraser' ? lineWidth * 3 : lineWidth;
+  const px = Math.max(2, Math.min(sz, 26));
+  sizePreviewDot.style.width = px + 'px';
+  sizePreviewDot.style.height = px + 'px';
+  sizePreviewDot.style.color = currentTool === 'eraser' ? '#888' : currentColor;
+  sizePreviewDot.style.background = currentTool === 'eraser' ? '#888' : currentColor;
+}
+updateSizePreview();
+
+document.querySelectorAll('.tool-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tool-btn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  currentTool = b.dataset.tool;
+  canvas.style.cursor = currentTool === 'eraser' ? 'cell' : 'crosshair';
+  updateSizePreview();
+  updateMiniIcon();
+}));
+
+document.querySelectorAll('.color-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.color-btn').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  currentColor = b.dataset.color;
+  document.getElementById('custom-color').value = currentColor;
+  updateSizePreview();
+}));
+document.getElementById('custom-color').addEventListener('input', e => {
+  currentColor = e.target.value;
+  document.querySelectorAll('.color-btn').forEach(x => x.classList.remove('active'));
+  updateSizePreview();
+});
+
+thicknessSlider.addEventListener('input', e => { lineWidth = +e.target.value; updateSizePreview(); });
+document.getElementById('btn-undo').addEventListener('click', () => { strokes.pop(); redraw(); });
+document.getElementById('btn-clear').addEventListener('click', () => { strokes = []; redraw(); });
+
+function getPos(e) {
+  const r = canvas.getBoundingClientRect();
+  return { x: e.clientX - r.left, y: e.clientY - r.top };
+}
+
+canvas.addEventListener('pointerdown', e => {
+  drawingActive = true;
+  const p = getPos(e);
+  if (currentTool === 'pen' || currentTool === 'eraser') {
+    currentStroke = { tool: currentTool, color: currentTool === 'eraser' ? null : currentColor, width: currentTool === 'eraser' ? lineWidth * 3 : lineWidth, points: [p] };
+  } else {
+    currentStroke = { tool: currentTool, color: currentColor, width: lineWidth, start: p, end: p };
+  }
+  canvas.setPointerCapture(e.pointerId);
+});
+
+canvas.addEventListener('pointermove', e => {
+  if (!drawingActive || !currentStroke) return;
+  const p = getPos(e);
+  if (currentStroke.points) currentStroke.points.push(p);
+  else currentStroke.end = p;
+  redraw();
+  drawStroke(currentStroke);
+});
+
+canvas.addEventListener('pointerup', () => {
+  if (drawingActive && currentStroke) {
+    strokes.push(currentStroke);
+    currentStroke = null;
+    drawingActive = false;
+    redraw();
+  }
+});
+
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  strokes.forEach(drawStroke);
+}
+
+function drawStroke(s) {
+  ctx.save();
+  ctx.lineWidth = s.width;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  if (s.tool === 'eraser') {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.strokeStyle = 'rgba(0,0,0,1)';
+    if (s.points && s.points.length > 1) {
+      ctx.beginPath();
+      ctx.moveTo(s.points[0].x, s.points[0].y);
+      s.points.forEach(p => ctx.lineTo(p.x, p.y));
+      ctx.stroke();
+    }
+    ctx.restore();
+    return;
+  }
+  ctx.strokeStyle = s.color;
+  ctx.fillStyle = s.color;
+  if (s.tool === 'pen') {
+    if (s.points.length < 2) { ctx.restore(); return; }
+    ctx.beginPath();
+    ctx.moveTo(s.points[0].x, s.points[0].y);
+    s.points.forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.stroke();
+  } else if (s.tool === 'line') {
+    ctx.beginPath();
+    ctx.moveTo(s.start.x, s.start.y);
+    ctx.lineTo(s.end.x, s.end.y);
+    ctx.stroke();
+  } else if (s.tool === 'arrow') {
+    ctx.beginPath();
+    ctx.moveTo(s.start.x, s.start.y);
+    ctx.lineTo(s.end.x, s.end.y);
+    ctx.stroke();
+    const angle = Math.atan2(s.end.y - s.start.y, s.end.x - s.start.x);
+    const headLen = 12 + s.width * 2;
+    ctx.beginPath();
+    ctx.moveTo(s.end.x, s.end.y);
+    ctx.lineTo(s.end.x - headLen * Math.cos(angle - .45), s.end.y - headLen * Math.sin(angle - .45));
+    ctx.lineTo(s.end.x - headLen * Math.cos(angle + .45), s.end.y - headLen * Math.sin(angle + .45));
+    ctx.closePath();
+    ctx.fill();
+  } else if (s.tool === 'rect') {
+    ctx.strokeRect(s.start.x, s.start.y, s.end.x - s.start.x, s.end.y - s.start.y);
+  } else if (s.tool === 'ellipse') {
+    const cx = (s.start.x + s.end.x) / 2, cy = (s.start.y + s.end.y) / 2;
+    const rx = Math.abs(s.end.x - s.start.x) / 2, ry = Math.abs(s.end.y - s.start.y) / 2;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx || 0.1, ry || 0.1, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// --- Recording: composites video + canvas, fully reusable ---
+const btnStartRec = document.getElementById('btn-start-rec');
+const btnStopRec = document.getElementById('btn-stop-rec');
+const recIndicator = document.getElementById('rec-indicator');
+let mediaRecorder = null, recordedChunks = [], recRAF;
+let recRunning = false, recMicStream = null, recAudioCtx = null;
+
+btnStartRec.addEventListener('click', async () => {
+  try {
+    const w = video.videoWidth;
+    const h = video.videoHeight;
+    const recCanvas = document.createElement('canvas');
+    recCanvas.width = w;
+    recCanvas.height = h;
+    const recCtx = recCanvas.getContext('2d');
+
+    recRunning = true;
+    function compositeFrame() {
+      if (!recRunning) return;
+      recCtx.drawImage(video, 0, 0, w, h);
+      recCtx.drawImage(canvas, 0, 0, w, h);
+      recRAF = requestAnimationFrame(compositeFrame);
+    }
+    compositeFrame();
+
+    const canvasStream = recCanvas.captureStream(30);
+
+    // Use captureStream on the video element to get its audio track
+    // This avoids createMediaElementSource which permanently hijacks the element
+    const videoStream = video.captureStream ? video.captureStream() : video.mozCaptureStream();
+    const videoAudioTracks = videoStream.getAudioTracks();
+
+    recAudioCtx = new AudioContext();
+    const dest = recAudioCtx.createMediaStreamDestination();
+
+    if (videoAudioTracks.length) {
+      recAudioCtx.createMediaStreamSource(new MediaStream(videoAudioTracks)).connect(dest);
+    }
+
+    try {
+      recMicStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recAudioCtx.createMediaStreamSource(recMicStream).connect(dest);
+    } catch { recMicStream = null; }
+
+    const combined = new MediaStream([
+      ...canvasStream.getVideoTracks(),
+      ...dest.stream.getAudioTracks()
+    ]);
+
+    recordedChunks = [];
+    const mimeType = MediaRecorder.isTypeSupported('video/webm; codecs=vp9')
+      ? 'video/webm; codecs=vp9' : 'video/webm';
+    mediaRecorder = new MediaRecorder(combined, { mimeType });
+    mediaRecorder.ondataavailable = e => { if (e.data.size) recordedChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      recRunning = false;
+      cancelAnimationFrame(recRAF);
+      const blob = new Blob(recordedChunks, { type: 'video/webm' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'review-' + new Date().toISOString().slice(0,19).replace(/:/g,'-') + '.webm';
+      a.click();
+      cleanupRecording();
+    };
+
+    mediaRecorder.start(1000);
+    btnStartRec.style.display = 'none';
+    btnStopRec.style.display = 'inline-block';
+    recIndicator.style.display = 'flex';
+  } catch (err) {
+    console.error('Recording failed:', err);
+    cleanupRecording();
+  }
+});
+
+function cleanupRecording() {
+  if (recMicStream) { recMicStream.getTracks().forEach(t => t.stop()); recMicStream = null; }
+  if (recAudioCtx) {
+    recAudioCtx.close().catch(() => {});
+    recAudioCtx = null;
+  }
+  mediaRecorder = null;
+}
+
+btnStopRec.addEventListener('click', stopRec);
+function stopRec() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+  btnStartRec.style.display = 'inline-block';
+  btnStopRec.style.display = 'none';
+  recIndicator.style.display = 'none';
+}
+</script>
+</body>
+</html>

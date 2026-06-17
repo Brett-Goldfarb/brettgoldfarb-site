@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brett Goldfarb — Marketing &amp; AI Builder</title>
+  <meta name="description" content="Brett Goldfarb builds marketing that moves people and AI tools that do the work. Portfolio, projects, and writing." />
+
+  <!-- Fonts: playful personal direction —
+       Architects Daughter (handwritten display: titles, headings, labels, brand),
+       Nunito (warm, rounded, highly readable body). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       BJG — Brett Goldfarb personal site
+       Playful / personal / unique theme.
+       Voice:
+         Warm off-white "paper"  #f9f9f9  (dominant page, faint dot-grid)
+         Card surface            #ffffff
+         Soft ink text           #3a3a3a  (not harsh black)
+         Accent — warm cocoa → caramel gradient (links, buttons, labels)
+         Highlight — cream       #f3eac8  (sticker tags, soft fills)
+         Hand-drawn personality from Architects Daughter display type.
+       Dark mode auto-applies via prefers-color-scheme (tokens supplied below).
+       ============================================================ */
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+
+      /* Warm accent ("navy" name kept for stability — now a cocoa→caramel ink) */
+      --navy: #5d4037;        /* deep cocoa — primary ink accent */
+      --navy-2: #a9744c;      /* caramel — gradient end / hover */
+      --navy-grad: linear-gradient(95deg, #5d4037 0%, #a9744c 100%);
+      --cream: #f3eac8;       /* warm highlight — sticker tags, soft fills */
+      --on-accent: #ffffff;   /* text that sits on the accent gradient */
+
+      /* Roles */
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --text: #3a3a3a;
+      --text-soft: #585858;
+      --border: #d6cfc2;       /* warm paper-gray hairline */
+      --border-strong: #8c8578;
+      --accent: var(--navy);
+      --accent-hover: var(--navy-2);
+      --accent-soft: rgba(243, 234, 200, 0.55);   /* cream wash */
+      --nav-bg: rgba(249, 249, 249, 0.82);
+      --paper-dot: rgba(93, 64, 55, 0.05);         /* faint cocoa dot-grid */
+      --shadow-1: 0 1px 2px rgba(60, 40, 30, 0.05), 0 4px 14px rgba(60, 40, 30, 0.07);
+      --shadow-2: 0 2px 6px rgba(60, 40, 30, 0.08), 0 16px 36px rgba(60, 40, 30, 0.13);
+
+      /* Spacing scale — tightened */
+      --s-1: 4px;
+      --s-2: 8px;
+      --s-3: 16px;
+      --s-4: 24px;
+      --s-5: 36px;
+      --s-6: 56px;
+      --s-7: 80px;
+
+      --radius: 14px;
+      --radius-sm: 10px;
+      --maxw: 1120px;
+
+      --font-title: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --font-heading: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --font-body: 'Nunito', system-ui, sans-serif;
+
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* Dark mode — supplied tokens, remapped onto the role variables.
+       Auto-activates for visitors whose OS prefers dark. */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --navy: #e0b083;       /* light caramel — accent ink on dark */
+        --navy-2: #f0cda6;
+        --navy-grad: linear-gradient(95deg, #e0b083 0%, #f0cda6 100%);
+        --cream: #5a4a2e;
+        --on-accent: #2b2b2b;  /* dark text on the light caramel accent */
+
+        --bg: #2b2b2b;
+        --surface: #333333;
+        --text: #dcdcdc;
+        --text-soft: #a8a8a8;
+        --border: #474747;
+        --border-strong: #5f5f5f;
+        --accent: var(--navy);
+        --accent-hover: var(--navy-2);
+        --accent-soft: rgba(243, 234, 200, 0.12);
+        --nav-bg: rgba(43, 43, 43, 0.82);
+        --paper-dot: rgba(255, 255, 255, 0.035);
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
+        --shadow-2: 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background-color: var(--bg);
+      /* faint hand-drawn dot-grid "paper" — the personal, notebook touch */
+      background-image: radial-gradient(var(--paper-dot) 1.1px, transparent 1.1px);
+      background-size: 22px 22px;
+      background-position: -11px -11px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      font-weight: 400;          /* Architects Daughter ships a single weight */
+      line-height: 1.15;
+      margin: 0;
+      letter-spacing: 0;          /* handwritten type needs its natural spacing */
+    }
+    /* Titles share the handwritten display face at full scale. */
+    .hero h1, .section-head h2 {
+      font-family: var(--font-title);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0; }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s var(--ease); }
+    a:hover { color: var(--accent-hover); }
+
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-left: var(--s-4);
+      padding-right: var(--s-4);
+    }
+
+    /* Reusable navy gradient TEXT (background-clip:text), horizontal */
+    .grad-text {
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy); /* fallback */
+    }
+
+    /* Eyebrow / section label — navy gradient */
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      margin-bottom: var(--s-2);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--navy-grad);
+      display: inline-block;
+    }
+
+    /* ============================================================ NAV ============================================================ */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: 1.15rem;
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    .brand img {
+      height: 28px;
+      width: auto;
+      transition: transform 0.3s var(--ease);
+    }
+    .brand:hover img { transform: rotate(-4deg) scale(1.05); }
+
+    .nav-links { display: none; align-items: center; gap: var(--s-4); }
+    .nav-links a {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      font-weight: 500;
+      position: relative;
+      padding: 4px 0;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 2px;
+      background: var(--navy-grad);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after { transform: scaleX(1); }
+
+    .nav-right { display: flex; align-items: center; gap: var(--s-3); }
+
+    /* Hamburger (mobile only) */
+    .nav-burger {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .nav-burger:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .nav-burger:active { transform: translateY(0) scale(0.95); }
+    .nav-burger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .nav-burger .icon-x { display: none; }
+    .nav-burger[aria-expanded="true"] .icon-bars { display: none; }
+    .nav-burger[aria-expanded="true"] .icon-x { display: block; }
+    .nav-burger svg { width: 18px; height: 18px; }
+
+    .mobile-menu {
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      background: var(--surface);
+      box-shadow: var(--shadow-2);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(-8px);
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s linear 0.25s;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s;
+    }
+    .mobile-menu .wrap { display: flex; flex-direction: column; padding-top: var(--s-2); padding-bottom: var(--s-2); }
+    .mobile-menu a {
+      color: var(--text);
+      font-weight: 500;
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+    }
+    .mobile-menu a:last-child { border-bottom: 0; }
+    .mobile-menu a:hover {
+      padding-left: 8px;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+
+    /* ============================================================ BUTTONS ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      box-shadow: var(--shadow-1);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); background: var(--navy-grad); color: var(--on-accent); }
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+    .btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: var(--navy-2);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .btn-ghost:active { transform: translateY(0) scale(0.98); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* Non-interactive status pill (e.g. tools not yet public) */
+    .tool-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border-strong);
+      background: var(--accent-soft);
+      color: var(--text-soft);
+      cursor: default;
+    }
+
+    /* ============================================================ DOWNLOAD DIALOG ============================================================ */
+    .dl-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--s-3);
+      background: rgba(60, 40, 30, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.2s var(--ease);
+    }
+    .dl-overlay[hidden] { display: none; }
+    .dl-overlay.open { opacity: 1; }
+    .dl-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-2);
+      max-width: 380px;
+      width: 100%;
+      padding: var(--s-4);
+      text-align: center;
+      transform: translateY(8px) scale(0.98);
+      transition: transform 0.2s var(--ease);
+    }
+    .dl-overlay.open .dl-modal { transform: translateY(0) scale(1); }
+    .dl-title { font-family: var(--font-title); color: var(--navy); margin: 0 0 var(--s-2); }
+    .dl-desc { color: var(--text-soft); margin: 0 0 var(--s-3); }
+    .dl-actions { display: flex; gap: var(--s-2); justify-content: center; flex-wrap: wrap; }
+
+    /* ============================================================ SECTIONS ============================================================ */
+    section { padding: var(--s-5) 0; position: relative; }
+    .section-head { max-width: 620px; margin-bottom: var(--s-4); }
+    /* Marketing header lockup with BJG mark */
+    .marketing-head {
+      max-width: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-3);
+      flex-wrap: wrap;
+    }
+    .marketing-head-text { max-width: 620px; }
+    .section-logo {
+      height: 110px;
+      width: auto;
+      flex-shrink: 0;
+      border-radius: var(--radius);
+      mix-blend-mode: multiply; /* drops the logo's gray field onto the page gray */
+      cursor: pointer;
+      transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
+    }
+    .section-logo:hover {
+      transform: translateY(-6px) rotate(-2deg) scale(1.04);
+      filter: drop-shadow(0 14px 28px rgba(60, 40, 30, 0.22));
+    }
+    @media (prefers-reduced-motion: reduce) { .section-logo:hover { transform: none; } }
+    @media (max-width: 560px) { .section-logo { height: 84px; } }
+    .section-head h2 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); margin-bottom: var(--s-2); }
+    .section-head p { color: var(--text-soft); font-size: 1.02rem; }
+
+    /* ---- HERO ---- */
+    .hero { padding-top: var(--s-6); padding-bottom: var(--s-5); }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-1);
+      align-items: center;
+      justify-items: center;
+      text-align: center;
+    }
+    .hero-cta { justify-content: center; }
+    .hero-art { width: 100%; }
+    .hero h1 {
+      font-size: clamp(2.5rem, 10vw, 4.6rem);
+      margin-bottom: var(--s-3);
+    }
+    /* "Brett Goldfarb" — horizontal navy gradient via background-clip:text */
+    .hero h1 .name {
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy); /* fallback for browsers without background-clip:text */
+    }
+    .hero-lead {
+      font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+      color: var(--text-soft);
+      max-width: 32ch;
+      margin-bottom: var(--s-4);
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+    .hero-art { position: relative; display: grid; place-items: center; }
+
+    /* ---- HERO PHOTO GALLERY — draggable frameless photo fan ----
+       Vanilla port of a React/Framer component. Bare rounded photos
+       spread in a wide horizontal fan, slide out from a center stack
+       with a spring on load, drag freely, and snap home on release. */
+    .gallery {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      display: grid;
+      place-items: center;
+      overflow: visible;
+      touch-action: pan-y;
+    }
+    /* Zero-size origin: every photo is centered on it, then offset out.
+       The whole fan is scaled to fit the available width per breakpoint. */
+    .gallery-stack {
+      position: relative;
+      width: 0;
+      height: 0;
+      transform: scale(var(--gscale, 0.4));
+      transform-origin: center;
+    }
+    /* Outer layer: owns the fan position (tx/ty) + spring entrance + drag. */
+    .gphoto {
+      position: absolute;
+      top: 0; left: 0;
+      width: 220px;
+      height: 220px;
+      margin: -110px 0 0 -110px;          /* center on the stack origin */
+      z-index: var(--z, 1);
+      opacity: 0;
+      transform: translate(0, 0) scale(0.82);
+      transition: transform 0.9s cubic-bezier(0.34, 1.32, 0.5, 1),
+                  opacity 0.45s ease;
+      transition-delay: var(--d, 0s);
+      will-change: transform;
+      cursor: grab;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .gphoto:active { cursor: grabbing; }
+    .gphoto:hover, .gphoto:focus-visible { z-index: 9999; }
+    .gallery.loaded .gphoto {
+      transform: translate(var(--tx), var(--ty));
+      opacity: 1;
+    }
+    /* Inner layer: owns the resting tilt + hover lift, so neither fights
+       the outer positional transform during drag. */
+    .gphoto-card {
+      width: 100%;
+      height: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      transform: rotate(var(--rot, 0deg)) scale(1);
+      box-shadow: 0 2px 6px rgba(60, 40, 30, 0.10),
+                  0 18px 40px rgba(60, 40, 30, 0.18);
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    }
+    .gphoto:hover .gphoto-card,
+    .gphoto:focus-visible .gphoto-card {
+      transform: rotate(var(--rot, 0deg)) scale(1.1);
+      box-shadow: 0 6px 14px rgba(60, 40, 30, 0.14),
+                  0 32px 60px rgba(60, 40, 30, 0.30);
+    }
+    .gphoto.dragging .gphoto-card {
+      transform: rotate(var(--rot, 0deg)) scale(1.08);
+      box-shadow: 0 8px 18px rgba(60, 40, 30, 0.18),
+                  0 40px 70px rgba(60, 40, 30, 0.34);
+    }
+    .gphoto:focus-visible { outline: none; }
+    .gphoto:focus-visible .gphoto-card { outline: 3px solid var(--accent); outline-offset: 5px; }
+    .gphoto-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      background: var(--bg);
+    }
+    @media (min-width: 600px) { .gallery { height: 320px; } .gallery-stack { --gscale: 0.66; } }
+    @media (min-width: 900px) { .gallery { height: 380px; } .gallery-stack { --gscale: 0.9; } }
+    @media (prefers-reduced-motion: reduce) {
+      .gphoto { transition: opacity 0.4s ease; }
+    }
+
+    /* ---- CARD GRID (Tools + Marketing) ---- */
+    .grid { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--s-4);
+      box-shadow: var(--shadow-1);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); }
+    .card-media {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: var(--s-3);
+      border: 1px solid var(--border);
+      aspect-ratio: 16 / 10;
+      background: var(--bg);
+    }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; }
+    .card-tag {
+      align-self: flex-start;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background:
+        var(--navy-grad) padding-box,
+        var(--accent-soft);
+      -webkit-background-clip: text, padding-box;
+      background-clip: text, padding-box;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: var(--s-3);
+    }
+    .card h3 { font-size: 1.25rem; margin-bottom: var(--s-2); }
+    .card p { color: var(--text-soft); font-size: 0.96rem; margin-bottom: var(--s-3); }
+    .card .result {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: 1.15rem;
+      margin-bottom: var(--s-3);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+      width: fit-content;
+    }
+    .card-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: auto; }
+
+    /* ---- WRITING ---- */
+    .writing-grid { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
+    .pub-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-2);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--s-4);
+      box-shadow: var(--shadow-1);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .pub-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); }
+    .pub-card .kicker {
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+      width: fit-content;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .pub-card h3 { font-size: 1.3rem; }
+    .pub-card p { color: var(--text-soft); margin-bottom: var(--s-2); }
+    .pub-card .card-actions { margin-top: var(--s-1); }
+
+    /* ============================================================ TESTIMONIALS (shuffle stack) ============================================================ */
+    #testimonials .section-head { margin-left: auto; margin-right: auto; text-align: center; }
+    .tstack-wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(var(--s-2), 3vw, var(--s-4));
+    }
+    .tstack {
+      position: relative;
+      width: clamp(280px, 86vw, 400px);
+      height: clamp(400px, 64vh, 450px);
+      margin: var(--s-3) auto 0;
+      touch-action: pan-y;     /* let horizontal drags drive the stack */
+    }
+    .tcard {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--s-3);
+      padding: var(--s-5);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow-2);
+      text-align: center;
+      transform-origin: center center;
+      transition: transform 1s var(--ease), box-shadow 0.6s var(--ease);
+      will-change: transform;
+      user-select: none;
+    }
+    .tcard.is-front { cursor: grab; }
+    .tcard.is-front:active { cursor: grabbing; }
+    .tcard .avatar {
+      width: 92px; height: 92px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 1px var(--border-strong);
+      background: var(--bg);
+      pointer-events: none;
+    }
+    .tcard .quote {
+      font-style: italic;
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      max-width: 28ch;
+    }
+    .tcard .author { font-weight: 700; font-size: 0.95rem; width: fit-content; margin: 0 auto; }
+    /* Subtle prev/next arrows flanking the stack */
+    .tnav {
+      appearance: none;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-soft);
+      cursor: pointer;
+      box-shadow: var(--shadow-1);
+      transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .tnav:hover { transform: translateY(-2px); color: var(--accent); border-color: var(--navy-2); box-shadow: var(--shadow-2); }
+    .tnav:active { transform: translateY(0) scale(0.94); }
+    .tnav:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .tnav svg { width: 20px; height: 20px; }
+    @media (max-width: 560px) { .tnav { width: 40px; height: 40px; } .tnav svg { width: 18px; height: 18px; } }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+
+    /* ============================================================ FOOTER ============================================================ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: var(--s-5) 0 var(--s-4);
+      margin-top: var(--s-4);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-5);
+    }
+    @media (min-width: 640px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+    }
+    .footer-label { margin-bottom: var(--s-3); }
+    .link-list { display: flex; flex-direction: column; gap: var(--s-1); }
+    .link-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-3);
+      padding: 13px 4px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+    }
+    .link-list a:hover {
+      padding-left: 10px;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .link-list a .arrow { color: var(--text-soft); transition: transform 0.2s var(--ease); }
+    .link-list a:hover .arrow { transform: translateX(4px); }
+    .footer-bottom { margin-top: var(--s-4); color: var(--text-soft); font-size: 0.82rem; }
+
+    /* ============================================================ SCROLL REVEAL ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      will-change: transform, opacity;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.07s; }
+    .reveal.d2 { transition-delay: 0.14s; }
+    .reveal.d3 { transition-delay: 0.21s; }
+
+    /* Skip link */
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: 8px;
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      padding: 10px 16px;
+      border-radius: 8px;
+      z-index: 100;
+    }
+    .skip:focus { left: 12px; }
+
+    /* ============================================================ RESPONSIVE ============================================================ */
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .writing-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 860px) {
+      .nav-links { display: flex; }
+      .nav-burger { display: none; }
+      .mobile-menu { display: none; }
+      .hero { padding-top: var(--s-7); padding-bottom: var(--s-6); }
+      .grid { grid-template-columns: repeat(3, 1fr); }
+      section { padding: var(--s-6) 0; }
+    }
+    /* Marketing has two clients — let the cards share the full row width
+       instead of leaving an empty third column. */
+    @media (min-width: 640px) {
+      .grid--clients { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* ---- TOOLS CAROUSEL ----
+       The tools live in a horizontal scroller so they keep a comfortable
+       card width instead of squishing. Arrows page through them. */
+    .carousel { position: relative; }
+    .carousel-track {
+      display: flex;
+      gap: var(--s-4);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      /* room for card hover-lift + shadow so nothing gets clipped */
+      padding: 6px 4px var(--s-3);
+      scrollbar-width: none;            /* Firefox */
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }  /* WebKit */
+    .carousel-track .card {
+      flex: 0 0 340px;
+      scroll-snap-align: start;
+    }
+    /* Let the screenshot fill the frame (the previews are ~16:10, so this
+       only shaves a sliver off the edges). */
+    .carousel-track .card-media img { object-fit: cover; }
+    /* Keep all three actions on a single row — slightly tighter buttons. */
+    .carousel-track .card-actions { flex-wrap: nowrap; gap: var(--s-2); }
+    .carousel-track .card-actions .btn {
+      flex: 0 1 auto;
+      padding: 9px 13px;
+      font-size: 0.84rem;
+      white-space: nowrap;
+    }
+    .carousel-arrow {
+      position: absolute;
+      top: calc(50% - 12px);
+      transform: translateY(-50%);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--navy);
+      box-shadow: var(--shadow-2);
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), background 0.2s var(--ease), opacity 0.2s var(--ease);
+    }
+    .carousel-arrow:hover { transform: translateY(-50%) scale(1.08); background: var(--bg); }
+    .carousel-arrow--prev { left: -10px; }
+    .carousel-arrow--next { right: -10px; }
+    .carousel-arrow[disabled] { opacity: 0.35; cursor: default; pointer-events: none; }
+    @media (min-width: 1100px) {
+      .carousel-arrow--prev { left: -22px; }
+      .carousel-arrow--next { right: -22px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#hero" class="skip">Skip to content</a>
+
+  <!-- ============================ NAV ============================ -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#hero" aria-label="Brett Goldfarb — home">
+        <span>Brett Goldfarb</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#ai-tools">Tools</a>
+        <a href="#marketing">Marketing</a>
+        <a href="#writing">Writing</a>
+        <a href="#connect">Connect</a>
+      </nav>
+      <div class="nav-right">
+        <button class="nav-burger" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
+          <svg class="icon-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="wrap">
+        <a href="#ai-tools">Tools</a>
+        <a href="#marketing">Marketing</a>
+        <a href="#writing">Writing</a>
+        <a href="#connect">Connect</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" id="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1 class="reveal">Hello, I'm<br /><span class="name">Brett Goldfarb.</span></h1>
+          <div class="hero-cta reveal d1">
+            <a href="#ai-tools" class="btn btn-primary">See my work
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="hero-art reveal d1">
+          <div class="gallery" id="gallery" aria-label="Photo gallery">
+            <div class="gallery-stack" id="galleryStack"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ TOOLS I BUILT WITH AI ============================ -->
+    <section id="ai-tools">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Tools I Built with AI</h2>
+          <p>Watch a demo or try one.</p>
+        </div>
+        <div class="carousel reveal">
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous tools" data-tools-prev>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="carousel-track" data-tools-track>
+            <!-- Per tool: thumbnail, name, one line, demo + download links. -->
+            <article class="card">
+              <div class="card-media"><img src="./assets/Heirloom/preview.png" alt="Heirloom preview" loading="lazy" /></div>
+              <h3>Heirloom</h3>
+              <p>Turns your photos and music into a beautifully crafted slideshow — just upload and watch your memories come to life.</p>
+              <div class="card-actions">
+                <a href="https://www.loom.com/share/766ddeaa60b14a33af87d5bee2191433" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
+                <span class="tool-status" aria-disabled="true">Under construction</span>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-media"><img src="./assets/Ledger%20Budget%20tool/preview.png" alt="Ledger preview" loading="lazy" /></div>
+              <h3>Ledger</h3>
+              <p>Personal budgeting and expense tracker.</p>
+              <div class="card-actions">
+                <a href="https://www.loom.com/share/e4bb1106657e4002bd18f95ad370eb20" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
+                <a href="./assets/Ledger%20Budget%20tool/ledger-demo.html" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
+                <a href="./assets/Ledger%20Budget%20tool/ledger-demo.html" class="btn btn-ghost" download>Download</a>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-media"><img src="./assets/Video%20Markup%20tool/preview.png" alt="Video Markup tool preview" loading="lazy" /></div>
+              <h3>Video Markup Tool</h3>
+              <p>Annotate videos and export them social-media ready.</p>
+              <div class="card-actions">
+                <a href="https://www.loom.com/share/930b2e558c1a43259a552959a8e710f1" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
+                <a href="./assets/Video%20Markup%20tool/Video%20Markup%20Tool.html" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
+                <a href="./assets/Video%20Markup%20tool/Video%20Markup%20Tool.html" class="btn btn-ghost" download>Download</a>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-media"><img src="./assets/Video%20Script%20tool/preview.png" alt="Video Script tool preview" loading="lazy" /></div>
+              <h3>Video Script Tool</h3>
+              <p>Plan your script and visualize the shoot before you film.</p>
+              <div class="card-actions">
+                <a href="https://www.loom.com/share/ae69453a375e41e9b395e5739b8d9de5" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
+                <a href="./assets/Video%20Script%20tool/video-script-tool.html" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
+                <a href="./assets/Video%20Script%20tool/video-script-tool.html" class="btn btn-ghost" download>Download</a>
+              </div>
+            </article>
+          </div>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next tools" data-tools-next>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ MARKETING — CLIENT WORK ============================ -->
+    <section id="marketing">
+      <div class="wrap">
+        <div class="section-head marketing-head reveal">
+          <div class="marketing-head-text">
+            <h2>Small Business Marketing Agency</h2>
+            <p>A few clients I've helped grow.</p>
+          </div>
+          <!-- BJG Creations mark — its baked-in gray matches the page, so it blends cleanly -->
+          <img class="section-logo" src="./assets/BJG%20Creations%20Logo.png" alt="BJG Creations logo" />
+        </div>
+        <div class="grid grid--clients">
+          <!-- Per client: image, industry tag, client name, headline result, one line, link. -->
+          <article class="card reveal">
+            <div class="card-media" style="background:#fff;"><img src="./assets/TGC%20portfolio%20page/TGC%20Logo.png" alt="The Garden Continuum logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
+            <span class="card-tag">Regenerative Landscaping</span>
+            <h3>The Garden Continuum</h3>
+            <p>TGC coined the Life-Scape Method™. My job is to keep their inbound strategy consistent and push it further.</p>
+            <div class="card-actions"><a href="./portfolio/the-garden-continuum.html" class="btn btn-ghost">What I did for them</a></div>
+          </article>
+          <article class="card reveal d1">
+            <div class="card-media" style="background:#fff;"><img src="./assets/CMH%20portfolio%20page/CMH-LOGO.png" alt="Centre Music House logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
+            <span class="card-tag">Local Music Store</span>
+            <h3>Centre Music House</h3>
+            <p>Restarted social media presence for a beloved local music store.</p>
+            <div class="card-actions"><a href="./portfolio/centre-music-house.html" class="btn btn-ghost">What I did for them</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ WRITING ============================ -->
+    <section id="writing">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Writing</h2>
+        </div>
+        <div class="writing-grid">
+          <article class="pub-card reveal">
+            <span class="kicker">Personal Substack</span>
+            <h3>Brett Goldfarb</h3>
+            <p>An inside look at what I'm up to and what I'm thinking about.</p>
+            <div class="card-actions">
+              <a href="https://brettgoldfarb.substack.com/" target="_blank" rel="noopener" class="btn btn-primary">Read
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </article>
+          <article class="pub-card reveal d1">
+            <span class="kicker">BJG Creations Substack</span>
+            <h3>BJG Creations Blog</h3>
+            <p>A marketing focused blog that follows my curiosity.</p>
+            <div class="card-actions">
+              <a href="https://bjgcreationsblog.substack.com/" target="_blank" rel="noopener" class="btn btn-primary">Read
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ TESTIMONIALS ============================ -->
+    <!-- Shuffle-stack reskinned from the supplied React/Framer component into vanilla JS.
+         Cards are built in JS from the `testimonials` array below — swap in real quotes later. -->
+    <section id="testimonials">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Don't just take my word for it</h2>
+        </div>
+        <div class="tstack-wrap reveal d1">
+          <button class="tnav" id="tPrev" type="button" aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="tstack" id="tStack" aria-roledescription="testimonial stack"></div>
+          <button class="tnav" id="tNext" type="button" aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+          <p class="visually-hidden" id="tLive" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER — LINKS + CONTACT ONLY ============================ -->
+  <footer id="connect">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col reveal">
+          <p class="eyebrow footer-label">Connect</p>
+          <div class="link-list">
+            <a href="mailto:brett@bjgcreations.com">brett@bjgcreations.com <span class="arrow">→</span></a>
+            <a href="tel:+15087453108">(508) 745-3108 <span class="arrow">→</span></a>
+            <a href="https://www.linkedin.com/in/brett-j-goldfarb/" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
+          </div>
+        </div>
+        <div class="footer-col reveal d1">
+          <p class="eyebrow footer-label">In the press</p>
+          <div class="link-list">
+            <a href="https://canvasrebel.com/meet-brett-goldfarb/" target="_blank" rel="noopener">CanvasRebel — Meet Brett Goldfarb <span class="arrow">↗</span></a>
+          </div>
+        </div>
+      </div>
+      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb</p>
+    </div>
+  </footer>
+
+  <!-- Download confirmation dialog -->
+  <div class="dl-overlay" id="dlOverlay" hidden>
+    <div class="dl-modal" role="alertdialog" aria-modal="true" aria-labelledby="dlTitle" aria-describedby="dlDesc">
+      <h3 class="dl-title" id="dlTitle">Heads up</h3>
+      <p class="dl-desc" id="dlDesc">I want to make sure you want to download this file.</p>
+      <div class="dl-actions">
+        <button type="button" class="btn btn-ghost" id="dlCancel">No, go back</button>
+        <button type="button" class="btn btn-primary" id="dlConfirm">Yes, download</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---- Download confirmation ----
+    (function () {
+      var overlay = document.getElementById('dlOverlay');
+      var confirmBtn = document.getElementById('dlConfirm');
+      var cancelBtn = document.getElementById('dlCancel');
+      var pending = null;
+
+      function open() {
+        overlay.hidden = false;
+        requestAnimationFrame(function () { overlay.classList.add('open'); });
+        confirmBtn.focus();
+      }
+      function close() {
+        overlay.classList.remove('open');
+        pending = null;
+        setTimeout(function () { overlay.hidden = true; }, 200);
+      }
+
+      document.querySelectorAll('a[download]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          pending = link;
+          open();
+        });
+      });
+
+      confirmBtn.addEventListener('click', function () {
+        if (!pending) return;
+        var link = pending;
+        var temp = document.createElement('a');
+        temp.href = link.href;
+        temp.setAttribute('download', link.getAttribute('download') || '');
+        document.body.appendChild(temp);
+        temp.click();
+        document.body.removeChild(temp);
+        close();
+      });
+      cancelBtn.addEventListener('click', close);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !overlay.hidden) close();
+      });
+    })();
+
+    // ---- Mobile menu ----
+    var navToggle = document.getElementById('navToggle');
+    var mobileMenu = document.getElementById('mobileMenu');
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+    navToggle.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    // ---- Scroll reveal ----
+    var revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    // ---- Hero photo gallery (vanilla port of the React/Framer fanned-stack) ----
+    (function () {
+      var stack = document.getElementById('galleryStack');
+      var gallery = document.getElementById('gallery');
+      if (!stack || !gallery) return;
+
+      // Wide horizontal fan (offsets/order/z mirror the reference component).
+      // Center photo sits highest and forward; edges drop and recede.
+      var photos = [
+        { src: './assets/gallery-5.jpg', alt: 'Snowboarding a mountain run', tx: -320, ty: 15, z: 30, dir: -1, order: 0 },
+        { src: './assets/gallery-1.jpg', alt: 'Walking a trail with the crew', tx: -160, ty: 32, z: 40, dir: -1, order: 1 },
+        { src: './assets/gallery-4.jpg', alt: 'Brett Goldfarb portrait',       tx:    0, ty:  8, z: 50, dir:  1, order: 2 },
+        { src: './assets/gallery-2.jpg', alt: 'Golden hour in the city',       tx:  160, ty: 22, z: 39, dir:  1, order: 3 },
+        { src: './assets/gallery-3.jpg?v=2', alt: 'A town on the coast',       tx:  320, ty: 44, z: 29, dir: -1, order: 4 }
+      ];
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      photos.forEach(function (p) {
+        var rot = rand(1, 4) * p.dir;            // gentle, organic resting tilt
+        var card = document.createElement('div');
+        card.className = 'gphoto';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'img');
+        card.setAttribute('aria-label', p.alt);
+        card.style.setProperty('--tx', p.tx + 'px');
+        card.style.setProperty('--ty', p.ty + 'px');
+        card.style.setProperty('--rot', rot.toFixed(2) + 'deg');
+        card.style.setProperty('--z', p.z);
+        card.style.setProperty('--d', (0.1 + p.order * 0.15) + 's');
+        card.dataset.baseZ = String(p.z);
+        card.innerHTML =
+          '<div class="gphoto-card">' +
+            '<img src="' + p.src + '" alt="' + p.alt + '" draggable="false" loading="lazy" />' +
+          '</div>';
+        stack.appendChild(card);
+        makeDraggable(card);
+      });
+
+      // Reveal the fan once mounted (next frame so the transition runs).
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { gallery.classList.add('loaded'); });
+      });
+
+      function makeDraggable(card) {
+        var dragging = false, startX = 0, startY = 0, dx = 0, dy = 0, resetTimer;
+
+        function down(e) {
+          dragging = true;
+          clearTimeout(resetTimer);
+          var pt = point(e);
+          startX = pt.x; startY = pt.y; dx = 0; dy = 0;
+          card.style.transition = 'none';
+          card.style.zIndex = '9999';
+          card.classList.add('dragging');     // inner card lifts via CSS
+          card.setPointerCapture && e.pointerId != null && card.setPointerCapture(e.pointerId);
+        }
+        function move(e) {
+          if (!dragging) return;
+          var pt = point(e);
+          dx = pt.x - startX; dy = pt.y - startY;
+          // Outer layer only translates; tilt/scale stay on the inner card.
+          card.style.transform =
+            'translate(calc(var(--tx) + ' + dx + 'px), calc(var(--ty) + ' + dy + 'px))';
+          e.preventDefault();
+        }
+        function up() {
+          if (!dragging) return;
+          dragging = false;
+          card.classList.remove('dragging');
+          // Snap home: restore the spring transition, clear inline transform.
+          card.style.transition = '';
+          card.style.transform = '';
+          resetTimer = setTimeout(function () {
+            card.style.zIndex = card.dataset.baseZ;
+          }, 700);
+        }
+
+        card.addEventListener('pointerdown', down);
+        window.addEventListener('pointermove', move, { passive: false });
+        window.addEventListener('pointerup', up);
+        window.addEventListener('pointercancel', up);
+
+        // Keyboard nudge for accessibility — Enter/Space gives a little wiggle.
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.style.zIndex = '9999';
+            card.classList.add('dragging');
+            card.style.transform = 'translate(var(--tx), calc(var(--ty) - 18px))';
+            setTimeout(function () {
+              card.classList.remove('dragging');
+              card.style.transform = '';
+              card.style.zIndex = card.dataset.baseZ;
+            }, 360);
+          }
+        });
+      }
+
+      function point(e) {
+        if (e.touches && e.touches[0]) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        return { x: e.clientX, y: e.clientY };
+      }
+    })();
+
+    // ---- Testimonials shuffle stack (vanilla port of the React/Framer component) ----
+    (function () {
+      var stack = document.getElementById('tStack');
+      if (!stack) return;
+
+      // PLACEHOLDER quotes — swap these for real testimonials later.
+      var testimonials = [
+        { id: 12, quote: "Brett gets our brand and our customers. Our community finally feels like a community.", author: "Placeholder — Local Business Owner" },
+        { id: 32, quote: "He turned our scattered ideas into a clear plan, then made it run on its own.", author: "Placeholder — Restaurant Owner" },
+        { id: 5,  quote: "The tools Brett built save us hours every week. I don't know how we worked before.", author: "Placeholder — Service Pro" }
+      ];
+
+      // Fan layout per slot — horizontal offset + slight rotation + scale.
+      // Back cards peek out further so the stack reads as a deck at a glance.
+      var layout = {
+        front:  { x: 0,  rot: -5, z: 3, s: 1    },
+        middle: { x: 48, rot: 4,  z: 2, s: 0.94 },
+        back:   { x: 92, rot: 9,  z: 1, s: 0.88 }
+      };
+      var order = ['front', 'middle', 'back'];           // index ↔ card slot
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var live = document.getElementById('tLive');
+
+      function initials(name) {
+        var core = name.replace(/^Placeholder\s*—\s*/, '').trim();
+        var parts = core.split(/\s+/).filter(Boolean);
+        return ((parts[0] || '?')[0] + (parts[1] || '')[0] || '').toUpperCase() || '?';
+      }
+
+      // Build the cards once
+      var cards = testimonials.map(function (t) {
+        var el = document.createElement('article');
+        el.className = 'tcard';
+        el.setAttribute('role', 'group');
+        el.innerHTML =
+          '<img class="avatar" src="https://placehold.co/128x128/5d4037/f3eac8?text=' + encodeURIComponent(initials(t.author)) + '" alt="" />' +
+          '<p class="quote">&ldquo;' + t.quote + '&rdquo;</p>' +
+          '<p class="author grad-text">' + t.author + '</p>';
+        stack.appendChild(el);
+        return el;
+      });
+
+      function frontCard() { return cards[order.indexOf('front')]; }
+
+      function apply() {
+        cards.forEach(function (el, i) {
+          var slot = order[i];
+          var L = layout[slot];
+          el.style.zIndex = String(L.z);
+          el.style.transform = 'translateX(' + L.x + 'px) rotate(' + L.rot + 'deg) scale(' + L.s + ')';
+          var isFront = slot === 'front';
+          el.classList.toggle('is-front', isFront);
+          el.setAttribute('aria-hidden', isFront ? 'false' : 'true');
+        });
+      }
+
+      function announce() {
+        var t = testimonials[order.indexOf('front')];
+        if (live) live.textContent = t.quote + ' — ' + t.author;
+      }
+      function next() {        // send the front card to the back
+        order.unshift(order.pop());
+        apply();
+        announce();
+      }
+      function prev() {        // bring the back card to the front
+        order.push(order.shift());
+        apply();
+        announce();
+      }
+      var shuffle = next;     // drag-left keeps advancing the deck
+
+      // ---- Pointer drag on the front card: swipe left past threshold to shuffle ----
+      var startX = null, dragEl = null;
+      stack.addEventListener('pointerdown', function (e) {
+        var f = frontCard();
+        if (!f || !f.contains(e.target)) return;
+        dragEl = f; startX = e.clientX;
+        dragEl.style.transition = 'none';
+        try { dragEl.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      stack.addEventListener('pointermove', function (e) {
+        if (startX === null || !dragEl) return;
+        var dx = e.clientX - startX;
+        dragEl.style.transform = 'translateX(' + dx + 'px) rotate(' + (-5 + dx * 0.03) + 'deg)';
+      });
+      function endDrag(e) {
+        if (startX === null || !dragEl) return;
+        var dx = e.clientX - startX;
+        dragEl.style.transition = '';
+        var shouldShuffle = dx < -120;
+        startX = null; dragEl = null;
+        if (shouldShuffle) shuffle(); else apply();
+      }
+      stack.addEventListener('pointerup', endDrag);
+      stack.addEventListener('pointercancel', endDrag);
+
+      // Prev / next arrows (keyboard-accessible)
+      var prevBtn = document.getElementById('tPrev');
+      var nextBtn = document.getElementById('tNext');
+      if (prevBtn) prevBtn.addEventListener('click', prev);
+      if (nextBtn) nextBtn.addEventListener('click', next);
+
+      apply();
+    })();
+
+    // ---- Tools carousel ----
+    (function () {
+      var track = document.querySelector('[data-tools-track]');
+      var prevBtn = document.querySelector('[data-tools-prev]');
+      var nextBtn = document.querySelector('[data-tools-next]');
+      if (!track || !prevBtn || !nextBtn) return;
+
+      function pageSize() {
+        var card = track.querySelector('.card');
+        if (!card) return track.clientWidth;
+        var gap = parseInt(getComputedStyle(track).columnGap || getComputedStyle(track).gap, 10) || 0;
+        // Scroll by however many whole cards are visible (at least one).
+        var step = card.offsetWidth + gap;
+        var perView = Math.max(1, Math.floor(track.clientWidth / step));
+        return step * perView;
+      }
+
+      function update() {
+        var maxScroll = track.scrollWidth - track.clientWidth - 1;
+        prevBtn.disabled = track.scrollLeft <= 0;
+        nextBtn.disabled = track.scrollLeft >= maxScroll;
+      }
+
+      prevBtn.addEventListener('click', function () {
+        track.scrollBy({ left: -pageSize(), behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', function () {
+        track.scrollBy({ left: pageSize(), behavior: 'smooth' });
+      });
+      track.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    // ---- Footer year ----
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
