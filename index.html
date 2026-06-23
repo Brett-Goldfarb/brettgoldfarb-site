@@ -690,7 +690,11 @@
       line-height: 1.5;
       max-width: 28ch;
     }
+    /* Longer quotes shrink a touch so the deck stays the same size */
+    .tcard.long .quote { font-size: 0.92rem; line-height: 1.45; max-width: 30ch; }
+    .tcard .attribution { text-align: center; }
     .tcard .author { font-weight: 700; font-size: 0.95rem; width: fit-content; margin: 0 auto; }
+    .tcard .role { color: var(--text-soft); font-size: 0.8rem; font-weight: 600; margin-top: 3px; max-width: 30ch; }
     /* Subtle prev/next arrows flanking the stack */
     .tnav {
       appearance: none;
@@ -1034,10 +1038,8 @@
 
     <!-- ============================ TESTIMONIALS ============================ -->
     <!-- Shuffle-stack reskinned from the supplied React/Framer component into vanilla JS.
-         Cards are built in JS from the `testimonials` array below — swap in real quotes later. -->
-    <!-- TEMPORARILY HIDDEN: placeholder testimonials hidden for an application submission.
-         To restore, remove the `hidden` attribute and the `style="display:none"` on the line below. -->
-    <section id="testimonials" hidden style="display:none">
+         Cards are built in JS from the `testimonials` array below. -->
+    <section id="testimonials">
       <div class="wrap">
         <div class="section-head reveal">
           <h2>Don't just take my word for it</h2>
@@ -1280,68 +1282,98 @@
       var stack = document.getElementById('tStack');
       if (!stack) return;
 
-      // PLACEHOLDER quotes — swap these for real testimonials later.
+      // Real client testimonials. `pos` tunes the headshot focal point inside
+      // the circular avatar; `long` shrinks the quote font for longer copy.
       var testimonials = [
-        { id: 12, quote: "Brett gets our brand and our customers. Our community finally feels like a community.", author: "Placeholder — Local Business Owner" },
-        { id: 32, quote: "He turned our scattered ideas into a clear plan, then made it run on its own.", author: "Placeholder — Restaurant Owner" },
-        { id: 5,  quote: "The tools Brett built save us hours every week. I don't know how we worked before.", author: "Placeholder — Service Pro" }
+        {
+          quote: "Brett is genuinely fun to work with. He has real conviction about wanting to provide value, and it shows in how he approaches every task. What really stands out is how coachable he is. He's always eager to learn, takes feedback well, and applies it right away.",
+          author: "Ryan Abramson",
+          role: "Co-Founder & CEO, Scout Cities",
+          img: "assets/Testimonials/Headshots/Ryan_Abramson_Scout_Cities.png",
+          pos: "center 30%"
+        },
+        {
+          quote: "Working with Brett has been a game-changer. Brett came in with a super clear plan and a system set-up that let me have a hand in the content while giving him the responsibility to create and manage it. Our analytics are way up, and people go out of their way to tell me in person how much they love our social media.",
+          author: "Max Larson",
+          role: "Owner, Centre Music House",
+          img: "assets/Testimonials/Headshots/Max_Larson_Owner_Framingham.jpg",
+          pos: "center 25%",
+          long: true
+        },
+        {
+          quote: "Having Brett work with us has taken a workload burden off my shoulders as social media is just a portion of the overall work I do for The Garden Continuum. He's a super quick learner so I truly believe he can help any business work to grow their online presence.",
+          author: "JoAnna Thomson",
+          role: "Client Contracts Manager, The Garden Continuum",
+          img: "assets/Testimonials/Headshots/JoAnna-Thomson.jpeg",
+          pos: "center 25%"
+        },
+        {
+          quote: "Behind the scenes, Brett is planful and highly organized. Brett is also flexible enough to pivot from the schedule when I need to shift my workload (which I deeply appreciate!). Positive energy, great attitude - a total pleasure to work with!",
+          author: "Jen Kettell",
+          role: "Owner, Radiant Leaf Consulting",
+          img: "assets/Testimonials/Headshots/Jen_Kettell_Radiant_Leaf.webp",
+          pos: "center 18%"
+        }
       ];
 
-      // Fan layout per slot — horizontal offset + slight rotation + scale.
-      // Back cards peek out further so the stack reads as a deck at a glance.
-      var layout = {
-        front:  { x: 0,  rot: -5, z: 3, s: 1    },
-        middle: { x: 48, rot: 4,  z: 2, s: 0.94 },
-        back:   { x: 92, rot: 9,  z: 1, s: 0.88 }
-      };
-      var order = ['front', 'middle', 'back'];           // index ↔ card slot
+      // Fan layout derived from depth (0 = front). Works for any card count:
+      // each deeper card peeks further right, rotates more, and scales down a touch.
+      function slotAt(depth, total) {
+        return {
+          x: depth * 40,
+          rot: depth === 0 ? -5 : depth * 4,
+          z: total - depth,
+          s: Math.max(0.84, 1 - depth * 0.05)
+        };
+      }
+      // order[depth] = index into `cards`; order[0] is the front card.
+      var order = testimonials.map(function (_, i) { return i; });
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var live = document.getElementById('tLive');
-
-      function initials(name) {
-        var core = name.replace(/^Placeholder\s*—\s*/, '').trim();
-        var parts = core.split(/\s+/).filter(Boolean);
-        return ((parts[0] || '?')[0] + (parts[1] || '')[0] || '').toUpperCase() || '?';
-      }
 
       // Build the cards once
       var cards = testimonials.map(function (t) {
         var el = document.createElement('article');
-        el.className = 'tcard';
+        el.className = 'tcard' + (t.long ? ' long' : '');
         el.setAttribute('role', 'group');
         el.innerHTML =
-          '<img class="avatar" src="https://placehold.co/128x128/5d4037/f3eac8?text=' + encodeURIComponent(initials(t.author)) + '" alt="" />' +
+          '<img class="avatar" src="' + t.img + '" alt="' + t.author + '" loading="lazy"' +
+            (t.pos ? ' style="object-position:' + t.pos + '"' : '') + ' />' +
           '<p class="quote">&ldquo;' + t.quote + '&rdquo;</p>' +
-          '<p class="author grad-text">' + t.author + '</p>';
+          '<div class="attribution">' +
+            '<p class="author grad-text">' + t.author + '</p>' +
+            '<p class="role">' + t.role + '</p>' +
+          '</div>';
         stack.appendChild(el);
         return el;
       });
 
-      function frontCard() { return cards[order.indexOf('front')]; }
+      function frontCard() { return cards[order[0]]; }
 
       function apply() {
-        cards.forEach(function (el, i) {
-          var slot = order[i];
-          var L = layout[slot];
+        var total = order.length;
+        order.forEach(function (cardIdx, depth) {
+          var el = cards[cardIdx];
+          var L = slotAt(depth, total);
           el.style.zIndex = String(L.z);
           el.style.transform = 'translateX(' + L.x + 'px) rotate(' + L.rot + 'deg) scale(' + L.s + ')';
-          var isFront = slot === 'front';
+          var isFront = depth === 0;
           el.classList.toggle('is-front', isFront);
           el.setAttribute('aria-hidden', isFront ? 'false' : 'true');
         });
       }
 
       function announce() {
-        var t = testimonials[order.indexOf('front')];
-        if (live) live.textContent = t.quote + ' — ' + t.author;
+        var t = testimonials[order[0]];
+        if (live) live.textContent = t.quote + ' — ' + t.author + ', ' + t.role;
       }
       function next() {        // send the front card to the back
-        order.unshift(order.pop());
+        order.push(order.shift());
         apply();
         announce();
       }
       function prev() {        // bring the back card to the front
-        order.push(order.shift());
+        order.unshift(order.pop());
         apply();
         announce();
       }

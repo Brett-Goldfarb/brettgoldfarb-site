@@ -732,6 +732,17 @@
       font-size: 1rem;
     }
     .pullquote .cite span { display: block; font-weight: 600; color: var(--text-soft); font-size: 0.92rem; }
+    .pullquote .pq-avatar {
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 25%;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 1px var(--border-strong);
+      display: block;
+      margin: 0 auto var(--s-3);
+    }
+    .pullquote + .pullquote { margin-top: var(--s-4); }
 
     /* ============================================================ FOOTER ============================================================ */
     footer {
@@ -1000,6 +1011,12 @@
     <!-- ============================ TESTIMONIAL ============================ -->
     <section id="testimonial">
       <div class="wrap">
+        <div class="pullquote reveal">
+          <img class="pq-avatar" src="../assets/Testimonials/Headshots/Max_Larson_Owner_Framingham.jpg" alt="Max Larson" loading="lazy" />
+          <span class="mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>Working with Brett has been a game-changer for my business. Before, managing our social media felt like a &lsquo;should do&rsquo; that we attacked in fits and bursts with little to no traction. Brett came in with a super clear plan and a system set-up that let me still have a hand in the content while giving him the responsibility to create and manage it. As a result, our numbers are way up, and people go out of their way to tell me in person how much they love our social media.</blockquote>
+          <p class="cite">Max Larson<span>Owner, Centre Music House</span></p>
+        </div>
         <div class="pullquote reveal">
           <span class="mark" aria-hidden="true">&ldquo;</span>
           <blockquote>I am mainly writing to say how impressed I am with your social media presence! Your snippets from the faculty and students are great! Thanks for being a great example of how to use social media!</blockquote>
