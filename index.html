@@ -850,6 +850,9 @@
     /* Let the screenshot fill the frame (the previews are ~16:10, so this
        only shaves a sliver off the edges). */
     .carousel-track .card-media img { object-fit: cover; }
+    /* Higher specificity than the cover rule above, so wide previews like
+       Heirloom's still show in full instead of getting cropped. */
+    .carousel-track .card-media--contain img { object-fit: contain; }
     /* Keep all three actions on a single row — slightly tighter buttons. */
     .carousel-track .card-actions { flex-wrap: nowrap; gap: 6px; }
     .carousel-track .card-actions .btn {
@@ -964,7 +967,6 @@
               <div class="card-actions">
                 <a href="https://www.loom.com/share/e047d00e04a340769420da9fc53ac5eb" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
                 <a href="https://heirloomslides.com" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
-                <span class="tool-status" aria-disabled="true">Under construction</span>
               </div>
             </article>
             <article class="card">
