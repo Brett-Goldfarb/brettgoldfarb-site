@@ -656,10 +656,13 @@
       align-items: center;
       justify-content: center;
       gap: clamp(var(--s-2), 3vw, var(--s-4));
+      width: 100%;
     }
     .tstack {
       position: relative;
       width: clamp(280px, 86vw, 400px);
+      min-width: 0;
+      flex: 1 1 auto;
       /* Height is equalized to the tallest card in JS (measureHeights). The
          min-height keeps the layout stable before that runs. */
       height: auto;
@@ -714,6 +717,8 @@
        more room so names never clip. */
     @media (max-width: 560px) {
       #testimonials .section-head h2 { font-size: 1.3rem; }
+      .tstack-wrap { gap: var(--s-1); }
+      .tstack { width: clamp(220px, 68vw, 400px); }
       .tcard { padding: var(--s-4) var(--s-3); gap: var(--s-2); }
       .tcard .avatar { width: 76px; height: 76px; }
       .tcard .quote { font-size: 0.96rem; line-height: 1.45; max-width: 32ch; }
@@ -733,6 +738,8 @@
       color: var(--text-soft);
       cursor: pointer;
       box-shadow: var(--shadow-1);
+      position: relative;
+      z-index: 10;
       transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
     }
     .tnav:hover { transform: translateY(-2px); color: var(--accent); border-color: var(--navy-2); box-shadow: var(--shadow-2); }
