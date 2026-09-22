@@ -657,12 +657,20 @@
       justify-content: center;
       gap: clamp(var(--s-2), 3vw, var(--s-4));
       width: 100%;
+      /* Keeps the arrows near the deck instead of drifting to the content
+         edges. The fanned cards tilt ~5deg and sit offset to the right, so
+         this leaves room for that spread on top of the 400px stack. */
+      max-width: 720px;
+      margin-inline: auto;
     }
     .tstack {
       position: relative;
       width: clamp(280px, 86vw, 400px);
       min-width: 0;
-      flex: 1 1 auto;
+      /* Never grow: the width above is the real cap. With `1 1 auto` the flex
+         row stretched the stack to fill the wrap (~970px at desktop) while the
+         quote stayed ~300px, leaving a card of mostly empty space. */
+      flex: 0 1 auto;
       /* Height is equalized to the tallest card in JS (measureHeights). The
          min-height keeps the layout stable before that runs. */
       height: auto;
@@ -1374,6 +1382,18 @@
           s: Math.max(0.84, 1 - depth * 0.05)
         };
       }
+      // The fan only spreads rightward, so the deck's visual center sits right
+      // of the stack box. Shift the stack left by half the total spread to
+      // recenter it between the arrows (recomputed on resize, since `step`
+      // changes at the 560px breakpoint).
+      var tStackEl = document.getElementById('tStack');
+      function centerFan() {
+        var step = window.innerWidth < 560 ? 22 : 40;
+        var spread = (testimonials.length - 1) * step;
+        tStackEl.style.transform = 'translateX(' + (-spread / 2) + 'px)';
+      }
+      centerFan();
+
       // order[depth] = index into `cards`; order[0] is the front card.
       var order = testimonials.map(function (_, i) { return i; });
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1468,7 +1488,7 @@
       if (prevBtn) prevBtn.addEventListener('click', prev);
       if (nextBtn) nextBtn.addEventListener('click', next);
 
-      function relayout() { measureHeights(); apply(); }
+      function relayout() { centerFan(); measureHeights(); apply(); }
 
       // Recompute once the handwritten display font swaps in (it changes text height).
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
