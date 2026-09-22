@@ -1012,8 +1012,8 @@
               <h3>Heirloom</h3>
               <p>Turns your photos and music into a beautifully crafted slideshow. Just upload and watch your memories come to life.</p>
               <div class="card-actions card-actions--split">
-                <a href="https://www.youtube.com/watch?v=ljndHTddU4I" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
-                <a href="https://heirloomslides.com" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
+                <a href="https://www.youtube.com/watch?v=ljndHTddU4I" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Watch demo — Heirloom">Watch demo</a>
+                <a href="https://heirloomslides.com" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Heirloom">Try it</a>
               </div>
             </article>
             <article class="card">
@@ -1021,9 +1021,9 @@
               <h3>Ledger</h3>
               <p>Personal budgeting and expense tracker.</p>
               <div class="card-actions">
-                <a href="https://www.loom.com/share/e4bb1106657e4002bd18f95ad370eb20" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
-                <a href="./assets/Ledger%20Budget%20tool/ledger-demo.html" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
-                <a href="./assets/Ledger%20Budget%20tool/ledger-demo.html" class="btn btn-ghost" download>Download</a>
+                <a href="https://www.loom.com/share/e4bb1106657e4002bd18f95ad370eb20" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Watch demo — Ledger">Watch demo</a>
+                <a href="./assets/Ledger%20Budget%20tool/ledger-demo.html" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Ledger">Try it</a>
+                <a href="./assets/Ledger%20Budget%20tool/ledger-demo.html" class="btn btn-ghost" download data-track="Download — Ledger">Download</a>
               </div>
             </article>
             <article class="card">
@@ -1031,9 +1031,9 @@
               <h3>Video Markup Tool</h3>
               <p>Annotate videos and export them social-media ready.</p>
               <div class="card-actions">
-                <a href="https://www.loom.com/share/930b2e558c1a43259a552959a8e710f1" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
-                <a href="./assets/Video%20Markup%20tool/Video%20Markup%20Tool.html" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
-                <a href="./assets/Video%20Markup%20tool/Video%20Markup%20Tool.html" class="btn btn-ghost" download>Download</a>
+                <a href="https://www.loom.com/share/930b2e558c1a43259a552959a8e710f1" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Watch demo — Video Markup Tool">Watch demo</a>
+                <a href="./assets/Video%20Markup%20tool/Video%20Markup%20Tool.html" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Video Markup Tool">Try it</a>
+                <a href="./assets/Video%20Markup%20tool/Video%20Markup%20Tool.html" class="btn btn-ghost" download data-track="Download — Video Markup Tool">Download</a>
               </div>
             </article>
             <article class="card">
@@ -1041,9 +1041,9 @@
               <h3>Video Script Tool</h3>
               <p>Plan your script and visualize the shoot before you film.</p>
               <div class="card-actions">
-                <a href="https://www.loom.com/share/ae69453a375e41e9b395e5739b8d9de5" target="_blank" rel="noopener" class="btn btn-ghost">Watch demo</a>
-                <a href="./assets/Video%20Script%20tool/video-script-tool.html" target="_blank" rel="noopener" class="btn btn-primary">Try it</a>
-                <a href="./assets/Video%20Script%20tool/video-script-tool.html" class="btn btn-ghost" download>Download</a>
+                <a href="https://www.loom.com/share/ae69453a375e41e9b395e5739b8d9de5" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Watch demo — Video Script Tool">Watch demo</a>
+                <a href="./assets/Video%20Script%20tool/video-script-tool.html" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Video Script Tool">Try it</a>
+                <a href="./assets/Video%20Script%20tool/video-script-tool.html" class="btn btn-ghost" download data-track="Download — Video Script Tool">Download</a>
               </div>
             </article>
           </div>
@@ -1072,14 +1072,14 @@
             <span class="card-tag">Regenerative Landscaping</span>
             <h3>The Garden Continuum</h3>
             <p>TGC coined the Life-Scape Method™. My job is to keep their inbound strategy consistent and push it further.</p>
-            <div class="card-actions"><a href="./portfolio/the-garden-continuum.html" class="btn btn-ghost">What I did for them</a></div>
+            <div class="card-actions"><a href="./portfolio/the-garden-continuum.html" class="btn btn-ghost" data-track="What I did for them — The Garden Continuum">What I did for them</a></div>
           </article>
           <article class="card reveal d1">
             <div class="card-media" style="background:#fff;"><img src="./assets/CMH%20portfolio%20page/CMH-LOGO.png" alt="Centre Music House logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
             <span class="card-tag">Local Music Store</span>
             <h3>Centre Music House</h3>
             <p>Restarted social media presence for a beloved local music store.</p>
-            <div class="card-actions"><a href="./portfolio/centre-music-house.html" class="btn btn-ghost">What I did for them</a></div>
+            <div class="card-actions"><a href="./portfolio/centre-music-house.html" class="btn btn-ghost" data-track="What I did for them — Centre Music House">What I did for them</a></div>
           </article>
         </div>
       </div>
@@ -1565,11 +1565,13 @@
     // ---- Footer year ----
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ---- Page-load ping ----
-    // Fires once per load. No cookies, no storage, nothing read from the
-    // visitor. Wrapped and .catch()'d so a blocked, offline, or sleeping
-    // endpoint can never throw into the page. keepalive lets it finish if
-    // the visitor navigates away immediately.
+    // ---- Tracking: page load + button clicks ----
+    // No cookies, no storage, nothing read from the visitor. Every call is
+    // wrapped and .catch()'d so a blocked, offline, or sleeping endpoint can
+    // never throw into the page. keepalive lets a click's request finish even
+    // when it's the same click that navigates away (e.g. "Try it" opening a
+    // new tab still lets the ping land; same-tab links get a brief head start
+    // from keepalive before the page unloads).
     (function () {
       // Served from localhost (or a file:// preview) means this is local dev,
       // so talk to the local backend; anywhere else is the real site. Keeps
@@ -1592,18 +1594,57 @@
         }
       } catch (e) {}
 
-      try {
-        fetch(base + '/c', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+      function ping(extra) {
+        try {
+          var body = {
             path: location.pathname + location.search,
             referrer: document.referrer || ''
-          }),
-          keepalive: true,
-          mode: 'cors',
-          credentials: 'omit'
-        }).catch(function () {});
+          };
+          for (var k in extra) body[k] = extra[k];
+          fetch(base + '/c', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            keepalive: true,
+            mode: 'cors',
+            credentials: 'omit'
+          }).catch(function () {});
+        } catch (e) {}
+      }
+
+      ping(); // one page-load view per visit
+
+      // Buttons opt in with data-track="Label text" - the label is what
+      // shows up in the "Buttons clicked" panel, so it should read on its
+      // own (e.g. "Try it — Heirloom", not just "Try it").
+      //
+      // Every tracked link on the page opens in a new tab (target="_blank")
+      // except "What I did for them", which navigates this tab. keepalive is
+      // meant to let a fetch survive its own page unloading, but a same-tab
+      // navigation can still race it: the browser can cancel the request
+      // before the keepalive queue picks it up, especially on a fast local
+      // network. For any link without target="_blank", briefly hold the
+      // navigation open (60ms - imperceptible to a person, plenty for the
+      // request to leave) so the click reliably gets recorded.
+      try {
+        document.querySelectorAll('[data-track]').forEach(function (el) {
+          el.addEventListener('click', function (ev) {
+            var label = el.getAttribute('data-track');
+            // Only a plain left click actually navigates this tab. A
+            // modified click (Cmd/Ctrl/middle-click) already opens a new tab
+            // on its own and must not be touched - preventDefault here would
+            // silently break "open in new tab" for anyone used to doing that.
+            var willNavigateHere = el.tagName === 'A' && el.target !== '_blank' && el.href &&
+              ev.button === 0 && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey && !ev.altKey;
+            if (willNavigateHere) {
+              ev.preventDefault();
+              ping({ kind: 'click', label: label });
+              setTimeout(function () { location.href = el.href; }, 60);
+            } else {
+              ping({ kind: 'click', label: label });
+            }
+          });
+        });
       } catch (e) {}
     })();
   </script>
