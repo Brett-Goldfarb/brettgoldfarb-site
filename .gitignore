@@ -1,0 +1,5 @@
+# Local screenshot workflow (screenshot.mjs) - never part of the deployed site
+node_modules/
+temporary screenshots/
+
+.DS_Store
