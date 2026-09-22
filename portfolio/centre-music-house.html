@@ -1101,7 +1101,7 @@
           </div>
         </div>
       </div>
-      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb<a class="fb-dot" href="https://bjg-site-metrics.onrender.com/" rel="noopener nofollow" aria-hidden="true" tabindex="-1">.</a></p>
+      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb<a class="fb-dot" href="https://site-metrics.brett-goldfarb.workers.dev/" rel="noopener nofollow" aria-hidden="true" tabindex="-1">.</a></p>
     </div>
   </footer>
 
@@ -1189,7 +1189,9 @@
       // one file working in both places without editing URLs before a push.
       var local = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname)
                   || location.protocol === 'file:';
-      var base = local ? 'http://localhost:5055' : 'https://bjg-site-metrics.onrender.com';
+      // One place to change if the Workers subdomain differs. Local dev talks
+      // to `wrangler dev` on 8787; anywhere else uses the deployed Worker.
+      var base = local ? 'http://localhost:8787' : 'https://site-metrics.brett-goldfarb.workers.dev';
 
       // Point the footer mark at whichever backend is in play. On localhost
       // also flag the document so the mark gets a visible outline (see the
