@@ -3,25 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video Markup & Review</title>
+<title>Video Markup &amp; Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+:root {
+  --ink: #0e0d14;
+  --panel: #17151f;
+  --panel-raised: #201d2c;
+  --panel-floating: #262238;
+  --line: rgba(255,255,255,.08);
+  --line-strong: rgba(255,255,255,.14);
+  --text: #e7e4ee;
+  --text-dim: #93899e;
+  --violet: #8a6bff;
+  --violet-dim: #6b4fd6;
+  --violet-glow: rgba(138,107,255,.35);
+  --film-silver: #d8d5de;
+  --rec: #ff5470;
+  --font-display: 'Familjen Grotesk', sans-serif;
+  --font-ui: 'IBM Plex Mono', monospace;
+}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; overflow: hidden; }
-body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+body {
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(138,107,255,.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 100%, rgba(138,107,255,.06), transparent 55%),
+    var(--ink);
+  color: var(--text); font-family: var(--font-ui);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 2000; opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+#brand-mark {
+  display: flex; align-items: center; justify-content: center; margin-bottom: 28px; user-select: none;
+}
+#brand-mark .logo-img { width: 280px; max-width: 60vw; height: auto; display: block; }
+#brand-mark.hidden { display: none; }
 
 #drop-zone {
-  width: 80vw; max-width: 960px; height: 300px; border: 3px dashed #555;
-  border-radius: 12px; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; cursor: pointer; transition: border-color .2s;
+  width: 80vw; max-width: 960px; height: 300px;
+  border: 2px dashed var(--line-strong);
+  border-radius: 16px; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; cursor: pointer;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), transparent);
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
 }
-#drop-zone.over { border-color: #7c5cfc; }
-#drop-zone p { font-size: 1.1rem; color: #aaa; }
+#drop-zone:hover { border-color: rgba(138,107,255,.5); transform: translateY(-1px); }
+#drop-zone.over { border-color: var(--violet); box-shadow: 0 0 0 1px var(--violet-glow), 0 20px 60px -20px var(--violet-glow); }
+#drop-zone p { font-size: 1rem; color: var(--text-dim); letter-spacing: .01em; }
+#drop-zone p.hint { font-size: .78rem; color: #5c5468; margin-top: 10px; letter-spacing: .06em; text-transform: uppercase; }
 #drop-zone.hidden { display: none; }
+#drop-zone .drop-icon { width: 64px; height: auto; margin-bottom: 18px; opacity: .75; }
 
 #workspace { display: none; width: 100vw; height: 100vh; position: relative; }
 #video-container {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  background: #000; border-radius: 4px; overflow: hidden;
+  background: #000; border-radius: 6px; overflow: hidden;
+  border: 2px solid var(--line-strong);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,.7), 0 8px 30px -10px var(--violet-glow);
 }
 #video-container video { display: block; width: 100%; height: 100%; }
 #overlay {
@@ -31,51 +78,81 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 
 /* Floating toolbar */
 #floating-toolbar {
-  position: fixed; z-index: 1000; background: #1e1e32; border: 1px solid #444;
-  border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.5);
+  position: fixed; z-index: 1000; background: var(--panel-raised); border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 14px 34px -12px rgba(0,0,0,.65), 0 4px 14px -6px var(--violet-glow);
   user-select: none; overflow: hidden; display: none;
+  flex-direction: column;
 }
+#floating-toolbar.sizeable { display: flex; }
 #toolbar-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 6px 10px; cursor: grab; background: #2a2a44;
-  border-bottom: 1px solid #444; font-size: .8rem; color: #aaa;
-  min-height: 30px;
+  padding: 7px 10px; cursor: grab; background: var(--panel-floating);
+  border-bottom: 1px solid var(--line); font-size: .72rem; color: var(--text-dim);
+  min-height: 32px; letter-spacing: .07em; text-transform: uppercase;
+  flex-shrink: 0;
 }
 #toolbar-header:active { cursor: grabbing; }
 #toolbar-header .collapse-btn {
-  background: none; border: none; color: #aaa; font-size: 1rem; cursor: pointer;
-  padding: 0 4px; line-height: 1;
+  background: none; border: none; color: var(--text-dim); font-size: 1rem; cursor: pointer;
+  padding: 2px 6px; line-height: 1; border-radius: 5px;
+  transition: color .15s ease, background-color .15s ease;
 }
-#toolbar-header .collapse-btn:hover { color: #fff; }
-#toolbar-header .header-label { display: flex; align-items: center; gap: 6px; }
+#toolbar-header .collapse-btn:hover { color: var(--text); background: rgba(255,255,255,.06); }
+#toolbar-header .collapse-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 1px; }
+#toolbar-header .header-label { display: flex; align-items: center; gap: 7px; }
 #mini-tool-icon {
-  display: none; font-size: .75rem; background: #7c5cfc; color: #fff;
-  padding: 2px 8px; border-radius: 4px; pointer-events: none;
+  display: none; align-items: center; font-size: .7rem; background: var(--violet); color: #fff;
+  padding: 3px 5px; border-radius: 5px; pointer-events: none;
 }
+#mini-tool-icon svg { width: 13px; height: 13px; }
 #toolbar-body {
-  padding: 8px; overflow: auto;
+  padding: 9px; overflow: hidden; flex: 1 1 auto; min-height: 0;
 }
 #toolbar-body.collapsed { display: none; }
 
-#toolbar-body .tool-items { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+/* .toolbar-scale is transform:scale()'d by JS to zoom the whole tool block
+   uniformly when the toolbar is resized bigger, so growing the toolbar
+   grows every button/icon/label together instead of leaving blank space.
+   The toolbar can never be resized below zoom 1 (its natural, unscaled
+   size), so every tool is always visible and nothing ever needs to scroll.
+   The tool row wraps at a fixed, narrow width so the toolbar's natural
+   footprint is small enough to dock in a side gutter next to the video
+   instead of needing the video's full width to lay out in one line. */
+.toolbar-scale { transform-origin: top left; width: 216px; }
+#toolbar-body .tool-items { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; width: 216px; }
+.size-control { display: inline-flex; align-items: center; gap: 5px; flex-wrap: nowrap; flex-shrink: 0; }
+.size-control .size-label {
+  font-size: .7rem; color: var(--text-dim); letter-spacing: .05em; text-transform: uppercase; white-space: nowrap;
+}
 #toolbar-body button {
-  background: #2a2a40; border: 1px solid #444; color: #ddd; padding: 5px 10px;
-  border-radius: 5px; cursor: pointer; font-size: .78rem; white-space: nowrap;
+  background: var(--panel); border: 1px solid var(--line-strong); color: var(--text); padding: 6px 9px;
+  border-radius: 7px; cursor: pointer; font-size: .74rem; white-space: nowrap; font-family: var(--font-ui);
+  display: inline-flex; align-items: center; gap: 5px;
+  transition: background-color .15s ease, border-color .15s ease, transform .1s ease;
 }
-#toolbar-body button:hover { background: #3a3a55; }
-#toolbar-body button.active { background: #7c5cfc; border-color: #7c5cfc; color: #fff; }
+#toolbar-body button svg { width: 14px; height: 14px; flex-shrink: 0; }
+#toolbar-body button:hover { background: var(--panel-floating); border-color: rgba(138,107,255,.4); }
+#toolbar-body button:active { transform: translateY(1px) scale(.97); }
+#toolbar-body button:focus-visible { outline: 2px solid var(--violet); outline-offset: 1px; }
+#toolbar-body button.active {
+  background: var(--violet); border-color: var(--violet); color: #fff;
+  box-shadow: 0 3px 12px -3px var(--violet-glow);
+}
 .color-btn {
-  width: 24px; height: 24px; border-radius: 50%; border: 2px solid #555;
-  cursor: pointer; padding: 0; flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line-strong);
+  cursor: pointer; padding: 0; flex-shrink: 0; transition: border-color .15s ease, transform .1s ease;
 }
-.color-btn.active { border-color: #fff; box-shadow: 0 0 4px #fff; }
-#custom-color { width: 28px; height: 24px; border: none; background: none; cursor: pointer; }
-#thickness { width: 70px; accent-color: #7c5cfc; }
+.color-btn:hover { transform: scale(1.1); }
+.color-btn:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+.color-btn.active { border-color: #fff; box-shadow: 0 0 0 2px var(--panel-raised), 0 0 0 4px #fff; }
+#custom-color { width: 26px; height: 22px; border: none; background: none; cursor: pointer; border-radius: 5px; }
+#thickness { width: 70px; accent-color: var(--violet); }
 
 /* Size preview dot */
 #size-preview {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; flex-shrink: 0;
+  width: 28px; height: 28px; flex-shrink: 0;
 }
 #size-preview .dot {
   border-radius: 50%; background: currentColor;
@@ -84,57 +161,87 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
 /* Resize handle */
 #resize-handle {
   position: absolute; bottom: 0; right: 0; width: 16px; height: 16px;
-  cursor: nwse-resize; opacity: .4;
+  cursor: nwse-resize; opacity: .4; transition: opacity .15s ease;
 }
 #resize-handle:hover { opacity: .8; }
 #resize-handle::after {
   content: ''; position: absolute; bottom: 3px; right: 3px;
   width: 8px; height: 8px;
-  border-right: 2px solid #aaa; border-bottom: 2px solid #aaa;
+  border-right: 2px solid var(--text-dim); border-bottom: 2px solid var(--text-dim);
 }
 
 /* Playback controls - bottom bar */
 #controls {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
-  display: none; align-items: center; gap: 8px; padding: 8px 16px;
-  background: rgba(26,26,46,.92); backdrop-filter: blur(8px);
-  border-top: 1px solid #333;
+  display: none; align-items: center; gap: 10px; padding: 10px 18px;
+  background: rgba(23,21,31,.88); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -12px 30px -14px rgba(0,0,0,.6);
 }
 #controls button {
-  background: #2a2a40; border: 1px solid #444; color: #ddd; padding: 6px 12px;
-  border-radius: 6px; cursor: pointer; font-size: .82rem; white-space: nowrap;
+  background: var(--panel-raised); border: 1px solid var(--line-strong); color: var(--text); padding: 7px 12px;
+  border-radius: 8px; cursor: pointer; font-size: .78rem; white-space: nowrap; font-family: var(--font-ui);
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background-color .15s ease, border-color .15s ease, transform .1s ease;
 }
-#controls button:hover { background: #3a3a55; }
-#scrub { flex: 1; min-width: 80px; accent-color: #7c5cfc; }
-#timestamp { font-size: .82rem; min-width: 90px; text-align: center; }
-#volume-slider { width: 70px; accent-color: #7c5cfc; }
+#controls button svg { width: 14px; height: 14px; }
+#controls button:hover { background: var(--panel-floating); border-color: rgba(138,107,255,.4); }
+#controls button:active { transform: scale(.96); }
+#controls button:focus-visible { outline: 2px solid var(--violet); outline-offset: 1px; }
+#scrub { flex: 1; min-width: 80px; accent-color: var(--violet); }
+#timestamp {
+  font-size: .78rem; min-width: 100px; text-align: center; color: var(--text-dim);
+  font-variant-numeric: tabular-nums; letter-spacing: .02em;
+}
+#volume-slider { width: 70px; accent-color: var(--violet); }
 
 /* Recording controls */
 #rec-controls {
-  position: fixed; top: 12px; right: 12px; z-index: 1001;
-  display: none; align-items: center; gap: 8px;
+  position: fixed; top: 16px; right: 16px; z-index: 1001;
+  display: none; align-items: center; gap: 10px;
 }
 #rec-controls button {
-  padding: 8px 16px; border-radius: 8px; border: none; font-size: .85rem;
-  cursor: pointer; font-weight: 600;
+  padding: 9px 16px; border-radius: 9px; border: 1px solid transparent; font-size: .78rem;
+  cursor: pointer; font-weight: 600; font-family: var(--font-ui); letter-spacing: .02em;
+  display: inline-flex; align-items: center; gap: 7px;
+  transition: filter .15s ease, transform .1s ease, box-shadow .15s ease;
 }
-#btn-start-rec { background: #e53935; color: #fff; }
-#btn-stop-rec { background: #ff9800; color: #fff; display: none; }
+#rec-controls button:active { transform: scale(.96); }
+#rec-controls button:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+#rec-controls button svg { width: 13px; height: 13px; }
+#btn-start-rec {
+  background: linear-gradient(180deg, #ff6b83, var(--rec)); color: #fff;
+  box-shadow: 0 6px 18px -6px rgba(255,84,112,.55);
+}
+#btn-start-rec:hover { filter: brightness(1.08); }
+#btn-stop-rec {
+  background: linear-gradient(180deg, #ffb454, #f6931e); color: #201200; display: none;
+  box-shadow: 0 6px 18px -6px rgba(246,147,30,.5);
+}
+#btn-stop-rec:hover { filter: brightness(1.06); }
 #rec-indicator {
-  display: none; align-items: center; gap: 6px; font-size: .85rem; color: #e53935;
+  display: none; align-items: center; gap: 7px; font-size: .78rem; color: var(--rec);
+  background: rgba(255,84,112,.1); border: 1px solid rgba(255,84,112,.3);
+  padding: 7px 12px; border-radius: 9px; letter-spacing: .04em;
 }
 #rec-indicator .dot {
-  width: 10px; height: 10px; background: #e53935; border-radius: 50%;
-  animation: blink 1s infinite;
+  width: 8px; height: 8px; background: var(--rec); border-radius: 50%;
+  animation: blink 1.1s ease-in-out infinite;
+  box-shadow: 0 0 8px var(--rec);
 }
-@keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:.2; } }
+@keyframes blink { 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
 </style>
 </head>
 <body>
 
+<div id="brand-mark">
+  <img class="logo-img" src="video-markup-logo.png" alt="Video Markup">
+</div>
+
 <div id="drop-zone">
+  <img class="drop-icon" src="video-markup-icon.png" alt="">
   <p>Drop a video file here or click to browse</p>
-  <p style="font-size:.85rem; color:#666; margin-top:8px;">MP4, MOV, WebM</p>
+  <p class="hint">MP4 &middot; MOV &middot; WebM</p>
   <input type="file" id="file-input" accept="video/*" style="display:none;">
 </div>
 
@@ -154,47 +261,51 @@ body { background: #1a1a2e; color: #e0e0e0; font-family: -apple-system, BlinkMac
     <button class="collapse-btn" id="btn-collapse" title="Collapse">−</button>
   </div>
   <div id="toolbar-body">
+   <div class="toolbar-scale">
     <div class="tool-items">
-      <button class="tool-btn active" data-tool="pen">✏️ Pen</button>
-      <button class="tool-btn" data-tool="line">— Line</button>
-      <button class="tool-btn" data-tool="arrow">→ Arrow</button>
-      <button class="tool-btn" data-tool="rect">▭ Rect</button>
-      <button class="tool-btn" data-tool="ellipse">⬭ Ellipse</button>
-      <button class="tool-btn" data-tool="eraser">🧹 Eraser</button>
+      <button class="tool-btn active" data-tool="pen" title="Pen"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20l3-1 10-10-2-2L5 17l-1 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15 6l2-2 2 2-2 2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Pen</button>
+      <button class="tool-btn" data-tool="line" title="Line"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Line</button>
+      <button class="tool-btn" data-tool="arrow" title="Arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H10M19 5V14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Arrow</button>
+      <button class="tool-btn" data-tool="rect" title="Rectangle"><svg viewBox="0 0 24 24" fill="none"><rect x="4.5" y="6" width="15" height="12" rx="1.5" stroke="currentColor" stroke-width="2.2"/></svg>Rect</button>
+      <button class="tool-btn" data-tool="ellipse" title="Ellipse"><svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="12" rx="7.5" ry="5.5" stroke="currentColor" stroke-width="2.2"/></svg>Ellipse</button>
+      <button class="tool-btn" data-tool="eraser" title="Eraser"><svg viewBox="0 0 24 24" fill="none"><path d="M18 13l-7 7H7l-4-4a2 2 0 010-2.8l9-9a2 2 0 012.8 0l3.2 3.2a2 2 0 010 2.8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 20h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Eraser</button>
       <span style="width:4px;"></span>
-      <button class="color-btn active" data-color="#e53935" style="background:#e53935;"></button>
-      <button class="color-btn" data-color="#ff9800" style="background:#ff9800;"></button>
-      <button class="color-btn" data-color="#fdd835" style="background:#fdd835;"></button>
-      <button class="color-btn" data-color="#43a047" style="background:#43a047;"></button>
-      <button class="color-btn" data-color="#1e88e5" style="background:#1e88e5;"></button>
-      <button class="color-btn" data-color="#8e24aa" style="background:#8e24aa;"></button>
-      <button class="color-btn" data-color="#ffffff" style="background:#ffffff;"></button>
-      <button class="color-btn" data-color="#000000" style="background:#000000;"></button>
-      <input type="color" id="custom-color" value="#e53935" title="Custom color">
+      <button class="color-btn active" data-color="#ff5470" style="background:#ff5470;" title="Red"></button>
+      <button class="color-btn" data-color="#ffb454" style="background:#ffb454;" title="Amber"></button>
+      <button class="color-btn" data-color="#f4e04d" style="background:#f4e04d;" title="Yellow"></button>
+      <button class="color-btn" data-color="#4dd9a0" style="background:#4dd9a0;" title="Green"></button>
+      <button class="color-btn" data-color="#4d9dff" style="background:#4d9dff;" title="Blue"></button>
+      <button class="color-btn" data-color="#8a6bff" style="background:#8a6bff;" title="Violet"></button>
+      <button class="color-btn" data-color="#ffffff" style="background:#ffffff;" title="White"></button>
+      <button class="color-btn" data-color="#0e0d14" style="background:#0e0d14;" title="Black"></button>
+      <input type="color" id="custom-color" value="#ff5470" title="Custom color">
       <span style="width:4px;"></span>
-      <span style="font-size:.75rem; color:#888;">Size</span>
-      <input type="range" id="thickness" min="1" max="20" value="4">
-      <span id="size-preview"><span class="dot"></span></span>
+      <span class="size-control">
+        <span class="size-label">Size</span>
+        <input type="range" id="thickness" min="1" max="20" value="4">
+        <span id="size-preview"><span class="dot"></span></span>
+      </span>
       <span style="width:4px;"></span>
-      <button id="btn-undo">↩ Undo</button>
-      <button id="btn-clear">🗑 Clear</button>
+      <button id="btn-undo" title="Undo"><svg viewBox="0 0 24 24" fill="none"><path d="M7 10H16a5 5 0 010 10h-1M7 10l4-4M7 10l4 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Undo</button>
+      <button id="btn-clear" title="Clear all"><svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0l-1 13a2 2 0 01-2 2H9a2 2 0 01-2-2L6 7h12z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Clear</button>
     </div>
+   </div>
   </div>
   <div id="resize-handle"></div>
 </div>
 
 <div id="controls">
-  <button id="btn-play">▶ Play</button>
+  <button id="btn-play" title="Play"><svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span id="play-label">Play</span></button>
   <input type="range" id="scrub" min="0" max="1000" value="0">
   <span id="timestamp">0:00 / 0:00</span>
-  <button id="btn-mute">🔊</button>
+  <button id="btn-mute" title="Mute"><svg id="mute-icon" viewBox="0 0 24 24" fill="none"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8a4.5 4.5 0 010 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
   <input type="range" id="volume-slider" min="0" max="100" value="80">
 </div>
 
 <div id="rec-controls">
-  <button id="btn-start-rec">⏺ Record</button>
-  <button id="btn-stop-rec">⏹ Stop & Save</button>
-  <div id="rec-indicator"><span class="dot"></span> REC</div>
+  <button id="btn-start-rec"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg>Record</button>
+  <button id="btn-stop-rec"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop &amp; save</button>
+  <div id="rec-indicator"><span class="dot"></span> Recording</div>
 </div>
 
 <script>
@@ -208,6 +319,7 @@ const ctx = canvas.getContext('2d');
 const floatingToolbar = document.getElementById('floating-toolbar');
 const controls = document.getElementById('controls');
 const recControls = document.getElementById('rec-controls');
+const brandMark = document.getElementById('brand-mark');
 
 // --- File loading ---
 dropZone.addEventListener('click', () => fileInput.click());
@@ -221,11 +333,13 @@ function loadVideo(file) {
   video.load();
   video.addEventListener('loadedmetadata', () => {
     dropZone.classList.add('hidden');
+    brandMark.classList.add('hidden');
     workspace.style.display = 'block';
     controls.style.display = 'flex';
     recControls.style.display = 'flex';
-    floatingToolbar.style.display = 'block';
+    floatingToolbar.classList.add('sizeable');
     sizeVideoToViewport();
+    placeToolbarDefault();
   }, { once: true });
 }
 
@@ -242,7 +356,13 @@ function sizeVideoToViewport() {
   canvas.height = h;
   redraw();
 }
-window.addEventListener('resize', () => { if (workspace.style.display === 'block') sizeVideoToViewport(); });
+window.addEventListener('resize', () => {
+  if (workspace.style.display === 'block') {
+    sizeVideoToViewport();
+    const r = floatingToolbar.getBoundingClientRect();
+    moveToolbarTo(r.left, r.top);
+  }
+});
 
 // --- Playback controls ---
 const btnPlay = document.getElementById('btn-play');
@@ -251,10 +371,18 @@ const timestamp = document.getElementById('timestamp');
 const btnMute = document.getElementById('btn-mute');
 const volumeSlider = document.getElementById('volume-slider');
 
+const playIcon = document.getElementById('play-icon');
+const playLabel = document.getElementById('play-label');
+const muteIcon = document.getElementById('mute-icon');
+const ICON_PLAY = '<path d="M8 5v14l11-7z"/>';
+const ICON_PAUSE = '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';
+const ICON_VOLUME = '<path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8a4.5 4.5 0 010 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+const ICON_MUTED = '<path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M15.5 9.5l5 5m0-5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+
 video.volume = 0.8;
 btnPlay.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
-video.addEventListener('play', () => btnPlay.textContent = '⏸ Pause');
-video.addEventListener('pause', () => btnPlay.textContent = '▶ Play');
+video.addEventListener('play', () => { playIcon.innerHTML = ICON_PAUSE; playLabel.textContent = 'Pause'; });
+video.addEventListener('pause', () => { playIcon.innerHTML = ICON_PLAY; playLabel.textContent = 'Play'; });
 video.addEventListener('timeupdate', () => {
   if (!scrubbing) scrub.value = (video.currentTime / video.duration) * 1000 || 0;
   timestamp.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
@@ -263,81 +391,259 @@ let scrubbing = false;
 scrub.addEventListener('pointerdown', () => scrubbing = true);
 scrub.addEventListener('pointerup', () => { scrubbing = false; video.currentTime = (scrub.value / 1000) * video.duration; });
 scrub.addEventListener('input', () => { if (scrubbing) video.currentTime = (scrub.value / 1000) * video.duration; });
-btnMute.addEventListener('click', () => { video.muted = !video.muted; btnMute.textContent = video.muted ? '🔇' : '🔊'; });
+btnMute.addEventListener('click', () => {
+  video.muted = !video.muted;
+  muteIcon.innerHTML = video.muted ? ICON_MUTED : ICON_VOLUME;
+  btnMute.title = video.muted ? 'Unmute' : 'Mute';
+});
 volumeSlider.addEventListener('input', () => { video.volume = volumeSlider.value / 100; });
 
 function fmt(s) { if (!s || isNaN(s)) return '0:00'; const m = Math.floor(s/60), sec = Math.floor(s%60); return m + ':' + String(sec).padStart(2,'0'); }
 
-// --- Draggable toolbar ---
-floatingToolbar.style.top = '12px';
-floatingToolbar.style.left = '12px';
+// --- Draggable toolbar (free-floating, jumps clear of the video) ---
+// The toolbar can be dragged anywhere on screen. It's only ever forbidden
+// from overlapping the video itself, and only ever resolves that by moving
+// left/right of the video (never up/down) - if a drag would put it over the
+// video, it hops to whichever side (left or right) is nearer, then gets
+// clamped back onto the screen so it can never end up off-viewport.
+const GUTTER_MARGIN = 12;
 
-let dragging = false, dragOffX = 0, dragOffY = 0;
+function usableViewportBottom() {
+  return controls.style.display !== 'none' ? controls.getBoundingClientRect().top : window.innerHeight;
+}
+
+// If the rect at (x,y,w,h) overlaps the video, push it out horizontally to
+// whichever side (left or right of the video) is the smaller move. Used only
+// to decide a direction; the caller re-clamps the result to the viewport,
+// since there may not be room for the full toolbar width on either side.
+function pushOutOfVideo(x, y, w, h) {
+  const vidR = videoContainer.getBoundingClientRect();
+  const overlapsH = x < vidR.right && (x + w) > vidR.left;
+  const overlapsV = y < vidR.bottom && (y + h) > vidR.top;
+  if (!(overlapsH && overlapsV)) return { x, y };
+
+  const centerX = x + w / 2;
+  const vidCenterX = (vidR.left + vidR.right) / 2;
+  if (centerX < vidCenterX) {
+    x = vidR.left - GUTTER_MARGIN - w;
+  } else {
+    x = vidR.right + GUTTER_MARGIN;
+  }
+  return { x, y };
+}
+
+// Push out of the video first, then clamp to the viewport - so a toolbar
+// too wide to fit beside the video pins to the nearest screen edge instead
+// of flying off-screen.
+function resolveToolbarPos(x, y) {
+  const w = floatingToolbar.offsetWidth;
+  const h = floatingToolbar.offsetHeight;
+  const pushed = pushOutOfVideo(x, y, w, h);
+  x = pushed.x; y = pushed.y;
+  const maxX = Math.max(GUTTER_MARGIN, window.innerWidth - w - GUTTER_MARGIN);
+  const maxY = Math.max(GUTTER_MARGIN, usableViewportBottom() - h - GUTTER_MARGIN);
+  x = Math.min(Math.max(x, GUTTER_MARGIN), maxX);
+  y = Math.min(Math.max(y, GUTTER_MARGIN), maxY);
+  return { x, y };
+}
+
+function moveToolbarTo(x, y) {
+  const pos = resolveToolbarPos(x, y);
+  floatingToolbar.style.left = pos.x + 'px';
+  floatingToolbar.style.top = pos.y + 'px';
+}
+
+function placeToolbarDefault() {
+  applyToolbarZoom(1);
+  moveToolbarTo(GUTTER_MARGIN, GUTTER_MARGIN);
+}
+
+let dragging = false, dragOffX = 0, dragOffY = 0, dragPointerId = null;
 const header = document.getElementById('toolbar-header');
 header.addEventListener('pointerdown', e => {
   if (e.target.closest('.collapse-btn')) return;
   dragging = true;
+  dragPointerId = e.pointerId;
   const r = floatingToolbar.getBoundingClientRect();
   dragOffX = e.clientX - r.left;
   dragOffY = e.clientY - r.top;
   header.setPointerCapture(e.pointerId);
 });
-header.addEventListener('pointermove', e => {
+function stopDragging() {
   if (!dragging) return;
-  floatingToolbar.style.left = (e.clientX - dragOffX) + 'px';
-  floatingToolbar.style.top = (e.clientY - dragOffY) + 'px';
+  dragging = false;
+  if (dragPointerId !== null && header.hasPointerCapture(dragPointerId)) {
+    header.releasePointerCapture(dragPointerId);
+  }
+  dragPointerId = null;
+}
+window.addEventListener('pointermove', e => {
+  if (!dragging || e.pointerId !== dragPointerId) return;
+  if (e.buttons === 0) { stopDragging(); return; }
+  moveToolbarTo(e.clientX - dragOffX, e.clientY - dragOffY);
 });
-header.addEventListener('pointerup', () => dragging = false);
+window.addEventListener('pointerup', e => { if (e.pointerId === dragPointerId) stopDragging(); });
+window.addEventListener('pointercancel', e => { if (e.pointerId === dragPointerId) stopDragging(); });
 
-// --- Resizable toolbar ---
+// --- Resizable toolbar (uniform zoom; never below "all tools visible") ---
+// Dragging the corner zooms the whole tool row up together, so growing the
+// toolbar grows every button/icon/label in proportion instead of adding
+// blank space. It can never zoom below 1 (its natural size with every tool
+// laid out in a single row), so nothing is ever hidden or needs to scroll.
 const resizeHandle = document.getElementById('resize-handle');
-let resizing = false, resizeStartX, resizeStartY, resizeStartW, resizeStartH;
+const toolbarScale = document.querySelector('.toolbar-scale');
+const toolbarHeader = document.getElementById('toolbar-header');
+const TOOLBAR_MIN_ZOOM = 1;
+const TOOLBAR_MAX_ZOOM = 3;
+let toolbarZoom = 1;
+
+// Size of the tool row at zoom 1, regardless of the transform currently applied.
+function toolbarNaturalSize() {
+  const prev = toolbarScale.style.transform;
+  toolbarScale.style.transform = 'none';
+  const w = toolbarScale.offsetWidth;
+  const h = toolbarScale.offsetHeight;
+  toolbarScale.style.transform = prev;
+  return { w, h };
+}
+
+// Extra chrome (in px) around the scaled tool row that the toolbar's outer
+// box must add on top of it: the body's own padding plus the floating
+// toolbar's border (it's border-box, so the border eats into the width/height
+// we set unless it's added back here). Read from actual computed styles so
+// this can never drift out of sync with the CSS.
+function toolbarChrome() {
+  const bodyStyle = getComputedStyle(toolbarBody);
+  const tbStyle = getComputedStyle(floatingToolbar);
+  const padX = parseFloat(bodyStyle.paddingLeft) + parseFloat(bodyStyle.paddingRight);
+  const padY = parseFloat(bodyStyle.paddingTop) + parseFloat(bodyStyle.paddingBottom);
+  const borderX = parseFloat(tbStyle.borderLeftWidth) + parseFloat(tbStyle.borderRightWidth);
+  const borderY = parseFloat(tbStyle.borderTopWidth) + parseFloat(tbStyle.borderBottomWidth);
+  return { x: padX + borderX, y: padY + borderY };
+}
+
+// The largest zoom the toolbar could grow to, from its current top-left
+// corner, without its right/bottom edge crossing into the video or off the
+// viewport. Resizing is always anchored at top-left (only the handle at
+// bottom-right moves), so growing only ever pushes the right/bottom edges
+// outward - this is what must stay clear.
+function maxZoomAtCurrentPosition() {
+  const { w: natW, h: natH } = toolbarNaturalSize();
+  const headerH = toolbarHeader.getBoundingClientRect().height;
+  const chrome = toolbarChrome();
+  const left = floatingToolbar.getBoundingClientRect().left;
+  const top = floatingToolbar.getBoundingClientRect().top;
+  const vidR = videoContainer.getBoundingClientRect();
+
+  const viewportLimitW = (window.innerWidth - GUTTER_MARGIN - left - chrome.x) / natW;
+  const viewportLimitH = (usableViewportBottom() - GUTTER_MARGIN - top - chrome.y - headerH) / natH;
+
+  // Only the side of the video the toolbar would grow toward matters. If the
+  // toolbar's left edge is at or past the video's right edge, it's docked on
+  // the right and must stop before its own right edge would need to cross
+  // back left of the video's right edge (i.e. it can't grow leftward into it,
+  // but growing only extends rightward here so the video isn't a constraint).
+  // If it's docked left of the video, its growing right edge must stop at the
+  // video's left edge.
+  let videoLimitW = Infinity;
+  const dockedLeftOfVideo = (left + natW) <= vidR.left + 1;
+  if (dockedLeftOfVideo) {
+    videoLimitW = (vidR.left - GUTTER_MARGIN - left - chrome.x) / natW;
+  }
+
+  const maxW = Math.max(TOOLBAR_MIN_ZOOM, Math.min(viewportLimitW, videoLimitW));
+  const maxH = Math.max(TOOLBAR_MIN_ZOOM, viewportLimitH);
+  return Math.min(TOOLBAR_MAX_ZOOM, maxW, maxH);
+}
+
+function applyToolbarZoom(zoom) {
+  const cap = maxZoomAtCurrentPosition();
+  toolbarZoom = Math.min(cap, Math.max(TOOLBAR_MIN_ZOOM, zoom));
+  toolbarScale.style.transform = `scale(${toolbarZoom})`;
+  const { w, h } = toolbarNaturalSize();
+  const headerH = toolbarHeader.getBoundingClientRect().height;
+  const chrome = toolbarChrome();
+  floatingToolbar.style.width = (w * toolbarZoom + chrome.x) + 'px';
+  floatingToolbar.style.height = (h * toolbarZoom + chrome.y + headerH) + 'px';
+}
+
+// Zoom tracks the straight-line distance from the toolbar's top-left corner
+// to the pointer, relative to that same distance at the toolbar's natural
+// (zoom 1) size. Using one diagonal distance - instead of averaging two
+// separate width-relative and height-relative ratios - keeps the drag
+// proportional even though the toolbar is much wider than it is tall.
+// Listens on window (not just the handle) for move/up, and double-checks
+// e.buttons on every move, so a pointerup that happens to land outside the
+// handle - or gets missed entirely - can never leave resize "stuck on"
+// and following the cursor.
+let resizing = false, resizeOriginX, resizeOriginY, resizeStartDist, resizeStartZoom, resizePointerId = null;
 resizeHandle.addEventListener('pointerdown', e => {
   e.stopPropagation();
   resizing = true;
+  resizePointerId = e.pointerId;
   const r = floatingToolbar.getBoundingClientRect();
-  resizeStartX = e.clientX; resizeStartY = e.clientY;
-  resizeStartW = r.width; resizeStartH = r.height;
+  resizeOriginX = r.left;
+  resizeOriginY = r.top;
+  resizeStartDist = Math.hypot(e.clientX - resizeOriginX, e.clientY - resizeOriginY);
+  resizeStartZoom = toolbarZoom;
   resizeHandle.setPointerCapture(e.pointerId);
 });
-resizeHandle.addEventListener('pointermove', e => {
+function stopResizing() {
   if (!resizing) return;
-  const newW = Math.max(120, resizeStartW + (e.clientX - resizeStartX));
-  const newH = Math.max(60, resizeStartH + (e.clientY - resizeStartY));
-  floatingToolbar.style.width = newW + 'px';
-  floatingToolbar.style.height = newH + 'px';
+  resizing = false;
+  if (resizePointerId !== null && resizeHandle.hasPointerCapture(resizePointerId)) {
+    resizeHandle.releasePointerCapture(resizePointerId);
+  }
+  resizePointerId = null;
+}
+window.addEventListener('pointermove', e => {
+  if (!resizing || e.pointerId !== resizePointerId) return;
+  if (e.buttons === 0) { stopResizing(); return; }
+  if (resizeStartDist === 0) return;
+  const dist = Math.hypot(e.clientX - resizeOriginX, e.clientY - resizeOriginY);
+  applyToolbarZoom(resizeStartZoom * (dist / resizeStartDist));
+  const r = floatingToolbar.getBoundingClientRect();
+  moveToolbarTo(r.left, r.top);
 });
-resizeHandle.addEventListener('pointerup', () => resizing = false);
+window.addEventListener('pointerup', e => { if (e.pointerId === resizePointerId) stopResizing(); });
+window.addEventListener('pointercancel', e => { if (e.pointerId === resizePointerId) stopResizing(); });
 
 // --- Collapse / expand ---
 const toolbarBody = document.getElementById('toolbar-body');
 const btnCollapse = document.getElementById('btn-collapse');
 const miniToolIcon = document.getElementById('mini-tool-icon');
-const toolLabels = { pen: '✏️ Pen', line: '— Line', arrow: '→ Arrow', rect: '▭ Rect', ellipse: '⬭ Ellipse', eraser: '🧹 Eraser' };
 
 function updateMiniIcon() {
-  miniToolIcon.textContent = toolLabels[currentTool] || currentTool;
+  const activeBtn = document.querySelector(`.tool-btn[data-tool="${currentTool}"] svg`);
+  miniToolIcon.innerHTML = activeBtn ? activeBtn.outerHTML : '';
 }
 
-btnCollapse.addEventListener('click', () => {
-  const collapsed = toolbarBody.classList.toggle('collapsed');
+function setToolbarCollapsed(collapsed) {
+  toolbarBody.classList.toggle('collapsed', collapsed);
   btnCollapse.textContent = collapsed ? '+' : '−';
   resizeHandle.style.display = collapsed ? 'none' : 'block';
   if (collapsed) {
     floatingToolbar.style.width = 'auto';
     floatingToolbar.style.height = 'auto';
     header.style.borderBottom = 'none';
-    miniToolIcon.style.display = 'inline-block';
+    miniToolIcon.style.display = 'inline-flex';
     updateMiniIcon();
   } else {
-    header.style.borderBottom = '1px solid #444';
+    header.style.borderBottom = '1px solid var(--line)';
     miniToolIcon.style.display = 'none';
+    applyToolbarZoom(toolbarZoom);
   }
+  const r = floatingToolbar.getBoundingClientRect();
+  moveToolbarTo(r.left, r.top);
+}
+
+btnCollapse.addEventListener('click', () => {
+  setToolbarCollapsed(!toolbarBody.classList.contains('collapsed'));
 });
 
 // --- Drawing state ---
 let currentTool = 'pen';
-let currentColor = '#e53935';
+let currentColor = '#ff5470';
 let lineWidth = 4;
 let strokes = [];
 let drawingActive = false;
@@ -351,8 +657,8 @@ function updateSizePreview() {
   const px = Math.max(2, Math.min(sz, 26));
   sizePreviewDot.style.width = px + 'px';
   sizePreviewDot.style.height = px + 'px';
-  sizePreviewDot.style.color = currentTool === 'eraser' ? '#888' : currentColor;
-  sizePreviewDot.style.background = currentTool === 'eraser' ? '#888' : currentColor;
+  sizePreviewDot.style.color = currentTool === 'eraser' ? '#5c5468' : currentColor;
+  sizePreviewDot.style.background = currentTool === 'eraser' ? '#5c5468' : currentColor;
 }
 updateSizePreview();
 
@@ -379,8 +685,15 @@ document.getElementById('custom-color').addEventListener('input', e => {
 });
 
 thicknessSlider.addEventListener('input', e => { lineWidth = +e.target.value; updateSizePreview(); });
-document.getElementById('btn-undo').addEventListener('click', () => { strokes.pop(); redraw(); });
+function undoStroke() { strokes.pop(); redraw(); }
+document.getElementById('btn-undo').addEventListener('click', undoStroke);
 document.getElementById('btn-clear').addEventListener('click', () => { strokes = []; redraw(); });
+window.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') {
+    e.preventDefault();
+    undoStroke();
+  }
+});
 
 function getPos(e) {
   const r = canvas.getBoundingClientRect();
@@ -526,17 +839,32 @@ btnStartRec.addEventListener('click', async () => {
     ]);
 
     recordedChunks = [];
-    const mimeType = MediaRecorder.isTypeSupported('video/webm; codecs=vp9')
-      ? 'video/webm; codecs=vp9' : 'video/webm';
-    mediaRecorder = new MediaRecorder(combined, { mimeType });
+    // MediaRecorder can only output whatever container the browser actually
+    // supports encoding live - there's no way to force MP4 everywhere. Try
+    // MP4 variants first (Safari can record straight to MP4/H.264), then
+    // fall back to WebM (Chrome/Firefox) - the download's extension always
+    // matches whichever container was actually recorded, never guessed.
+    // Deliberately avc1, not avc3: avc3 tags the video as "parameter sets
+    // inline per-sample" (meant for adaptive streaming), which QuickTime
+    // Player can't decode even though it plays fine elsewhere - avc1 (SPS/PPS
+    // in the container's avcC box) is the broadly-compatible tagging.
+    const CONTAINER_CANDIDATES = [
+      { mimeType: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"', ext: 'mp4' },
+      { mimeType: 'video/mp4', ext: 'mp4' },
+      { mimeType: 'video/webm; codecs=vp9', ext: 'webm' },
+      { mimeType: 'video/webm', ext: 'webm' }
+    ];
+    const chosen = CONTAINER_CANDIDATES.find(c => MediaRecorder.isTypeSupported(c.mimeType))
+      || { mimeType: '', ext: 'webm' };
+    mediaRecorder = new MediaRecorder(combined, chosen.mimeType ? { mimeType: chosen.mimeType } : undefined);
     mediaRecorder.ondataavailable = e => { if (e.data.size) recordedChunks.push(e.data); };
     mediaRecorder.onstop = () => {
       recRunning = false;
       cancelAnimationFrame(recRAF);
-      const blob = new Blob(recordedChunks, { type: 'video/webm' });
+      const blob = new Blob(recordedChunks, { type: chosen.mimeType || 'video/webm' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'review-' + new Date().toISOString().slice(0,19).replace(/:/g,'-') + '.webm';
+      a.download = 'review-' + new Date().toISOString().slice(0,19).replace(/:/g,'-') + '.' + chosen.ext;
       a.click();
       cleanupRecording();
     };

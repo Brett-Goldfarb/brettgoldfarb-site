@@ -10,23 +10,26 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
   :root {
-    --paper: #F2ECDD;
+    --paper: #F2ECDA;
     --card: #FBF7EC;
     --floating: #FFFFFF;
     --ink: #2B2620;
     --ink-soft: #756B59;
     --ink-faint: #A89E8C;
-    --primary: #1F4B3F;
-    --primary-soft: #DCE7E0;
-    --primary-strong: #163A30;
-    --gold: #C8932B;
-    --gold-soft: #F3E6C9;
+    --primary: #2E5139;
+    --primary-soft: #DCE7DE;
+    --primary-strong: #203A28;
+    --gold: #BA861A;
+    --gold-soft: #F3E4C4;
     --gold-ink: #8A6418;
     --rust: #C1502E;
     --rust-soft: #F5DDD2;
     --rust-ink: #9A3D22;
     --border: #E4DCC8;
     --border-strong: #D6CBB2;
+    --logo-gradient: linear-gradient(180deg, #BA861A 0%, #8C7A28 45%, #2E5139 100%);
+    --logo-gradient-wide: linear-gradient(120deg, #BA861A 0%, #8C7A28 38%, #2E5139 85%);
+    --logo-gradient-wide-strong: linear-gradient(120deg, #A3760E 0%, #6E5F1F 38%, #203A28 85%);
 
     --space-1: 4px;
     --space-2: 8px;
@@ -45,7 +48,7 @@
     --shadow-sm: 0 1px 2px rgba(43,38,32,0.05), 0 2px 6px -2px rgba(43,38,32,0.08);
     --shadow-md: 0 2px 4px rgba(43,38,32,0.05), 0 10px 28px -10px rgba(43,38,32,0.16);
     --shadow-lg: 0 6px 16px rgba(43,38,32,0.08), 0 24px 56px -16px rgba(43,38,32,0.24);
-    --shadow-primary: 0 4px 14px -4px rgba(31,75,63,0.40);
+    --shadow-primary: 0 4px 14px -4px rgba(46,81,57,0.40);
     --shadow-rust: 0 4px 14px -4px rgba(193,80,46,0.40);
   }
 
@@ -54,8 +57,8 @@
   body {
     background: var(--paper);
     background-image:
-      radial-gradient(circle at 12% 8%, rgba(31,75,63,0.05), transparent 38%),
-      radial-gradient(circle at 92% 85%, rgba(200,147,43,0.06), transparent 42%);
+      radial-gradient(circle at 12% 8%, rgba(46,81,57,0.05), transparent 38%),
+      radial-gradient(circle at 92% 85%, rgba(186,134,26,0.06), transparent 42%);
     background-attachment: fixed;
     color: var(--ink);
     font-family: 'Spline Sans', sans-serif;
@@ -91,10 +94,20 @@
     font-size: 26px;
     letter-spacing: -0.01em;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-2);
   }
-  .brand .dot { color: var(--gold); }
+  .brand-mark {
+    display: block;
+    flex-shrink: 0;
+  }
+  .brand-word {
+    background: var(--logo-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--primary);
+  }
 
   .month-nav {
     display: flex;
@@ -153,7 +166,7 @@
   .tab:hover { background: var(--card); color: var(--ink); }
   .tab:active { transform: scale(0.97); }
   .tab:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-  .tab.active { background: var(--primary); color: var(--paper); box-shadow: var(--shadow-primary); }
+  .tab.active { background: var(--logo-gradient-wide); color: var(--paper); box-shadow: var(--shadow-primary); }
 
   .view { display: none; }
   .view.active { display: block; animation: fadeUp 0.36s ease both; }
@@ -325,8 +338,8 @@
   .btn:active { transform: scale(0.97); }
   .btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
-  .btn-primary { background: var(--primary); color: var(--paper); box-shadow: var(--shadow-primary); }
-  .btn-primary:hover { background: var(--primary-strong); transform: translateY(-1px); }
+  .btn-primary { background: var(--logo-gradient-wide); color: var(--paper); box-shadow: var(--shadow-primary); }
+  .btn-primary:hover { background: var(--logo-gradient-wide-strong); transform: translateY(-1px); }
 
   .btn-ghost { background: var(--floating); color: var(--ink); border: 1px solid var(--border-strong); box-shadow: var(--shadow-sm); }
   .btn-ghost:hover { transform: translateY(-1px); }
@@ -520,7 +533,21 @@
       <button class="btn btn-ghost btn-sm" id="resetDemoBtn" style="margin-left:auto; white-space:nowrap;">Reset demo</button>
     </div>
     <header class="app-header">
-      <div class="brand"><span>Ledger</span><span class="dot">.</span></div>
+      <div class="brand">
+        <svg class="brand-mark" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="brandMarkGradient" x1="13" y1="2" x2="13" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#BA861A"/>
+              <stop offset="50%" stop-color="#8C7A28"/>
+              <stop offset="100%" stop-color="#2E5139"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="15" width="5.5" height="9" rx="1.6" fill="url(#brandMarkGradient)"/>
+          <rect x="10.25" y="9" width="5.5" height="15" rx="1.6" fill="url(#brandMarkGradient)"/>
+          <rect x="18.5" y="2" width="5.5" height="22" rx="1.6" fill="url(#brandMarkGradient)"/>
+        </svg>
+        <span class="brand-word">Ledger</span>
+      </div>
       <div class="month-nav">
         <button class="icon-btn" id="prevMonth" aria-label="Previous month">&#8249;</button>
         <span class="month-label" id="monthLabel">—</span>
