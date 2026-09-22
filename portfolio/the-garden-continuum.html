@@ -814,6 +814,32 @@
     .link-list a .arrow { color: var(--text-soft); transition: transform 0.2s var(--ease); }
     .link-list a:hover .arrow { transform: translateX(4px); }
     .footer-bottom { margin-top: var(--s-4); color: var(--text-soft); font-size: 0.82rem; }
+    /* Reads as the period ending the copyright line. Low contrast, tiny, and
+       skipped by screen readers and tab order so it never announces itself. */
+    .fb-dot {
+      font-size: 0.5rem;
+      color: var(--text-soft);
+      opacity: 0.28;
+      text-decoration: none;
+      /* The glyph is ~3px wide, too small to hit by hand (and well under the
+         44px touch guidance). Padding + a negative margin grow the tap target
+         without moving the dot or adding any visible ink. */
+      padding: 14px 12px 14px 13px;
+      margin: -14px -12px -14px -11px;
+      transition: opacity 0.2s var(--ease);
+    }
+    .fb-dot:hover, .fb-dot:focus-visible { opacity: 0.6; }
+    /* Local dev only: the <html data-local> flag is set by the script below
+       when the page is served from localhost, so the mark is findable while
+       testing. On the live site the attribute is never set and this does
+       nothing, leaving the dot as inconspicuous as before. */
+    html[data-local] .fb-dot {
+      opacity: 0.5;
+      outline: 1px dashed var(--text-soft);
+      outline-offset: 1px;
+      border-radius: 3px;
+    }
+    html[data-local] .fb-dot:hover { opacity: 1; outline-style: solid; }
 
     /* ============================================================ SCROLL REVEAL ============================================================ */
     .reveal {
@@ -1097,7 +1123,7 @@
           </div>
         </div>
       </div>
-      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb</p>
+      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb<a class="fb-dot" href="https://bjg-site-metrics.onrender.com/" rel="noopener nofollow" aria-hidden="true" tabindex="-1">.</a></p>
     </div>
   </footer>
 
@@ -1173,6 +1199,46 @@
 
     // ---- Footer year ----
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---- Page-load ping ----
+    // Fires once per load. No cookies, no storage, nothing read from the
+    // visitor. Wrapped and .catch()'d so a blocked, offline, or sleeping
+    // endpoint can never throw into the page. keepalive lets it finish if
+    // the visitor navigates away immediately.
+    (function () {
+      // Served from localhost (or a file:// preview) means this is local dev,
+      // so talk to the local backend; anywhere else is the real site. Keeps
+      // one file working in both places without editing URLs before a push.
+      var local = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname)
+                  || location.protocol === 'file:';
+      var base = local ? 'http://localhost:5055' : 'https://bjg-site-metrics.onrender.com';
+
+      // Point the footer mark at whichever backend is in play. On localhost
+      // also flag the document so the mark gets a visible outline (see the
+      // html[data-local] rule); never set on the live site.
+      try {
+        var mark = document.querySelector('.fb-dot');
+        if (mark) mark.href = base + '/';
+        if (local) {
+          document.documentElement.setAttribute('data-local', '');
+          if (mark) mark.title = 'localhost only';
+        }
+      } catch (e) {}
+
+      try {
+        fetch(base + '/c', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            path: location.pathname + location.search,
+            referrer: document.referrer || ''
+          }),
+          keepalive: true,
+          mode: 'cors',
+          credentials: 'omit'
+        }).catch(function () {});
+      } catch (e) {}
+    })();
   </script>
 </body>
 </html>
