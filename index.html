@@ -1594,6 +1594,10 @@
         }
       } catch (e) {}
 
+      // Returns a promise that always resolves (never rejects) so a caller
+      // can `await` it to know the request left, without needing its own
+      // try/catch. Used by the same-tab click handler below to hold a
+      // navigation open just long enough for the ping to actually send.
       function ping(extra) {
         try {
           var body = {
@@ -1601,7 +1605,7 @@
             referrer: document.referrer || ''
           };
           for (var k in extra) body[k] = extra[k];
-          fetch(base + '/c', {
+          return fetch(base + '/c', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
@@ -1609,7 +1613,9 @@
             mode: 'cors',
             credentials: 'omit'
           }).catch(function () {});
-        } catch (e) {}
+        } catch (e) {
+          return Promise.resolve();
+        }
       }
 
       ping(); // one page-load view per visit
@@ -1621,11 +1627,11 @@
       // Every tracked link on the page opens in a new tab (target="_blank")
       // except "What I did for them", which navigates this tab. keepalive is
       // meant to let a fetch survive its own page unloading, but a same-tab
-      // navigation can still race it: the browser can cancel the request
-      // before the keepalive queue picks it up, especially on a fast local
-      // network. For any link without target="_blank", briefly hold the
-      // navigation open (60ms - imperceptible to a person, plenty for the
-      // request to leave) so the click reliably gets recorded.
+      // navigation can still race it ahead of the request actually leaving -
+      // a fixed short delay isn't reliable here since real network latency to
+      // the backend (measured ~290ms round trip) can exceed it. Instead the
+      // navigation actually waits on the ping promise, capped by a timeout so
+      // a slow or unreachable backend can never meaningfully delay the click.
       try {
         document.querySelectorAll('[data-track]').forEach(function (el) {
           el.addEventListener('click', function (ev) {
@@ -1638,8 +1644,11 @@
               ev.button === 0 && !ev.metaKey && !ev.ctrlKey && !ev.shiftKey && !ev.altKey;
             if (willNavigateHere) {
               ev.preventDefault();
-              ping({ kind: 'click', label: label });
-              setTimeout(function () { location.href = el.href; }, 60);
+              var href = el.href;
+              var go = function () { location.href = href; };
+              var pinged = ping({ kind: 'click', label: label });
+              var timeout = new Promise(function (resolve) { setTimeout(resolve, 800); });
+              Promise.race([pinged, timeout]).then(go);
             } else {
               ping({ kind: 'click', label: label });
             }
