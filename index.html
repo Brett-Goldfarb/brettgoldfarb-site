@@ -647,6 +647,177 @@
     .pub-card h3 { font-size: 1.3rem; }
     .pub-card p { color: var(--text-soft); margin-bottom: var(--s-2); }
     .pub-card .card-actions { margin-top: var(--s-1); }
+    .pub-body { display: flex; flex-direction: column; gap: var(--s-2); flex: 1; }
+
+    /* Recent posts. Default (touch, narrow screens): a compact list inside
+       the card. With a mouse on a wide screen, the posts tuck behind the card
+       and fan out of its top edge on hover (see the media query below). */
+    .pub-fan {
+      display: grid;
+      gap: var(--s-2);
+      margin-top: var(--s-2);
+      padding-top: var(--s-3);
+      border-top: 1px dashed var(--border);
+    }
+    .pub-post {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      grid-template-rows: auto auto;
+      column-gap: var(--s-3);
+      align-items: center;
+      align-content: center;
+      color: var(--text);
+      text-decoration: none;
+      padding: 6px;
+      margin: -6px;
+      border-radius: var(--radius-sm);
+      transition: background-color 0.2s var(--ease);
+    }
+    .pub-post:hover { background: var(--accent-soft); }
+    .pub-post:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .pub-post img {
+      grid-row: 1 / 3;
+      width: 76px; height: 50px;
+      object-fit: cover;
+      border-radius: 7px;
+      display: block;
+    }
+    .pub-post-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      align-self: end;
+    }
+    .pub-post-meta { font-size: 0.74rem; color: var(--text-soft); align-self: start; }
+
+    @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+      /* The article becomes an unstyled positioning shell; .pub-body draws the
+         card so the posts (z 1) can sit underneath it (z 2) and slide out. */
+      .pub-card {
+        position: relative;
+        padding: 0;
+        background: none;
+        border: 0;
+        box-shadow: none;
+      }
+      .pub-card:hover, .pub-card:has(:focus-visible) { z-index: 6; transform: none; box-shadow: none; }
+      .pub-body {
+        position: relative;
+        z-index: 2;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: var(--s-4);
+        box-shadow: var(--shadow-1);
+        transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+      }
+      .pub-card:hover .pub-body, .pub-card:has(:focus-visible) .pub-body {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-2);
+        border-color: var(--border-strong);
+      }
+
+      /* Zero-height rail along the card's top edge. Once open it
+         grows into an invisible hover bridge over the fanned posts, so moving
+         the mouse between them never drops the hover. */
+      .pub-fan {
+        position: absolute;
+        z-index: 1;
+        left: 0; right: 0;
+        bottom: 100%;
+        height: 0;
+        margin: 0; padding: 0; border: 0;
+        display: block;
+        pointer-events: none;
+      }
+      .pub-card:hover .pub-fan, .pub-card:has(:focus-visible) .pub-fan { height: 270px; pointer-events: auto; }
+
+      .pub-post {
+        --w: min(178px, 31%);
+        --dx: 0%;
+        --lift: 0px;
+        --r: 0deg;
+        position: absolute;
+        left: 50%;
+        bottom: -10px;          /* tucked just under the card edge when open */
+        width: var(--w);
+        margin: 0;
+        padding: 8px 8px 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow-2);
+        z-index: calc(2 - var(--i));
+        opacity: 0;
+        pointer-events: none;
+        /* Closed: slid back behind the card, slightly smaller. */
+        transform: translateX(-50%) translateY(82%) scale(0.94);
+        /* Closing: quick, no overshoot, right-most card leaves first. */
+        transition:
+          transform 0.24s cubic-bezier(0.4, 0, 0.7, 0.2) calc((2 - var(--i)) * 25ms),
+          opacity 0.16s linear calc((2 - var(--i)) * 25ms + 0.06s),
+          background-color 0.2s var(--ease);
+        transform-origin: 50% 100%;
+        will-change: transform;
+      }
+      /* Side posts get a little lift too: rotating about the bottom edge
+         dips their outer corner back under the card. */
+      .pub-post:nth-child(1) { --dx: -94%; --r: -7deg; --lift: 12px; }
+      .pub-post:nth-child(2) { --lift: 20px; z-index: 3; }
+      .pub-post:nth-child(3) { --dx: 94%;  --r: 7deg; --lift: 12px; }
+
+      .pub-card:hover .pub-post, .pub-card:has(:focus-visible) .pub-post {
+        opacity: 1;
+        pointer-events: auto;
+        transform:
+          translateX(calc(-50% + var(--dx)))
+          translateY(calc(-1 * var(--lift)))
+          rotate(var(--r));
+        /* Opening: springy settle, left-to-right stagger, after a short
+           hover-intent pause so sweeping past the card doesn't fire it. */
+        transition:
+          transform 0.48s cubic-bezier(0.34, 1.3, 0.64, 1) calc(var(--i) * 45ms + 0.06s),
+          opacity 0.14s linear calc(var(--i) * 45ms + 0.06s),
+          background-color 0.2s var(--ease);
+      }
+      /* Hovering one post straightens it and pulls it forward. */
+      .pub-card .pub-post:hover, .pub-card .pub-post:focus-visible {
+        --r: 0deg;
+        --lift: 32px;
+        z-index: 4;
+        background: var(--surface);
+        transition:
+          transform 0.22s var(--ease),
+          opacity 0.14s linear,
+          background-color 0.2s var(--ease);
+      }
+      .pub-post:focus-visible { outline-offset: 3px; }
+      .pub-post img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        border-radius: 8px;
+      }
+      .pub-post-title {
+        font-family: var(--font-heading);
+        font-weight: 400;
+        font-size: 0.98rem;
+        line-height: 1.22;
+        margin-top: 4px;
+        display: block;
+        overflow: visible;
+        align-self: auto;
+      }
+      .pub-post-meta { align-self: auto; }
+      .pub-post-meta { font-size: 0.72rem; }
+    }
 
     /* ============================================================ TESTIMONIALS (shuffle stack) ============================================================ */
     #testimonials .section-head { margin-left: auto; margin-right: auto; text-align: center; }
@@ -1087,22 +1258,60 @@
         </div>
         <div class="writing-grid">
           <article class="pub-card reveal">
-            <span class="kicker">Personal Substack</span>
-            <h3>Brett Goldfarb</h3>
-            <p>An inside look at what I'm up to and what I'm thinking about.</p>
-            <div class="card-actions">
-              <a href="https://brettgoldfarb.substack.com/" target="_blank" rel="noopener" class="btn btn-primary">Read
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            <div class="pub-body">
+              <span class="kicker">Personal Substack</span>
+              <h3>Brett Goldfarb</h3>
+              <p>An inside look at what I'm up to and what I'm thinking about.</p>
+              <div class="card-actions">
+                <a href="https://brettgoldfarb.substack.com/" target="_blank" rel="noopener" class="btn btn-primary">Read
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="pub-fan" aria-label="Recent posts from Brett Goldfarb">
+              <a class="pub-post" style="--i:0" href="https://brettgoldfarb.substack.com/p/signed-sealed-delivering" target="_blank" rel="noopener" data-track="Read post — Signed, Sealed, Delivering">
+                <img src="./assets/Substack/signed-sealed-delivering.jpg" alt="" width="480" height="300" loading="lazy" />
+                <span class="pub-post-title">Signed, Sealed, Delivering</span>
+                <span class="pub-post-meta">3 min read</span>
+              </a>
+              <a class="pub-post" style="--i:1" href="https://brettgoldfarb.substack.com/p/why-not-now" target="_blank" rel="noopener" data-track="Read post — Why Not Now?">
+                <img src="./assets/Substack/why-not-now.jpg" alt="" width="480" height="300" loading="lazy" />
+                <span class="pub-post-title">Why Not Now?</span>
+                <span class="pub-post-meta">4 min read</span>
+              </a>
+              <a class="pub-post" style="--i:2" href="https://brettgoldfarb.substack.com/p/grateful-humbled-home" target="_blank" rel="noopener" data-track="Read post — Grateful, Humbled, Home">
+                <img src="./assets/Substack/grateful-humbled-home.jpg" alt="" width="480" height="300" loading="lazy" />
+                <span class="pub-post-title">Grateful, Humbled, Home</span>
+                <span class="pub-post-meta">6 min read</span>
               </a>
             </div>
           </article>
           <article class="pub-card reveal d1">
-            <span class="kicker">BJG Creations Substack</span>
-            <h3>BJG Creations Blog</h3>
-            <p>A marketing focused blog that follows my curiosity.</p>
-            <div class="card-actions">
-              <a href="https://bjgcreationsblog.substack.com/" target="_blank" rel="noopener" class="btn btn-primary">Read
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            <div class="pub-body">
+              <span class="kicker">BJG Creations Substack</span>
+              <h3>BJG Creations Blog</h3>
+              <p>A marketing focused blog that follows my curiosity.</p>
+              <div class="card-actions">
+                <a href="https://bjgcreationsblog.substack.com/" target="_blank" rel="noopener" class="btn btn-primary">Read
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+            <div class="pub-fan" aria-label="Recent posts from the BJG Creations Blog">
+              <a class="pub-post" style="--i:0" href="https://bjgcreationsblog.substack.com/p/finding-my-passion" target="_blank" rel="noopener" data-track="Read post — Finding My Passion">
+                <img src="./assets/Substack/finding-my-passion.jpg" alt="" width="480" height="300" loading="lazy" />
+                <span class="pub-post-title">Finding My Passion</span>
+                <span class="pub-post-meta">4 min read</span>
+              </a>
+              <a class="pub-post" style="--i:1" href="https://bjgcreationsblog.substack.com/p/the-pet-rock-marketing-phenomenon" target="_blank" rel="noopener" data-track="Read post — The Pet Rock: How a Gag Gift Made Millions">
+                <img src="./assets/Substack/the-pet-rock-marketing-phenomenon.jpg" alt="" width="480" height="300" loading="lazy" />
+                <span class="pub-post-title">The Pet Rock: How a Gag Gift Made Millions</span>
+                <span class="pub-post-meta">3 min read</span>
+              </a>
+              <a class="pub-post" style="--i:2" href="https://bjgcreationsblog.substack.com/p/show-your-work-by-austin-kleon" target="_blank" rel="noopener" data-track="Read post — Show Your Work! by Austin Kleon">
+                <img src="./assets/Substack/show-your-work-by-austin-kleon.jpg" alt="" width="480" height="300" loading="lazy" />
+                <span class="pub-post-title">Show Your Work! by Austin Kleon</span>
+                <span class="pub-post-meta">4 min read</span>
               </a>
             </div>
           </article>
