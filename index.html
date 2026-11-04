@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="Brett Goldfarb builds marketing that moves people and AI tools that do the work. Portfolio, projects, and writing." />
   <meta name="twitter:image" content="https://brett-goldfarb.github.io/brettgoldfarb-site/assets/Profile%20pic.png" />
 
-  <!-- Fonts: playful personal direction —
+  <!-- Fonts: playful personal direction:
        Architects Daughter (handwritten display: titles, headings, labels, brand),
        Nunito (warm, rounded, highly readable body). -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,14 +35,14 @@
 
   <style>
     /* ============================================================
-       BJG — Brett Goldfarb personal site
+       BJG, Brett Goldfarb personal site
        Playful / personal / unique theme.
        Voice:
          Warm off-white "paper"  #f9f9f9  (dominant page, faint dot-grid)
          Card surface            #ffffff
          Soft ink text           #3a3a3a  (not harsh black)
-         Accent — warm cocoa → caramel gradient (links, buttons, labels)
-         Highlight — cream       #f3eac8  (sticker tags, soft fills)
+         Accent, warm cocoa → caramel gradient (links, buttons, labels)
+         Highlight, cream       #f3eac8  (sticker tags, soft fills)
          Hand-drawn personality from Architects Daughter display type.
        Dark mode auto-applies via prefers-color-scheme (tokens supplied below).
        ============================================================ */
@@ -51,11 +51,11 @@
       --black: #000000;
       --white: #ffffff;
 
-      /* Warm accent ("navy" name kept for stability — now a cocoa→caramel ink) */
-      --navy: #5d4037;        /* deep cocoa — primary ink accent */
-      --navy-2: #a9744c;      /* caramel — gradient end / hover */
+      /* Warm accent ("navy" name kept for stability, now a cocoa→caramel ink) */
+      --navy: #5d4037;        /* deep cocoa, primary ink accent */
+      --navy-2: #a9744c;      /* caramel, gradient end / hover */
       --navy-grad: linear-gradient(95deg, #5d4037 0%, #a9744c 100%);
-      --cream: #f3eac8;       /* warm highlight — sticker tags, soft fills */
+      --cream: #f3eac8;       /* warm highlight, sticker tags, soft fills */
       --on-accent: #ffffff;   /* text that sits on the accent gradient */
 
       /* Roles */
@@ -73,7 +73,7 @@
       --shadow-1: 0 1px 2px rgba(60, 40, 30, 0.05), 0 4px 14px rgba(60, 40, 30, 0.07);
       --shadow-2: 0 2px 6px rgba(60, 40, 30, 0.08), 0 16px 36px rgba(60, 40, 30, 0.13);
 
-      /* Spacing scale — tightened */
+      /* Spacing scale, tightened */
       --s-1: 4px;
       --s-2: 8px;
       --s-3: 16px;
@@ -93,11 +93,11 @@
       --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     }
 
-    /* Dark mode — supplied tokens, remapped onto the role variables.
+    /* Dark mode, supplied tokens, remapped onto the role variables.
        Auto-activates for visitors whose OS prefers dark. */
     @media (prefers-color-scheme: dark) {
       :root {
-        --navy: #e0b083;       /* light caramel — accent ink on dark */
+        --navy: #e0b083;       /* light caramel, accent ink on dark */
         --navy-2: #f0cda6;
         --navy-grad: linear-gradient(95deg, #e0b083 0%, #f0cda6 100%);
         --cream: #5a4a2e;
@@ -135,7 +135,7 @@
       font-family: var(--font-body);
       color: var(--text);
       background-color: var(--bg);
-      /* faint hand-drawn dot-grid "paper" — the personal, notebook touch */
+      /* faint hand-drawn dot-grid "paper", the personal, notebook touch */
       background-image: radial-gradient(var(--paper-dot) 1.1px, transparent 1.1px);
       background-size: 22px 22px;
       background-position: -11px -11px;
@@ -182,7 +182,7 @@
       color: var(--navy); /* fallback */
     }
 
-    /* Eyebrow / section label — navy gradient */
+    /* Eyebrow / section label, navy gradient */
     .eyebrow {
       font-size: 0.72rem;
       letter-spacing: 0.18em;
@@ -458,7 +458,7 @@
       font-size: clamp(2.5rem, 10vw, 4.6rem);
       margin-bottom: var(--s-3);
     }
-    /* "Brett Goldfarb" — horizontal navy gradient via background-clip:text */
+    /* "Brett Goldfarb", horizontal navy gradient via background-clip:text */
     .hero h1 .name {
       background: var(--navy-grad);
       -webkit-background-clip: text;
@@ -476,7 +476,7 @@
 
     .hero-art { position: relative; display: grid; place-items: center; }
 
-    /* ---- HERO PHOTO GALLERY — draggable frameless photo fan ----
+    /* ---- HERO PHOTO GALLERY, draggable frameless photo fan ----
        Vanilla port of a React/Framer component. Bare rounded photos
        spread in a wide horizontal fan, slide out from a center stack
        with a spring on load, drag freely, and snap home on release. */
@@ -818,13 +818,8 @@
        when the page is served from localhost, so the mark is findable while
        testing. On the live site the attribute is never set and this does
        nothing, leaving the dot as inconspicuous as before. */
-    html[data-local] .fb-dot {
-      opacity: 0.5;
-      outline: 1px dashed var(--text-soft);
-      outline-offset: 1px;
-      border-radius: 3px;
-    }
-    html[data-local] .fb-dot:hover { opacity: 1; outline-style: solid; }
+    html[data-local] .fb-dot { opacity: 0.5; }
+    html[data-local] .fb-dot:hover { opacity: 1; }
 
     /* ============================================================ SCROLL REVEAL ============================================================ */
     .reveal {
@@ -864,7 +859,7 @@
       .grid { grid-template-columns: repeat(3, 1fr); }
       section { padding: var(--s-6) 0; }
     }
-    /* Marketing has two clients — let the cards share the full row width
+    /* Marketing has two clients, let the cards share the full row width
        instead of leaving an empty third column. */
     @media (min-width: 640px) {
       .grid--clients { grid-template-columns: repeat(2, 1fr); }
@@ -894,7 +889,7 @@
     /* Higher specificity than the cover rule above, so wide previews like
        Heirloom's still show in full instead of getting cropped. */
     .carousel-track .card-media--contain img { object-fit: contain; }
-    /* Keep all three actions on a single row — slightly tighter buttons. */
+    /* Keep all three actions on a single row, slightly tighter buttons. */
     .carousel-track .card-actions { flex-wrap: nowrap; gap: 6px; }
     .carousel-track .card-actions .btn {
       flex: 0 1 auto;
@@ -948,12 +943,12 @@
   <!-- ============================ NAV ============================ -->
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="#hero" aria-label="Brett Goldfarb — home">
+      <a class="brand" href="#hero" aria-label="Brett Goldfarb, home">
         <span>Brett Goldfarb</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#ai-tools">Tools</a>
         <a href="#marketing">Marketing</a>
+        <a href="#ai-tools">Tools</a>
         <a href="#writing">Writing</a>
         <a href="#connect">Connect</a>
       </nav>
@@ -966,8 +961,8 @@
     </div>
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
       <div class="wrap">
-        <a href="#ai-tools">Tools</a>
         <a href="#marketing">Marketing</a>
+        <a href="#ai-tools">Tools</a>
         <a href="#writing">Writing</a>
         <a href="#connect">Connect</a>
       </div>
@@ -981,7 +976,7 @@
         <div>
           <h1 class="reveal">Hello, I'm<br /><span class="name">Brett Goldfarb.</span></h1>
           <div class="hero-cta reveal d1">
-            <a href="#ai-tools" class="btn btn-primary">See my work
+            <a href="#marketing" class="btn btn-primary">See my work
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
           </div>
@@ -990,6 +985,36 @@
           <div class="gallery" id="gallery" aria-label="Photo gallery">
             <div class="gallery-stack" id="galleryStack"></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ MARKETING, CLIENT WORK ============================ -->
+    <section id="marketing">
+      <div class="wrap">
+        <div class="section-head marketing-head reveal">
+          <div class="marketing-head-text">
+            <h2>Small Business Marketing Agency</h2>
+          </div>
+          <!-- BJG Creations mark, its baked-in gray matches the page, so it blends cleanly -->
+          <img class="section-logo" src="./assets/BJG%20Creations%20Logo.png" alt="BJG Creations logo" />
+        </div>
+        <div class="grid grid--clients">
+          <!-- Per client: image, industry tag, client name, headline result, one line, link. -->
+          <article class="card reveal">
+            <div class="card-media" style="background:#fff;"><img src="./assets/CMH%20portfolio%20page/CMH-LOGO.png" alt="Centre Music House logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
+            <span class="card-tag">Local Music Store</span>
+            <h3>Centre Music House</h3>
+            <p>Restarted social media presence for a beloved local music store.</p>
+            <div class="card-actions"><a href="./portfolio/centre-music-house.html" class="btn btn-ghost" data-track="What I did for them — Centre Music House">View case study</a></div>
+          </article>
+          <article class="card reveal d1">
+            <div class="card-media" style="background:#fff;"><img src="./assets/TGC%20portfolio%20page/TGC%20Logo.png" alt="The Garden Continuum logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
+            <span class="card-tag">Regenerative Landscaping</span>
+            <h3>The Garden Continuum</h3>
+            <p>TGC coined the Life-Scape Method™. My job is to keep their inbound strategy consistent and push it further.</p>
+            <div class="card-actions"><a href="./portfolio/the-garden-continuum.html" class="btn btn-ghost" data-track="What I did for them — The Garden Continuum">View case study</a></div>
+          </article>
         </div>
       </div>
     </section>
@@ -1054,37 +1079,6 @@
       </div>
     </section>
 
-    <!-- ============================ MARKETING — CLIENT WORK ============================ -->
-    <section id="marketing">
-      <div class="wrap">
-        <div class="section-head marketing-head reveal">
-          <div class="marketing-head-text">
-            <h2>Small Business Marketing Agency</h2>
-            <p>A few clients I've helped grow.</p>
-          </div>
-          <!-- BJG Creations mark — its baked-in gray matches the page, so it blends cleanly -->
-          <img class="section-logo" src="./assets/BJG%20Creations%20Logo.png" alt="BJG Creations logo" />
-        </div>
-        <div class="grid grid--clients">
-          <!-- Per client: image, industry tag, client name, headline result, one line, link. -->
-          <article class="card reveal">
-            <div class="card-media" style="background:#fff;"><img src="./assets/TGC%20portfolio%20page/TGC%20Logo.png" alt="The Garden Continuum logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
-            <span class="card-tag">Regenerative Landscaping</span>
-            <h3>The Garden Continuum</h3>
-            <p>TGC coined the Life-Scape Method™. My job is to keep their inbound strategy consistent and push it further.</p>
-            <div class="card-actions"><a href="./portfolio/the-garden-continuum.html" class="btn btn-ghost" data-track="What I did for them — The Garden Continuum">What I did for them</a></div>
-          </article>
-          <article class="card reveal d1">
-            <div class="card-media" style="background:#fff;"><img src="./assets/CMH%20portfolio%20page/CMH-LOGO.png" alt="Centre Music House logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
-            <span class="card-tag">Local Music Store</span>
-            <h3>Centre Music House</h3>
-            <p>Restarted social media presence for a beloved local music store.</p>
-            <div class="card-actions"><a href="./portfolio/centre-music-house.html" class="btn btn-ghost" data-track="What I did for them — Centre Music House">What I did for them</a></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- ============================ WRITING ============================ -->
     <section id="writing">
       <div class="wrap">
@@ -1138,7 +1132,7 @@
     </section>
   </main>
 
-  <!-- ============================ FOOTER — LINKS + CONTACT ONLY ============================ -->
+  <!-- ============================ FOOTER, LINKS + CONTACT ONLY ============================ -->
   <footer id="connect">
     <div class="wrap">
       <div class="footer-grid">
@@ -1153,7 +1147,7 @@
         <div class="footer-col reveal d1">
           <p class="eyebrow footer-label">In the press</p>
           <div class="link-list">
-            <a href="https://canvasrebel.com/meet-brett-goldfarb/" target="_blank" rel="noopener">CanvasRebel — Meet Brett Goldfarb <span class="arrow">↗</span></a>
+            <a href="https://canvasrebel.com/meet-brett-goldfarb/" target="_blank" rel="noopener">CanvasRebel, Meet Brett Goldfarb <span class="arrow">↗</span></a>
             <a href="https://www.linkedin.com/posts/ronyvexelman_every-time-i-take-on-an-intern-someone-inevitably-activity-7338934355228004352-zOCB" target="_blank" rel="noopener">Optimove internship announcement <span class="arrow">↗</span></a>
           </div>
         </div>
@@ -1335,7 +1329,7 @@
         window.addEventListener('pointerup', up);
         window.addEventListener('pointercancel', up);
 
-        // Keyboard nudge for accessibility — Enter/Space gives a little wiggle.
+        // Keyboard nudge for accessibility, Enter/Space gives a little wiggle.
         card.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -1469,7 +1463,7 @@
 
       function announce() {
         var t = testimonials[order[0]];
-        if (live) live.textContent = t.quote + ' — ' + t.author + ', ' + t.role;
+        if (live) live.textContent = t.quote + ', ' + t.author + ', ' + t.role;
       }
       function next() {        // send the front card to the back
         order.push(order.shift());
