@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Centre Music House, Case Study · Brett Goldfarb</title>
-  <meta name="description" content="How BJG Creations restarted Centre Music House's social presence, education-first content, a Record Store Day reel that reached 240k+ accounts, and an 8.5% lift in Google Reviews." />
+  <meta name="description" content="How BJG Creations restarted Centre Music House's social presence, education-first content, a Record Store Day reel that reached 265,000+ accounts, and an 8.5% lift in Google Reviews." />
 
   <!-- Favicons -->
   <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any" />
@@ -423,39 +423,6 @@
       .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: var(--s-6); }
     }
 
-    /* ---- SUMMARY ---- */
-    .summary-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: var(--s-5);
-      box-shadow: var(--shadow-1);
-    }
-    .summary-card .eyebrow { margin-bottom: var(--s-3); }
-    .summary-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: var(--s-3);
-    }
-    .summary-list li {
-      display: flex;
-      gap: var(--s-3);
-      align-items: flex-start;
-      font-size: 1.05rem;
-      color: var(--text);
-    }
-    .summary-list li::before {
-      content: "";
-      flex-shrink: 0;
-      width: 12px; height: 12px;
-      margin-top: 7px;
-      border-radius: 4px;
-      background: var(--navy-grad);
-    }
-    .summary-list strong { font-weight: 800; }
-
     /* ---- WHAT I DID, service cards ---- */
     .grid { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
     .card {
@@ -584,6 +551,86 @@
       opacity: 0.95;
       max-width: 26ch;
     }
+
+    /* ---- REEL SLIDER: the top reels rotate inside one stat card ----
+       Slides stack in a single grid cell, so the card always holds the
+       tallest slide's height and never jumps. A change is a short sideways
+       drift plus a crossfade; the outgoing slide fades out quicker than the
+       incoming one fades in, so the two never read as overlapping text. */
+    .stat--reels { display: block; }
+    .reels-track { position: relative; z-index: 1; display: grid; }
+    .reel-slide {
+      grid-area: 1 / 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--s-4);
+      opacity: 0;
+      transform: translateX(var(--reel-x, 18px));
+      pointer-events: none;
+      transition: opacity 0.26s var(--ease), transform 0.5s var(--ease);
+    }
+    .reel-slide.is-active {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      transition: opacity 0.45s var(--ease) 0.1s, transform 0.65s var(--ease);
+    }
+    .reel-slide.no-anim { transition: none; }
+    .stat--reels .stat-num { font-size: clamp(2.3rem, 5.4vw, 3.3rem); white-space: nowrap; }
+    /* Facebook's player has no chrome to crop, so it simply fills the frame. */
+    .stat-embed iframe.is-fb { top: 0; left: 0; width: 100%; height: 100%; }
+
+    .reels-nav {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      margin-top: var(--s-4);
+      color: var(--on-accent);
+    }
+    /* Bare chevrons, quiet until you go looking: faint at rest, a touch
+       clearer while the card is hovered, full strength on the arrow itself. */
+    .reels-arrow {
+      display: grid;
+      place-items: center;
+      width: 28px; height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+      opacity: 0.35;
+      cursor: pointer;
+      transition: opacity 0.25s var(--ease), background-color 0.25s var(--ease);
+    }
+    .stat--reels:hover .reels-arrow { opacity: 0.6; }
+    .stat--reels .reels-arrow:hover { opacity: 1; background: rgba(255, 255, 255, 0.12); }
+    .reels-dots { display: flex; align-items: center; }
+    /* The button is a comfortable hit area; the pill inside is the visual. */
+    .reels-dot {
+      display: grid;
+      place-items: center;
+      height: 24px;
+      padding: 0 4px;
+      border: 0;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .reels-dot::after {
+      content: "";
+      display: block;
+      width: 7px; height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.4;
+      transition: width 0.4s var(--ease), opacity 0.4s var(--ease);
+    }
+    .reels-dot:hover::after { opacity: 0.7; }
+    .reels-dot[aria-current="true"]::after { width: 22px; opacity: 1; }
+    .reels-arrow:focus-visible, .reels-dot:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 999px; }
 
     /* ---- LEAD MAGNET + LANDING PAGE case-study block ---- */
     .casestudy {
@@ -926,6 +973,13 @@
       </div>
     </section>
 
+    <!-- ============================ THE STORY ============================ -->
+    <section id="summary">
+      <div class="wrap">
+        <div data-story-mount="cmh"></div>
+      </div>
+    </section>
+
     <!-- ============================ RESULTS, proof first ============================ -->
     <section id="results">
       <div class="wrap">
@@ -934,7 +988,65 @@
           <h2>Results that landed</h2>
         </div>
         <div class="results-grid">
-          <div class="stat reveal d1">
+          <div class="stat stat--reels reveal d1" data-reels aria-roledescription="carousel" aria-label="Top reels">
+            <div class="reels-track">
+              <div class="reel-slide is-active" aria-roledescription="slide" aria-label="1 of 4">
+                <div class="stat-info">
+                  <p class="stat-eyebrow">Record Store Day</p>
+                  <p class="stat-num">265,000+</p>
+                  <p class="stat-label">This reel reached over 265,000 unique accounts.</p>
+                  <a class="stat-link" href="https://www.instagram.com/reels/DXKqnffAHpz/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                </div>
+                <div class="stat-embed">
+                  <iframe src="https://www.instagram.com/reel/DXKqnffAHpz/embed/" title="Instagram reel, Record Store Day" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+                </div>
+              </div>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true" inert>
+                <div class="stat-info">
+                  <p class="stat-eyebrow">Guitar strings</p>
+                  <p class="stat-num">120,000+</p>
+                  <p class="stat-label">This reel reached over 120,000 unique accounts.</p>
+                  <a class="stat-link" href="https://www.instagram.com/reel/Ddb8uHHEiIB/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                </div>
+                <div class="stat-embed">
+                  <iframe data-src="https://www.instagram.com/reel/Ddb8uHHEiIB/embed/" title="Instagram reel, guitar strings" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+                </div>
+              </div>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true" inert>
+                <div class="stat-info">
+                  <p class="stat-eyebrow">Jazz record</p>
+                  <p class="stat-num">11,000+</p>
+                  <p class="stat-label">This reel reached over 11,000 unique accounts.</p>
+                  <a class="stat-link" href="https://www.instagram.com/reel/DXFPvFzE0yR/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                </div>
+                <div class="stat-embed">
+                  <iframe data-src="https://www.instagram.com/reel/DXFPvFzE0yR/embed/" title="Instagram reel, jazz record" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+                </div>
+              </div>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true" inert>
+                <div class="stat-info">
+                  <p class="stat-eyebrow">Stressful day</p>
+                  <p class="stat-num">7,500+</p>
+                  <p class="stat-label">This reel reached over 7,500 unique accounts.</p>
+                  <a class="stat-link" href="https://www.instagram.com/reel/DXz1f6Lifdp/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                </div>
+                <div class="stat-embed">
+                  <iframe data-src="https://www.instagram.com/reel/DXz1f6Lifdp/embed/" title="Instagram reel, stressful day" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+                </div>
+              </div>
+            </div>
+            <div class="reels-nav">
+              <button type="button" class="reels-arrow" data-dir="-1" aria-label="Previous reel"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+              <div class="reels-dots">
+                <button type="button" class="reels-dot" aria-label="Show reel 1: Record Store Day" aria-current="true"></button>
+                <button type="button" class="reels-dot" aria-label="Show reel 2: guitar strings" aria-current="false"></button>
+                <button type="button" class="reels-dot" aria-label="Show reel 3: jazz record" aria-current="false"></button>
+                <button type="button" class="reels-dot" aria-label="Show reel 4: stressful day" aria-current="false"></button>
+              </div>
+              <button type="button" class="reels-arrow" data-dir="1" aria-label="Next reel"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+            </div>
+          </div>
+          <div class="stat reveal d2">
             <div class="stat-info">
               <p class="stat-eyebrow">Google Reviews</p>
               <p class="stat-num">+8.5%</p>
@@ -945,31 +1057,6 @@
               <iframe src="https://www.instagram.com/p/DMioESlPiqo/embed/" title="Instagram post, Google review request" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
             </div>
           </div>
-          <div class="stat reveal d2">
-            <div class="stat-info">
-              <p class="stat-eyebrow">Record Store Day reel</p>
-              <p class="stat-num">240k+</p>
-              <p class="stat-label">One reel reached over 240,000 unique accounts.</p>
-              <a class="stat-link" href="https://www.instagram.com/reels/DXKqnffAHpz/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            </div>
-            <div class="stat-embed">
-              <iframe src="https://www.instagram.com/reel/DXKqnffAHpz/embed/" title="Instagram reel, Record Store Day" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ SUMMARY ============================ -->
-    <section id="summary">
-      <div class="wrap">
-        <div class="summary-card reveal">
-          <p class="eyebrow">The story</p>
-          <ul class="summary-list">
-            <li><span>When I was in elementary school I took guitar and drum lessons at Centre Music House. When I noticed their lack of an online presence, I saw a full-circle moment waiting to happen.</span></li>
-            <li><span>I've worked with Centre Music House since <strong>March 2025</strong>.</span></li>
-            <li><span>I got in the door by offering a <strong>free one-month trial</strong>.</span></li>
-          </ul>
         </div>
       </div>
     </section>
@@ -1106,6 +1193,7 @@
     </div>
   </footer>
 
+  <script src="../assets/story/the-story.js"></script>
   <script>
     // ---- Mobile menu ----
     var navToggle = document.getElementById('navToggle');
@@ -1174,6 +1262,100 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && lb.classList.contains('open')) close();
       });
+    })();
+
+    // ---- Reel slider ----
+    // Rotates the top reels inside the results card. It auto-advances only
+    // while the card is on screen and nobody is hovering or focused in it,
+    // and stops for good once someone clicks into a reel to watch it.
+    (function () {
+      var root = document.querySelector('[data-reels]');
+      if (!root) return;
+      var slides = [].slice.call(root.querySelectorAll('.reel-slide'));
+      var dots = [].slice.call(root.querySelectorAll('.reels-dot'));
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var INTERVAL = 6500;
+      var current = 0, timer = null, inView = false, paused = false;
+      var watching = false;   // a visitor clicked into a reel
+      var stopped = reduce;
+      var warmed = false;
+
+      // Only the first embed loads with the page. Once the card is on screen
+      // the next reel loads right away and the rest follow shortly after, so
+      // none of them slides in half-drawn.
+      function load(i) {
+        var f = slides[i] && slides[i].querySelector('iframe[data-src]');
+        if (f) { f.src = f.getAttribute('data-src'); f.removeAttribute('data-src'); }
+      }
+
+      function show(next, dir) {
+        if (next === current) return;
+        var from = slides[current], to = slides[next];
+        load(next);
+        // Park the incoming slide on the side it enters from, then let it drift in.
+        to.classList.add('no-anim');
+        to.style.setProperty('--reel-x', (dir * 18) + 'px');
+        void to.offsetWidth;
+        to.classList.remove('no-anim');
+        from.style.setProperty('--reel-x', (-dir * 18) + 'px');
+        from.classList.remove('is-active');
+        from.setAttribute('aria-hidden', 'true');
+        from.inert = true;
+        to.classList.add('is-active');
+        to.removeAttribute('aria-hidden');
+        to.inert = false;
+        dots.forEach(function (d, i) { d.setAttribute('aria-current', i === next ? 'true' : 'false'); });
+        // A reel someone started would keep playing (with sound) once it's
+        // hidden, so reload its embed after it has faded out.
+        if (watching) {
+          var f = from.querySelector('iframe');
+          setTimeout(function () { if (!from.classList.contains('is-active') && f && f.src) f.src = f.src; }, 600);
+        }
+        current = next;
+        load((next + 1) % slides.length);
+      }
+      function step(dir) { show((current + dir + slides.length) % slides.length, dir); }
+
+      function schedule() {
+        clearTimeout(timer);
+        if (stopped || !inView || paused || document.hidden) return;
+        timer = setTimeout(function () { step(1); schedule(); }, INTERVAL);
+      }
+
+      root.querySelectorAll('.reels-arrow').forEach(function (btn) {
+        btn.addEventListener('click', function () { step(+btn.getAttribute('data-dir')); schedule(); });
+      });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { show(i, i > current ? 1 : -1); schedule(); });
+      });
+
+      root.addEventListener('pointerenter', function () { paused = true; schedule(); });
+      root.addEventListener('pointerleave', function () { paused = false; schedule(); });
+      root.addEventListener('focusin', function () { paused = true; schedule(); });
+      root.addEventListener('focusout', function () { paused = false; schedule(); });
+      // Clicking into a cross-origin iframe blurs the page; that's the only
+      // signal we get that someone started a reel.
+      window.addEventListener('blur', function () {
+        setTimeout(function () {
+          var a = document.activeElement;
+          if (a && a.tagName === 'IFRAME' && root.contains(a)) { watching = true; stopped = true; schedule(); }
+        }, 0);
+      });
+      document.addEventListener('visibilitychange', schedule);
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          inView = entries[0].isIntersecting;
+          if (inView && !warmed) {
+            warmed = true;
+            load(1);
+            setTimeout(function () { slides.forEach(function (_, i) { load(i); }); }, 1500);
+          }
+          schedule();
+        }, { threshold: 0.35 }).observe(root);
+      } else {
+        load(1);
+      }
     })();
 
     // ---- Footer year ----
