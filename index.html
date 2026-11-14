@@ -362,6 +362,7 @@
     .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
     /* Non-interactive status pill (e.g. tools not yet public) */
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     .tool-status {
       display: inline-flex;
       align-items: center;
@@ -424,21 +425,6 @@
       flex-wrap: wrap;
     }
     .marketing-head-text { max-width: 620px; }
-    .section-logo {
-      height: 110px;
-      width: auto;
-      flex-shrink: 0;
-      border-radius: var(--radius);
-      mix-blend-mode: multiply; /* drops the logo's gray field onto the page gray */
-      cursor: pointer;
-      transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
-    }
-    .section-logo:hover {
-      transform: translateY(-6px) rotate(-2deg) scale(1.04);
-      filter: drop-shadow(0 14px 28px rgba(60, 40, 30, 0.22));
-    }
-    @media (prefers-reduced-motion: reduce) { .section-logo:hover { transform: none; } }
-    @media (max-width: 560px) { .section-logo { height: 84px; } }
     .section-head h2 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); margin-bottom: var(--s-2); }
     .section-head p { color: var(--text-soft); font-size: 1.02rem; }
 
@@ -620,6 +606,38 @@
       width: fit-content;
     }
     .card-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: auto; }
+
+    /* ---- MY APPROACH: a client-style card that spans the full row ---- */
+    .card--feature { grid-column: 1 / -1; }
+    .card--feature .card-body { display: flex; flex-direction: column; align-items: flex-start; }
+    .card--feature h3 { font-size: 1.5rem; }
+    .card--feature p { max-width: 40ch; }
+    .card--feature .card-actions { margin-top: 0; }
+    /* The logo's own gray, so the mark fills the panel the way client logos sit on white.
+       A true square (the logo's own shape), centered in its column, so it sits apart from the
+       wider client panels below. */
+    .card-media--bjg { background: #d9d9d9; border-color: #d9d9d9; aspect-ratio: 1 / 1; width: 240px; max-width: 100%; margin-inline: auto; padding: 20px; box-sizing: border-box; }   /* padding gives the mark breathing room inside the gray */
+    .card-media--bjg img { object-fit: contain; }
+    /* No card box at all: logo, title and button float on the page itself, so this
+       reads apart from the client cards below. */
+    .card--feature, .card--feature:hover { background: none; border-color: transparent; box-shadow: none; transform: none; }
+    /* Subtle logo motion on hover: My Approach and every client card. */
+    .grid--clients .card-media img { transition: transform 0.4s var(--ease); }
+    .grid--clients .card:hover .card-media img { transform: scale(1.05) rotate(-2deg); }
+    /* The BJG gray square is part of the logo, not a backdrop, so the whole tile moves as one. */
+    .card--feature .card-media--bjg { transition: transform 0.4s var(--ease); }
+    .grid--clients .card--feature:hover .card-media--bjg { transform: scale(1.05) rotate(-2deg); }
+    .grid--clients .card--feature:hover .card-media--bjg img { transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .grid--clients .card:hover .card-media img,
+      .grid--clients .card--feature:hover .card-media--bjg { transform: none; }
+    }
+    @media (min-width: 640px) {
+      /* Logo column and text column share the row; align-items centers the square logo against the text and button. */
+      .card--feature { display: grid; grid-template-columns: auto auto; justify-content: center; column-gap: 48px; align-items: center; }   /* logo and text sit close together, centered as a pair */
+      .card--feature .card-media { margin-bottom: 0; }
+    }
+    @media (max-width: 560px) { .card--feature .btn { width: 100%; justify-content: center; } }
 
     /* ---- WRITING ---- */
     .writing-grid { display: grid; gap: var(--s-4); grid-template-columns: 1fr; }
@@ -1074,6 +1092,26 @@
       font-size: 0.72rem;
       white-space: nowrap;
     }
+    /* Paused tool: the Try it button is boarded up with a strip of caution tape. */
+    .try-wrap { --tape: #f5c518; --tape-ink: #141414; position: relative; flex: 1 1 0; display: flex; min-width: 0; isolation: isolate; }
+    .try-wrap .btn.is-disabled, .try-wrap .btn.is-disabled:hover {
+      flex: 1 1 auto; justify-content: center; filter: none; opacity: 1; cursor: not-allowed; pointer-events: none;
+      transform: none; box-shadow: none; color: var(--text-soft);
+      border: 1px solid var(--border-strong);
+      background: repeating-linear-gradient(-45deg, rgba(128,128,128,0.16) 0 9px, rgba(128,128,128,0.06) 9px 18px);
+    }
+    .carousel-track .try-wrap .tool-status {
+      position: absolute; z-index: 2; left: -7%; right: -7%; top: 50%;
+      transform: translateY(-50%) rotate(-6deg);
+      justify-content: center; gap: 0; padding: 1px 4px; margin: 0; flex: none;
+      border: 0; border-block: 4px solid; border-image: repeating-linear-gradient(-45deg, var(--tape-ink) 0 5px, var(--tape) 5px 10px) 4;
+      background: var(--tape); color: var(--tape-ink); border-radius: 0;
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.4; white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4); pointer-events: none;
+      transition: transform 0.35s var(--ease);
+    }
+    .carousel-track .card:hover .try-wrap .tool-status { transform: translateY(-50%) rotate(-3.5deg); }
+    @media (prefers-reduced-motion: reduce) { .carousel-track .card:hover .try-wrap .tool-status { transform: translateY(-50%) rotate(-6deg); } }
     /* Heirloom has only two actions (no download), so let them split the
        full card width evenly instead of sitting tight on the left. */
     .carousel-track .card-actions--split .btn {
@@ -1119,7 +1157,8 @@
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="#marketing">Marketing</a>
-        <a href="#ai-tools">Tools</a>
+        <a href="./portfolio/my-approach.html">My Approach</a>
+        <a href="#ai-tools">AI Tools</a>
         <a href="#writing">Writing</a>
         <a href="#connect">Connect</a>
       </nav>
@@ -1133,7 +1172,8 @@
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
       <div class="wrap">
         <a href="#marketing">Marketing</a>
-        <a href="#ai-tools">Tools</a>
+        <a href="./portfolio/my-approach.html">My Approach</a>
+        <a href="#ai-tools">AI Tools</a>
         <a href="#writing">Writing</a>
         <a href="#connect">Connect</a>
       </div>
@@ -1167,10 +1207,22 @@
           <div class="marketing-head-text">
             <h2>Small Business Marketing Agency</h2>
           </div>
-          <!-- BJG Creations mark, its baked-in gray matches the page, so it blends cleanly -->
-          <img class="section-logo" src="./assets/BJG%20Creations%20Logo.png" alt="BJG Creations logo" />
         </div>
         <div class="grid grid--clients">
+          <!-- My Approach: built like the client cards, with the BJG mark as its image.
+               Spans the full row; on wider screens the logo panel lines up with the client logos below. -->
+          <article class="card card--feature reveal">
+            <div class="card-media card-media--bjg"><img src="./assets/BJG%20Creations%20Logo.png" alt="BJG Creations logo" loading="lazy" /></div>
+            <div class="card-body">
+              <h3>My Approach</h3>
+              <p>The monthly system behind every client, and the tools that run it.</p>
+              <div class="card-actions">
+                <a href="./portfolio/my-approach.html" class="btn btn-primary" data-track="My Approach">View my approach
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              </div>
+            </div>
+          </article>
           <!-- Per client: image, industry tag, client name, headline result, one line, link. -->
           <article class="card reveal">
             <div class="card-media" style="background:#fff;"><img src="./assets/CMH%20portfolio%20page/CMH-LOGO.png" alt="Centre Music House logo" loading="lazy" style="object-fit:contain;padding:18px;" /></div>
@@ -1209,7 +1261,12 @@
               <p>Turns your photos and music into a beautifully crafted slideshow. Just upload and watch your memories come to life.</p>
               <div class="card-actions card-actions--split">
                 <a href="https://www.youtube.com/watch?v=ljndHTddU4I" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Watch demo — Heirloom">Watch demo</a>
-                <a href="https://heirloomslides.com" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Heirloom">Try it</a>
+                <!-- Heirloom is paused (server costs). To bring it back: swap this wrapper for
+                     <a href="https://heirloomslides.com" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Heirloom">Try it</a> -->
+                <div class="try-wrap">
+                  <span class="tool-status" aria-hidden="true">Under construction</span>
+                  <span class="btn btn-primary is-disabled" role="link" aria-disabled="true">Try it<span class="sr-only"> (Heirloom is under construction)</span></span>
+                </div>
               </div>
             </article>
             <article class="card">

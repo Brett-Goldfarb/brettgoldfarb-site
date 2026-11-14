@@ -891,13 +891,8 @@
        when the page is served from localhost, so the mark is findable while
        testing. On the live site the attribute is never set and this does
        nothing, leaving the dot as inconspicuous as before. */
-    html[data-local] .fb-dot {
-      opacity: 0.5;
-      outline: 1px dashed var(--text-soft);
-      outline-offset: 1px;
-      border-radius: 3px;
-    }
-    html[data-local] .fb-dot:hover { opacity: 1; outline-style: solid; }
+    html[data-local] .fb-dot { opacity: 0.5; }
+    html[data-local] .fb-dot:hover { opacity: 1; }
 
     /* ============================================================ SCROLL REVEAL ============================================================ */
     .reveal {
@@ -949,8 +944,9 @@
         <span>Brett Goldfarb</span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="../index.html#ai-tools">Tools</a>
+        <a href="../index.html#ai-tools">AI Tools</a>
         <a href="../index.html#marketing">Marketing</a>
+        <a href="my-approach.html">My Approach</a>
         <a href="../index.html#writing">Writing</a>
         <a href="../index.html#connect">Connect</a>
       </nav>
@@ -963,8 +959,9 @@
     </div>
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
       <div class="wrap">
-        <a href="../index.html#ai-tools">Tools</a>
+        <a href="../index.html#ai-tools">AI Tools</a>
         <a href="../index.html#marketing">Marketing</a>
+        <a href="my-approach.html">My Approach</a>
         <a href="../index.html#writing">Writing</a>
         <a href="../index.html#connect">Connect</a>
       </div>

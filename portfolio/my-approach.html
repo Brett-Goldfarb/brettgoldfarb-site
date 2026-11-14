@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Approach · Brett Goldfarb</title>
+  <meta name="description" content="See how I plan, create, schedule, and report on social media for small local businesses, every month." />
+
+  <!-- Favicons -->
+  <link rel="icon" href="../assets/favicon/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="../assets/favicon/site.webmanifest" />
+  <meta name="theme-color" content="#2b2b2b" />
+  <meta name="color-scheme" content="dark" />
+
+  <!-- Same fonts as the main site:
+       Architects Daughter (handwritten display: titles, headings, labels, brand),
+       Nunito (warm, rounded body). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       MY APPROACH PAGE VARIABLES
+       First pass is plain black and white outline. To restyle to the
+       full brand later, change only the values in this block.
+       ============================================================ */
+    /* THEME: this page is always dark. Each dark override below sits in an
+       "@media all" block that used to read "@media (prefers-color-scheme: dark)".
+       To follow the visitor's device again, change those blocks back, set
+       ALWAYS_DARK = false in the script, and restore the two theme metas. */
+    :root {
+      --ap-ink: #111111;          /* all strokes and text in the diagrams */
+      --ap-ink-soft: #5a5a5a;     /* notes, tags, captions */
+      --ap-paper: transparent;    /* node fill (none, outline only) */
+      --ap-halo: #f9f9f9;         /* matches page bg, keeps labels crisp over lines */
+      --ap-stroke: 1.5px;         /* node borders */
+      --ap-line: 1.5;             /* SVG line width (unitless) */
+      --ap-line-thin: 1;          /* secondary lines */
+      --ap-radius: 14px 18px 14px 20px;  /* slightly hand-drawn corners */
+      --ap-font-display: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --ap-font-body: 'Nunito', system-ui, sans-serif;
+    }
+    @media all {
+      :root {
+        --ap-ink: #f2f2f2;
+        --ap-ink-soft: #a8a8a8;
+        --ap-halo: #2b2b2b;
+      }
+    }
+
+    /* ============================================================
+       BJG, Centre Music House case study
+       Inherits the personal-site design system verbatim so this page
+       reads as clicking deeper into the same site, not a bolt-on.
+       Warm "paper" bg, cocoa→caramel accent, hand-drawn display type.
+       Always shown in dark mode (see the THEME note at the top).
+       ============================================================ */
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+
+      --navy: #5d4037;        /* deep cocoa, primary ink accent */
+      --navy-2: #a9744c;      /* caramel, gradient end / hover */
+      --navy-grad: linear-gradient(95deg, #5d4037 0%, #a9744c 100%);
+      --cream: #f3eac8;       /* warm highlight */
+      --on-accent: #ffffff;
+
+      --bg: #f9f9f9;
+      --surface: #ffffff;
+      --text: #3a3a3a;
+      --text-soft: #585858;
+      --border: #d6cfc2;
+      --border-strong: #8c8578;
+      --accent: var(--navy);
+      --accent-hover: var(--navy-2);
+      --accent-soft: rgba(243, 234, 200, 0.55);
+      --nav-bg: rgba(249, 249, 249, 0.82);
+      --paper-dot: rgba(93, 64, 55, 0.05);
+      --shadow-1: 0 1px 2px rgba(60, 40, 30, 0.05), 0 4px 14px rgba(60, 40, 30, 0.07);
+      --shadow-2: 0 2px 6px rgba(60, 40, 30, 0.08), 0 16px 36px rgba(60, 40, 30, 0.13);
+
+      --s-1: 4px;
+      --s-2: 8px;
+      --s-3: 16px;
+      --s-4: 24px;
+      --s-5: 36px;
+      --s-6: 56px;
+      --s-7: 80px;
+
+      --radius: 14px;
+      --radius-sm: 10px;
+      --maxw: 1120px;
+
+      --font-title: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --font-heading: 'Architects Daughter', 'Comic Sans MS', cursive;
+      --font-body: 'Nunito', system-ui, sans-serif;
+
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    @media all {
+      :root {
+        --navy: #e0b083;
+        --navy-2: #f0cda6;
+        --navy-grad: linear-gradient(95deg, #e0b083 0%, #f0cda6 100%);
+        --cream: #5a4a2e;
+        --on-accent: #2b2b2b;
+
+        --bg: #2b2b2b;
+        --surface: #333333;
+        --text: #dcdcdc;
+        --text-soft: #a8a8a8;
+        --border: #474747;
+        --border-strong: #5f5f5f;
+        --accent: var(--navy);
+        --accent-hover: var(--navy-2);
+        --accent-soft: rgba(243, 234, 200, 0.12);
+        --nav-bg: rgba(43, 43, 43, 0.82);
+        --paper-dot: rgba(255, 255, 255, 0.035);
+        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
+        --shadow-2: 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--paper-dot) 1.1px, transparent 1.1px);
+      background-size: 22px 22px;
+      background-position: -11px -11px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0;
+      letter-spacing: 0;
+    }
+    .hero h1, .section-head h2 {
+      font-family: var(--font-title);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0; }
+
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s var(--ease); }
+    a:hover { color: var(--accent-hover); }
+
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding-left: var(--s-4);
+      padding-right: var(--s-4);
+    }
+
+    .grad-text {
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      margin-bottom: var(--s-2);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--navy-grad);
+      display: inline-block;
+    }
+
+    /* ============================================================ NAV ============================================================ */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: saturate(160%) blur(12px);
+      -webkit-backdrop-filter: saturate(160%) blur(12px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: 1.15rem;
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    .nav-links { display: none; align-items: center; gap: var(--s-4); }
+    .nav-links a {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      font-weight: 500;
+      position: relative;
+      padding: 4px 0;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 2px;
+      background: var(--navy-grad);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after { transform: scaleX(1); }
+
+    .nav-right { display: flex; align-items: center; gap: var(--s-3); }
+
+    .nav-burger {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: grid; place-items: center;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .nav-burger:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .nav-burger:active { transform: translateY(0) scale(0.95); }
+    .nav-burger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .nav-burger .icon-x { display: none; }
+    .nav-burger[aria-expanded="true"] .icon-bars { display: none; }
+    .nav-burger[aria-expanded="true"] .icon-x { display: block; }
+    .nav-burger svg { width: 18px; height: 18px; }
+
+    .mobile-menu {
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      background: var(--surface);
+      box-shadow: var(--shadow-2);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(-8px);
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s linear 0.25s;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+      pointer-events: auto;
+      transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0s;
+    }
+    .mobile-menu .wrap { display: flex; flex-direction: column; padding-top: var(--s-2); padding-bottom: var(--s-2); }
+    .mobile-menu a {
+      color: var(--text);
+      font-weight: 500;
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+    }
+    .mobile-menu a:last-child { border-bottom: 0; }
+    .mobile-menu a:hover {
+      padding-left: 8px;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+
+    /* ============================================================ BUTTONS ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 11px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      box-shadow: var(--shadow-1);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); background: var(--navy-grad); color: var(--on-accent); }
+    .btn-primary:active { transform: translateY(0) scale(0.98); }
+    .btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: var(--navy-2);
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .btn-ghost:active { transform: translateY(0) scale(0.98); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ============================================================ SECTIONS ============================================================ */
+    section { padding: var(--s-5) 0; position: relative; }
+    .section-head { max-width: 620px; margin-bottom: var(--s-4); }
+    .section-head h2 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); margin-bottom: var(--s-2); }
+    .section-head p { color: var(--text-soft); font-size: 1.02rem; }
+
+    /* ---- BACK LINK ---- */
+    .backbar { padding-top: var(--s-4); padding-bottom: 0; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      padding: 6px 2px;
+      border-radius: 8px;
+    }
+    .back-link svg { width: 18px; height: 18px; transition: transform 0.2s var(--ease); }
+    .back-link:hover { color: var(--accent); }
+    .back-link:hover svg { transform: translateX(-4px); }
+    .back-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    /* ---- HERO ---- */
+    .hero { padding-top: var(--s-5); padding-bottom: var(--s-5); }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-5);
+      align-items: center;
+    }
+    .hero-tag {
+      align-self: flex-start;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--accent-soft);
+      color: var(--navy);
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: var(--s-3);
+      width: fit-content;
+    }
+    @media all { .hero-tag { color: var(--navy); } }
+    .hero h1 {
+      font-size: clamp(2.3rem, 7vw, 3.8rem);
+      margin-bottom: var(--s-3);
+    }
+    .hero h1 .name {
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .hero-lead {
+      font-size: clamp(1rem, 1.6vw, 1.12rem);
+      color: var(--text-soft);
+      max-width: 52ch;
+      text-wrap: pretty;
+      margin-bottom: var(--s-4);
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+    /* Hero logo, sits directly on the page (no frame) for a clean, open look. */
+    .hero-media {
+      display: grid;
+      place-items: center;
+      padding: var(--s-2);
+    }
+    .hero-media img {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 24px rgba(60, 40, 30, 0.16));
+      transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
+      cursor: pointer;
+    }
+    .hero-media img:hover {
+      transform: translateY(-6px) rotate(-2deg) scale(1.04);
+      filter: drop-shadow(0 18px 34px rgba(60, 40, 30, 0.24));
+    }
+    @media all {
+      .hero-media img { filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.5)); }
+      .hero-media img:hover { filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.6)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-media img:hover { transform: none; }
+    }
+    /* BJG logo: a gray square, so round it like the home page mark and keep it
+       a touch smaller than the wide client logos. */
+    .hero-media .hero-logo { max-width: 230px; border-radius: var(--radius); }
+    @media (max-width: 859px) { .hero-media .hero-logo { max-width: 170px; } }
+    /* Tighter join between the hero and "Who I work with". */
+    .hero { padding-bottom: var(--s-2); }
+    #who { padding-top: var(--s-4); }
+
+    @media (min-width: 860px) {
+      .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: var(--s-6); }
+    }
+
+
+    /* ============================================================ MY APPROACH ============================================================ */
+    .ap-section { padding: var(--s-6) 0; }
+    .ap-section .section-head h2 {
+      background: var(--navy-grad);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: var(--navy);
+    }
+    .ap-hint { color: var(--ap-ink-soft); font-size: 0.9rem; margin-top: var(--s-2); }
+    .ap-hint .hint-touch { display: none; }
+    @media (hover: none) {
+      .ap-hint .hint-touch { display: inline; }
+      .ap-hint .hint-desktop { display: none; }
+    }
+
+    /* ---- 1. Who I work with ---- */
+    .ap-who {
+      max-width: 760px;
+      font-family: var(--ap-font-body);
+      font-size: clamp(1.08rem, 2.2vw, 1.38rem);
+      line-height: 1.55;
+      color: var(--ap-ink);
+      text-wrap: pretty;
+      margin: 0;
+      padding-left: var(--s-4);
+      border-left: var(--ap-stroke) solid var(--ap-ink);
+    }
+
+    /* Client logo strip beside the text: the logo marks sit straight on the page,
+       scrolling left forever (never pausing), edges faded. */
+    .who-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-5); align-items: center; }
+    @media (min-width: 860px) { .who-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--s-6); } }
+    .logo-marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+    }
+    .logo-track { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; width: max-content; animation: logoScroll 26s linear infinite; }
+    /* margin (not gap) on every slot, so both halves are exactly equal and -50% loops seamlessly */
+    /* Big enough that all four never fit in view at once: one slot is 136 + 48 = 184px, so
+       four need 3 x 184 + 136 = 688px, wider than the strip ever gets (about 420px at most). */
+    .logo-track li { flex: none; width: 136px; height: 136px; margin-right: 48px; display: grid; place-items: center; }
+    .logo-track img { max-width: 136px; max-height: 128px; width: auto; height: auto; object-fit: contain; }
+    @keyframes logoScroll { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) {
+      .logo-marquee { -webkit-mask-image: none; mask-image: none; }
+      .logo-track { animation: none !important; width: auto; flex-wrap: wrap; row-gap: var(--s-3); }
+      .logo-track li[aria-hidden="true"] { display: none; }
+    }
+
+    /* ---- 2. Flow diagram ---- */
+    .flow { position: relative; margin-top: var(--s-5); }
+    .flow-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      color: var(--ap-ink);
+    }
+    .flow-grid {
+      position: relative; z-index: 1;
+      list-style: none; margin: 0; padding: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 52px 0;
+    }
+    .flow-grid li { display: flex; margin: 0; }
+    .flow-grid li:nth-child(n) { margin-right: 40px; }
+    .flow-node {
+      all: unset;
+      box-sizing: border-box;
+      flex: 1;
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 16px 16px 14px;
+      border: var(--ap-stroke) solid var(--ap-ink);
+      border-radius: var(--ap-radius);
+      background: var(--ap-paper);
+      color: var(--ap-ink);
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .flow-node:hover { transform: translateY(-2px); background: rgba(128,128,128,0.08); }
+    .flow-node:focus-visible { outline: 2px dashed var(--ap-ink); outline-offset: 4px; }
+    .flow-node[aria-expanded="true"] { box-shadow: 0 0 0 1px var(--ap-ink); }
+    .flow-top { display: flex; align-items: baseline; justify-content: center; text-align: center; gap: 10px; }
+    .flow-art { width: 100%; height: 88px; flex: none; fill: none; stroke: currentColor; stroke-width: var(--ap-line); stroke-linecap: round; stroke-linejoin: round; margin-bottom: 6px; overflow: visible; }
+    .flow-art .a-soft { stroke-width: var(--ap-line-thin); opacity: 0.55; }
+    .flow-art .a-sweep { transform-origin: 80px 45px; animation: apSpin 24s linear infinite; }
+    .flow-art .a-post, .flow-art .a-approve { transform-box: fill-box; transform-origin: center; }
+    .flow-art .a-tick, .flow-art .a-check, .flow-art .a-trend { stroke-dasharray: 1 1; }
+    /* Each step plays once when the pulse arrives (JS adds .is-playing). Resting state = finished picture. */
+    .is-playing .a-post { animation: apPostOnce 0.5s var(--ease) backwards; animation-delay: calc(var(--i) * 0.22s); }
+    .is-playing .a-tick { animation: apTickOnce 0.7s var(--ease) backwards; animation-delay: calc(var(--i) * 0.9s + 0.2s); }
+    .is-playing .a-trend { animation: apTrendOnce 2.2s ease-in-out 0.2s backwards; }
+    .is-playing .a-trend-head { animation: apHeadOnce 2.4s ease-in-out 0.2s backwards; }
+    .is-playing .a-dot { animation: apDotOnce 0.3s ease-out backwards; animation-delay: calc(var(--i) * 0.65s + 0.3s); }
+    .is-playing .a-approve { animation: apApproveOnce 1s var(--ease) 0.5s backwards; }
+    .is-playing .a-check { animation: apCheckOnce 0.6s var(--ease) 0.9s backwards; }
+    .is-playing .a-rec { animation: apBlink 0.9s ease-in-out 3; }
+    .flow-art .a-rec { fill: #d93a3a; stroke: none; }
+    .flow-art .a-blink { fill: currentColor; animation: apBlink 1.6s ease-in-out infinite; }
+    .flow-art .a-spin { transform-origin: 44px 44px; animation: apSpin 24s linear infinite; }
+    .flow-art .a-bar, .flow-art .a-plane, .flow-art .a-sparkle { transform-box: fill-box; transition: transform 0.45s var(--ease); }
+    .flow-art .a-bar { transform-origin: bottom; }
+    .flow-node:hover .a-bar:nth-of-type(odd) { transform: scaleY(1.15); }
+    .flow-node:hover .a-bar:nth-of-type(even) { transform: scaleY(0.88); }
+    .flow-node:hover .a-plane { transform: translate(4px, -4px); }
+    .flow-node:hover .a-sparkle { transform: scale(1.15) rotate(8deg); }
+    @keyframes apPostOnce { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes apTickOnce { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes apTrendOnce { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes apHeadOnce { 0%, 88% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes apDotOnce { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes apApproveOnce { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes apCheckOnce { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+    @keyframes apBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    @keyframes apSpin { to { transform: rotate(360deg); } }
+    .flow-icon { width: 26px; height: 26px; flex: none; fill: none; stroke: currentColor; stroke-width: var(--ap-line); stroke-linecap: round; stroke-linejoin: round; }
+    .flow-title { font-family: var(--ap-font-display); font-size: 1.15rem; line-height: 1.15; }
+    .flow-note { text-align: center; font-size: 0.8rem; color: var(--ap-ink-soft); font-style: italic; }
+    .flow-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; }
+    .flow-tags span::before { content: ""; display: inline-block; width: 0.5em; height: 0.5em; margin-right: 0.35em; vertical-align: baseline; }
+    .flow-tags .t-edu::before { background: #2e9b57; border-radius: 1px; }
+    .flow-tags .t-reach::before { background: #d93a3a; border-radius: 50%; }
+    .flow-tags .t-brand::before { background: #2f6fd8; transform: rotate(45deg) scale(0.9); }
+    .flow-tags span {
+      font-size: 0.64rem; font-weight: 700; letter-spacing: 0.02em;
+      padding: 2px 6px; border: var(--ap-line-thin) solid var(--ap-ink); border-radius: 999px; white-space: nowrap;
+      color: var(--ap-ink);
+    }
+
+    /* edges */
+    .edge { fill: none; stroke: currentColor; stroke-width: var(--ap-line); stroke-dasharray: 1 1; stroke-dashoffset: 1;
+            transition: stroke-dashoffset 0.55s var(--ease) calc(var(--i) * 0.55s + 0.35s); }
+    .head { fill: none; stroke: currentColor; stroke-width: var(--ap-line); stroke-linecap: round; stroke-linejoin: round; opacity: 0;
+            transition: opacity 0.2s linear calc(var(--i) * 0.55s + 0.8s); }
+    /* Steps appear one by one, each arrow drawing in as the next step arrives */
+    .flow.is-armed .flow-grid li { opacity: 0; }   /* fade only: a transform would skew the arrow geometry, which is measured from the cards */
+    .flow.is-armed.is-started .flow-grid li { opacity: 1; transition: opacity 0.5s var(--ease); transition-delay: calc(var(--n) * 0.55s); }
+    .flow-svg.is-drawn .edge { stroke-dashoffset: 0; }
+    .flow-svg.is-drawn .head { opacity: 1; }
+    .flow-svg.is-done .edge, .flow-svg.is-done .head { transition: none; }
+    .pulse { fill: currentColor; opacity: 0; }
+
+    /* step modal */
+    .step-modal {
+      box-sizing: border-box; padding: 0; margin: auto;
+      --s: 1;   /* fit scale (1 down to 0.5), set by script so the modal always fits the window without scrolling */
+      --gap-x: calc(env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px) + 24px);
+      --gap-y: calc(env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px) + 24px);
+      width: min(560px, calc(100vw - var(--gap-x))); max-height: calc(100vh - var(--gap-y)); max-height: calc(100dvh - var(--gap-y)); overflow: auto; overscroll-behavior: contain;
+      border: var(--ap-stroke) solid var(--ap-ink); border-radius: var(--ap-radius);
+      background: var(--bg); color: var(--ap-ink);
+    }
+    .step-modal::backdrop { background: rgba(20, 14, 10, 0.55); }
+    .step-modal[open] { animation: smIn 0.28s var(--ease); }
+    .step-modal[open]::backdrop { animation: smFade 0.28s ease; }
+    html:has(.step-modal[open]) { overflow: hidden; }
+    .sm-inner { position: relative; padding: calc(34px * var(--s)) clamp(18px, 6vw, 36px) calc(22px * var(--s)); display: flex; flex-direction: column; gap: calc(22px * var(--s)); }
+    /* every step sits in the same grid cell, so the modal is always as tall as the tallest step */
+    .sm-slides { display: grid; touch-action: pan-y; overflow-x: clip; }   /* clips the off-screen steps so they never cause sideways scrolling */
+    .sm-slide {
+      grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; gap: calc(14px * var(--s)); text-align: center; min-width: 0;
+      opacity: 0; visibility: hidden; transform: translateX(16px);
+      transition: opacity 0.32s var(--ease), transform 0.32s var(--ease), visibility 0s linear 0.32s;
+    }
+    .sm-slide.is-before { transform: translateX(-16px); }
+    .sm-slide.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity 0.32s var(--ease) 0.06s, transform 0.32s var(--ease) 0.06s, visibility 0s; }
+    .sm-art { width: 100%; display: flex; justify-content: center; }
+    .sm-art .flow-art { height: calc(150px * var(--s)); margin: 0; }
+    .step-modal.no-art .sm-art { display: none; }
+    .step-modal.tight .sm-tools-label { display: none; }
+    .step-modal.tight .sm-nav { padding-top: 0; border-top: 0; }
+    .step-modal.tight .sm-arrow { width: 38px; height: 38px; }
+    .step-modal h3 { font-family: var(--ap-font-display); font-weight: 400; font-size: max(1.25rem, calc(1.7rem * var(--s))); line-height: 1.15; margin: 0; color: var(--ap-ink); text-wrap: balance; }
+    .step-modal p { margin: 0; max-width: 46ch; color: var(--text); font-size: max(0.9rem, calc(1rem * var(--s))); line-height: 1.6; text-wrap: pretty; }
+    .sm-key { justify-content: center; gap: 8px; margin-top: 4px; }
+    .sm-key span { font-size: 0.8rem; padding: 3px 10px; }
+    .sm-tools { margin-top: auto; padding-top: calc(10px * var(--s)); width: 100%; display: flex; flex-direction: column; align-items: center; gap: calc(10px * var(--s)); }
+    .step-modal .sm-tools-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ap-ink-soft); }
+    .sm-tool-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .sm-tool-list { gap: 10px 22px; }
+    .sm-tool-list li { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 700; color: var(--ap-ink); }
+    .sm-tool-list img { width: 24px; height: 24px; object-fit: contain; flex: none; }
+    .sm-close {
+      all: unset; box-sizing: border-box; position: absolute; top: 10px; right: 10px; z-index: 1;
+      width: 40px; height: 40px; display: grid; place-items: center;
+      border: 1.5px solid var(--ap-ink); border-radius: 50%; color: var(--ap-ink); cursor: pointer;
+    }
+    .sm-close svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .sm-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: calc(16px * var(--s)); border-top: 1.5px solid var(--ap-line-soft, rgba(128,128,128,0.35)); }
+    .sm-arrow {
+      all: unset; box-sizing: border-box; width: 44px; height: 44px; flex: none; display: grid; place-items: center;
+      border: var(--ap-stroke) solid var(--ap-ink); border-radius: 50%; color: var(--ap-ink); cursor: pointer;
+      transition: background 0.2s var(--ease), transform 0.2s var(--ease), opacity 0.2s var(--ease);
+    }
+    .sm-arrow svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .sm-arrow:hover:not(:disabled) { background: rgba(128,128,128,0.14); }
+    .sm-arrow:active:not(:disabled) { transform: scale(0.94); }
+    .sm-arrow:disabled { opacity: 0.3; cursor: default; }
+    .sm-close:hover { background: rgba(128,128,128,0.14); }
+    .sm-close:focus-visible, .sm-arrow:focus-visible, .sm-dot:focus-visible { outline: 2px dashed var(--ap-ink); outline-offset: 3px; }
+    .sm-dots { display: flex; gap: 2px; align-items: center; justify-content: center; flex-wrap: nowrap; }
+    .sm-dot { all: unset; box-sizing: border-box; width: 28px; height: 28px; display: grid; place-items: center; cursor: pointer; }
+    .sm-dot::before { content: ""; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ap-ink); transition: background 0.2s var(--ease), transform 0.2s var(--ease); }
+    .sm-dot[aria-current="true"]::before { background: var(--ap-ink); transform: scale(1.2); }
+    @media (max-width: 360px) { .sm-dot { width: 24px; } .sm-nav { gap: 6px; } .sm-key { gap: 6px; } .sm-key span { font-size: 0.74rem; padding: 3px 8px; } }
+    @media (max-width: 340px) { .sm-inner { padding-left: 14px; padding-right: 14px; } .sm-dot { width: 20px; } .sm-arrow { width: 40px; height: 40px; } .sm-tool-list { gap: 8px 14px; } }
+    @keyframes smIn { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+    @keyframes smFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes apIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    @media (min-width: 760px) {
+      .flow-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 84px clamp(40px, 5vw, 60px);
+      }
+      .flow-grid li:nth-child(n) { margin-right: 0; }
+      .flow-grid li:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .flow-grid li:nth-child(2) { grid-column: 2; grid-row: 1; }
+      .flow-grid li:nth-child(3) { grid-column: 3; grid-row: 1; }
+      .flow-grid li:nth-child(4) { grid-column: 4; grid-row: 1; }
+      .flow-grid li:nth-child(5) { grid-column: 4; grid-row: 2; }
+      .flow-grid li:nth-child(6) { grid-column: 2; grid-row: 2; }
+    }
+
+    /* ---- 3. Tools web ----
+       Tools sit on a ring. Each system is one colour of line, always visible. Hover a colour to
+       trace it, click it to watch the work move from tool to tool. */
+    .net {
+      margin-top: var(--s-4);
+      --net-c0: #a9652a;   /* Lead magnet: caramel */
+      --net-c1: #3f7d68;   /* Monthly content: sage */
+      --net-c2: #5468a3;   /* Monthly report: dusty blue */
+      --net-accent: var(--ap-ink);
+      display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-3);
+      grid-template-areas: "keys" "stage" "card";
+    }
+    @media all {
+      .net { --net-c0: #e3a765; --net-c1: #7fc4a8; --net-c2: #9aa9e0; }
+    }
+    .net[data-p="0"] { --net-accent: var(--net-c0); }
+    .net[data-p="1"] { --net-accent: var(--net-c1); }
+    .net[data-p="2"] { --net-accent: var(--net-c2); }
+    .net-p0 { --c: var(--net-c0); } .net-p1 { --c: var(--net-c1); } .net-p2 { --c: var(--net-c2); }
+    .net-stage { grid-area: stage; min-width: 0; }
+    .net-keys { grid-area: keys; display: flex; flex-wrap: wrap; gap: 6px; }
+    .net-card { grid-area: card; }
+
+    /* colour key: doubles as the project picker */
+    .net-key {
+      all: unset; box-sizing: border-box;
+      display: inline-flex; align-items: center; gap: 10px;
+      min-height: 44px; padding: 0 10px 0 8px;
+      border: var(--ap-stroke) solid transparent; border-radius: var(--ap-radius);
+      color: var(--ap-ink); cursor: pointer; white-space: nowrap;
+      transition: transform 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
+    }
+    .net-key svg { width: 26px; height: 11px; flex: none; fill: none; stroke: var(--c); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .net-key-name { font-family: var(--ap-font-display); font-size: 1rem; line-height: 1; }
+    .net-key:hover, .net-key.is-hover { background: rgba(128,128,128,0.1); }
+    .net-key:active { transform: scale(0.98); }
+    .net-key:focus-visible { outline: 2px dashed var(--ap-ink); outline-offset: 3px; }
+    .net-key[aria-pressed="true"] { border-color: var(--c); }
+
+    .net-btn {
+      all: unset; box-sizing: border-box;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px; padding: 0 18px; white-space: nowrap;
+      border: var(--ap-stroke) solid var(--ap-ink);
+      border-radius: var(--ap-radius);
+      font-family: var(--ap-font-display); font-size: 1rem; line-height: 1;
+      color: var(--ap-ink); cursor: pointer;
+      transition: transform 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), opacity 0.2s var(--ease);
+    }
+    .net-btn:hover { transform: translateY(-2px); background: rgba(128,128,128,0.1); }
+    .net-btn:active { transform: scale(0.97); }
+    .net-btn:focus-visible { outline: 2px dashed var(--ap-ink); outline-offset: 4px; }
+    .net-btn.is-main, .net-btn.is-main:hover { background: var(--ap-ink); color: var(--bg); }
+    .net-btn.is-icon { width: 44px; padding: 0; }
+    .net-btn[disabled] { opacity: 0.3; cursor: default; transform: none; background: none; }
+
+    .net-svg { width: 100%; height: auto; display: block; color: var(--ap-ink); overflow: visible; }
+    /* Route lines. Each leg = a wide invisible hit path, a faded base line
+       (always showing), and an "ink" line that draws on top for the live step. */
+    .net-hit { fill: none; stroke: transparent; stroke-width: 18; pointer-events: stroke; cursor: pointer; }
+    .net-leg-base { opacity: 0.4; transition: opacity 0.3s var(--ease); pointer-events: none; }
+    .net-leg-base path { fill: none; stroke: var(--c); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .net-leg-line { stroke-dasharray: 1 1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s var(--ease) calc(var(--n) * 45ms); }
+    .net-svg.is-pre .net-leg-line { stroke-dashoffset: 1; transition: none; }
+    .net-svg.is-pre .net-head { opacity: 0; }
+    .net-head { transition: opacity 0.3s var(--ease) calc(var(--n) * 45ms + 0.6s); }
+    .net-ink { fill: none; stroke: var(--c); stroke-width: 3.25; stroke-linecap: round; pointer-events: none;
+               stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0;
+               transition: opacity 0.4s var(--ease), stroke-dashoffset 0s linear 0.4s; }
+    .net-leg-g.is-now .net-ink { opacity: 1; stroke-dashoffset: 0; transition: opacity 0.05s linear var(--d, 0s), stroke-dashoffset 0.6s var(--ease) var(--d, 0s); }
+
+    /* While a system plays: other systems all but vanish, its upcoming steps are a
+       faint guide, finished steps leave a soft trail, and the live step is full strength. */
+    .net-svg.has-pick .net-leg-base { opacity: 0.04; }
+    .net-svg.has-pick .is-pick .net-leg-base { opacity: 0.14; }
+    .net-svg.has-pick .is-pick.is-past .net-leg-base { opacity: 0.42; }
+    .net-svg.has-pick .is-pick.is-now .net-leg-base { opacity: 1; transition-delay: calc(var(--d, 0s) + 0.4s); }
+    .net-svg.has-hover .net-leg-g .net-leg-base { opacity: 0.04; transition-delay: 0s; }
+    .net-svg.has-hover .net-leg-g.is-hover .net-leg-base { opacity: 0.95; }
+    .net-svg.has-hover .net-leg-g:not(.is-hover) .net-ink { opacity: 0.08; }
+
+    .net-node { cursor: pointer; outline: none; transition: opacity 0.35s var(--ease); }
+    .net-node-in { transform-box: fill-box; transform-origin: center; transition: transform 0.3s var(--ease); }
+    .net-circle { fill: var(--surface); stroke: currentColor; stroke-width: var(--ap-line); transition: stroke 0.3s var(--ease), stroke-width 0.3s var(--ease); }
+    .net-label { font-family: var(--ap-font-display); font-size: 15px; fill: currentColor;
+                 paint-order: stroke; stroke: var(--ap-halo); stroke-width: 5px; stroke-linejoin: round; }
+    .net-label.is-small { font-size: 13px; }
+    .net-node:hover .net-node-in { transform: scale(1.06); }
+    .net-node:active .net-node-in { transform: scale(0.97); }
+    .net-node.is-off { opacity: 0.3; }
+    .net-svg.has-hover .net-node { opacity: 0.3; }
+    .net-svg.has-hover .net-node.is-hover { opacity: 1; }
+    .net-node.is-active .net-circle { stroke: var(--net-accent); stroke-width: 3; transition-delay: 0.3s; }
+    .net-node.is-active .net-node-in { transform: scale(1.1); transition-delay: 0.3s; }
+    .net-node:focus-visible .net-circle { stroke-dasharray: 5 4; stroke-width: 3; }
+    .net-ripple { fill: none; stroke: var(--net-accent); stroke-width: 2; opacity: 0; pointer-events: none; transform-box: fill-box; transform-origin: center; }
+    .net-ripple.go { animation: netRipple 0.9s var(--ease) 0.3s 1 both; }
+    @keyframes netRipple { from { opacity: 0.55; transform: scale(1); } to { opacity: 0; transform: scale(1.7); } }
+    .net-badge { opacity: 0; transform: scale(0.4); pointer-events: none; transform-box: fill-box; transform-origin: center;
+                 transition: opacity 0.25s var(--ease), transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .net-badge.is-on { opacity: 1; transform: none; transition-delay: 0.35s; }
+    .net-badge circle { fill: var(--net-accent); }
+    .net-badge text { fill: var(--on-accent); font-family: var(--ap-font-body); font-weight: 800; font-size: 11px; text-anchor: middle; }
+
+    .net-cap { text-align: center; min-height: 1.6em; margin-top: var(--s-1); color: var(--ap-ink-soft); font-size: 0.88rem; }
+    @media (hover: none) { .net-cap { display: none; } }
+    .net-cap strong { color: var(--ap-ink); font-weight: 700; }
+
+    /* Step card. One fixed rhythm: kicker, 8, title, 8, text, 16, tools, 14, link.
+       The body's min-height is set in JS to the tallest step, so the controls never move. */
+    .net-card {
+      position: relative;
+      display: flex; flex-direction: column;
+      padding: var(--s-4);
+      border: var(--ap-stroke) solid var(--ap-ink);
+      border-radius: var(--ap-radius);
+      transition: border-color 0.3s var(--ease);
+    }
+    .net[data-p] .net-card { border-color: var(--net-accent); }
+    .net-card-body { flex: 1 0 auto; }
+    .net-card-body::after { content: ""; display: block; clear: both; }
+    .net-card-body.is-in { animation: apIn 0.3s var(--ease); }
+    .net-kicker { margin: 0 0 var(--s-2); font-size: 0.72rem; line-height: 1.4; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--ap-ink-soft); }
+    .net-card h3 { margin: 0 0 var(--s-2); font-size: clamp(1.3rem, 3.4vw, 1.5rem); line-height: 1.2; color: var(--ap-ink); }
+    .net-text { margin: 0; color: var(--text); font-size: 1rem; line-height: 1.55; text-wrap: pretty; }
+    .net-chips { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .net-chips li {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 30px; padding: 0 12px 0 6px;
+      border: var(--ap-line-thin) solid var(--ap-ink); border-radius: 999px;
+      font-size: 0.8rem; line-height: 1; font-weight: 700; color: var(--ap-ink); white-space: nowrap;
+    }
+    .net-chips img { width: 18px; height: 18px; object-fit: contain; }
+    .net-more { display: block; width: fit-content; margin-top: 14px; font-weight: 700; font-size: 0.88rem; line-height: 1.4; }
+    .net-more[hidden], .net-thumb[hidden], .net-chips[hidden], .net-kicker[hidden] { display: none; }
+    .net-thumb {
+      float: right; width: 88px; height: 100px; margin: 2px 2px var(--s-2) var(--s-3);
+      border: var(--ap-stroke) solid var(--ap-ink); border-radius: 6px; overflow: hidden;
+      transform: rotate(2.5deg); box-shadow: var(--shadow-1); background: var(--surface);
+    }
+    .net-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+    .net-ctrl { display: flex; align-items: center; gap: var(--s-2); margin-top: var(--s-3); padding-top: var(--s-3); border-top: 1px dashed var(--border-strong); }
+    .net-dots { flex: 1; display: flex; justify-content: center; }
+    .net-dot { all: unset; box-sizing: border-box; width: 15px; height: 44px; display: grid; place-items: center; cursor: pointer; }
+    .net-dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: var(--ap-stroke) solid var(--ap-ink);
+                       transition: transform 0.2s var(--ease), background 0.2s var(--ease); }
+    .net-dot:hover::before { transform: scale(1.3); }
+    .net-dot.is-past::before { background: var(--ap-ink-soft); border-color: var(--ap-ink-soft); }
+    .net-dot[aria-current="step"]::before { background: var(--net-accent); border-color: var(--net-accent); transform: scale(1.35); }
+    .net-dot:focus-visible { outline: 2px dashed var(--ap-ink); outline-offset: -6px; border-radius: 8px; }
+
+    @media (min-width: 640px) {
+      .net-thumb { width: 132px; height: 128px; }
+      .net-ctrl { gap: var(--s-3); }
+      .net-dot { width: 20px; }
+    }
+    /* Desktop: web on the left, colour key and step card on the right, all in one view. */
+    @media (min-width: 940px) {
+      .net {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+        grid-template-areas: "stage keys" "stage card";
+        grid-template-rows: auto 1fr;
+        column-gap: var(--s-5); row-gap: var(--s-3); align-items: start;
+      }
+      .net-keys { flex-direction: column; flex-wrap: nowrap; gap: 0; }
+      .net-key { display: flex; min-height: 40px; padding: 0 14px 0 10px; }
+      .net-key svg { width: 34px; height: 14px; }
+      .net-thumb { width: 96px; height: 108px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .step-modal[open], .step-modal[open]::backdrop { animation: none; }
+      .sm-slide, .sm-slide.is-active { transition: none; }
+      .flow-art .a-blink, .flow-art .a-rec, .flow-art .a-spin, .flow-art .a-sweep, .flow-art .a-approve, .flow-art .a-check, .flow-art .a-post, .flow-art .a-tick, .flow-art .a-trend, .flow-art .a-trend-head, .flow-art .a-dot { animation: none !important; }
+      .edge { stroke-dashoffset: 0; }
+      .head { opacity: 1; }
+    }
+
+    /* ============================================================ FOOTER ============================================================ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: var(--s-5) 0 var(--s-4);
+      margin-top: var(--s-4);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-5);
+    }
+    @media (min-width: 640px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--s-6); }
+    }
+    .footer-label { margin-bottom: var(--s-3); }
+    .link-list { display: flex; flex-direction: column; gap: var(--s-1); }
+    .link-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-3);
+      padding: 13px 4px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+    }
+    .link-list a:hover {
+      padding-left: 10px;
+      background: var(--navy-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: var(--navy);
+    }
+    .link-list a .arrow { color: var(--text-soft); transition: transform 0.2s var(--ease); }
+    .link-list a:hover .arrow { transform: translateX(4px); }
+    .footer-bottom { margin-top: var(--s-4); color: var(--text-soft); font-size: 0.82rem; }
+    /* Reads as the period ending the copyright line. Low contrast, tiny, and
+       skipped by screen readers and tab order so it never announces itself. */
+    .fb-dot {
+      font-size: 0.5rem;
+      color: var(--text-soft);
+      opacity: 0.28;
+      text-decoration: none;
+      /* The glyph is ~3px wide, too small to hit by hand (and well under the
+         44px touch guidance). Padding + a negative margin grow the tap target
+         without moving the dot or adding any visible ink. */
+      padding: 14px 12px 14px 13px;
+      margin: -14px -12px -14px -11px;
+      transition: opacity 0.2s var(--ease);
+    }
+    .fb-dot:hover, .fb-dot:focus-visible { opacity: 0.6; }
+    /* Local dev only: the <html data-local> flag is set by the script below
+       when the page is served from localhost, so the mark is findable while
+       testing. On the live site the attribute is never set and this does
+       nothing, leaving the dot as inconspicuous as before. */
+    html[data-local] .fb-dot { opacity: 0.5; }
+    html[data-local] .fb-dot:hover { opacity: 1; }
+
+    /* ============================================================ SCROLL REVEAL ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      will-change: transform, opacity;
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.07s; }
+    .reveal.d2 { transition-delay: 0.14s; }
+    .reveal.d3 { transition-delay: 0.21s; }
+
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: 8px;
+      background: var(--navy-grad);
+      color: var(--on-accent);
+      padding: 10px 16px;
+      border-radius: 8px;
+      z-index: 100;
+    }
+    .skip:focus { left: 12px; }
+
+    /* ============================================================ RESPONSIVE ============================================================ */
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 860px) {
+      .nav-links { display: flex; }
+      .nav-burger { display: none; }
+      .mobile-menu { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      section { padding: var(--s-6) 0; }
+    }
+    @media (min-width: 1040px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <!-- ============================ NAV ============================ -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html#hero" aria-label="Brett Goldfarb, home">
+        <span>Brett Goldfarb</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html#ai-tools">AI Tools</a>
+        <a href="../index.html#marketing">Marketing</a>
+        <a href="my-approach.html">My Approach</a>
+        <a href="../index.html#writing">Writing</a>
+        <a href="../index.html#connect">Connect</a>
+      </nav>
+      <div class="nav-right">
+        <button class="nav-burger" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
+          <svg class="icon-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="wrap">
+        <a href="../index.html#ai-tools">AI Tools</a>
+        <a href="../index.html#marketing">Marketing</a>
+        <a href="my-approach.html">My Approach</a>
+        <a href="../index.html#writing">Writing</a>
+        <a href="../index.html#connect">Connect</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================ BACK LINK ============================ -->
+  <div class="backbar">
+    <div class="wrap">
+      <a class="back-link" href="../index.html#marketing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Back to portfolio
+      </a>
+    </div>
+  </div>
+
+  <main id="hero">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1 class="reveal d1"><span class="name">My Approach</span></h1>
+          <p class="hero-lead reveal d1">I run the same monthly system for every client and adapt it to fit their needs. Here's who I work with, how the system runs, and the tools that make it work.</p>
+        </div>
+        <div class="hero-media reveal d2">
+          <img class="hero-logo" src="../assets/BJG%20Creations%20Logo.png" alt="BJG Creations logo" width="500" height="500" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 1. WHO I WORK WITH ============================ -->
+    <section class="ap-section" id="who">
+      <div class="wrap">
+        <div class="section-head reveal"><h2>Who I work with</h2></div>
+        <div class="who-grid">
+          <p class="ap-who reveal d1">My clients know social media matters. They just don't have the hours to do it right. They're busy running something they're passionate about and serving their community. That's who I love working with: small local businesses and organizations with real heart.</p>
+          <!-- Client logos, scrolling forever. The second set is a copy so the loop is seamless. -->
+          <div class="logo-marquee reveal d2" role="region" aria-label="Clients I work with">
+            <ul class="logo-track">
+              <li><img src="../assets/approach/clients/centre-music-house.png" alt="Centre Music House" width="247" height="240" /></li>
+              <li><img src="../assets/approach/clients/garden-continuum.png" alt="The Garden Continuum" width="227" height="240" /></li>
+              <li><img src="../assets/approach/clients/keep-framingham-beautiful.png" alt="Keep Framingham Beautiful" width="300" height="300" /></li>
+              <li><img src="../assets/approach/clients/radiant-leaf.png" alt="Radiant Leaf Consulting" width="240" height="240" /></li>
+              <li aria-hidden="true"><img src="../assets/approach/clients/centre-music-house.png" alt="" width="247" height="240" /></li>
+              <li aria-hidden="true"><img src="../assets/approach/clients/garden-continuum.png" alt="" width="227" height="240" /></li>
+              <li aria-hidden="true"><img src="../assets/approach/clients/keep-framingham-beautiful.png" alt="" width="300" height="300" /></li>
+              <li aria-hidden="true"><img src="../assets/approach/clients/radiant-leaf.png" alt="" width="240" height="240" /></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 2. WORKING TOGETHER ============================ -->
+    <section class="ap-section" id="together">
+      <div class="wrap">
+        <div class="section-head reveal">
+          
+          <h2>What working together looks like</h2>
+          <p class="ap-hint"><span class="hint-desktop">Click</span><span class="hint-touch">Tap</span> any step to learn more</p>
+        </div>
+
+        <div class="flow" id="flow">
+          <svg class="flow-svg" id="flowSvg" role="img" aria-labelledby="flowTitle flowDesc">
+            <title id="flowTitle">Monthly system</title>
+            <desc id="flowDesc">An onboarding call starts things off. Then the system repeats every month: content calendar, content creation, approval and scheduling, analyze and report, review and plan, and back to the content calendar.</desc>
+          </svg>
+          <ol class="flow-grid" id="flowGrid">
+          <li>
+            <button class="flow-node" type="button" data-key="zoom" aria-haspopup="dialog">
+              <svg class="flow-art" viewBox="0 0 160 90" aria-hidden="true"><defs><clipPath id="zoomScreen"><rect x="26" y="9" width="108" height="64" rx="1.5"/></clipPath></defs><rect x="20" y="3" width="120" height="76" rx="5"/><rect x="26" y="9" width="108" height="64" rx="1.5" fill="#d9d9d9" stroke="none"/><image href="../assets/BJG%20Creations%20Logo.png" x="34" y="-3" width="92" height="92" clip-path="url(#zoomScreen)"/><rect x="26" y="9" width="108" height="64" rx="1.5"/><circle cx="80" cy="6" r="1.1" fill="currentColor" stroke="none"/><path d="M8 79 H152 V82 a3 3 0 0 1 -3 3 H11 a3 3 0 0 1 -3 -3 z"/><path d="M68 79 q0 3.5 5 3.5 h14 q5 0 5 -3.5" class="a-soft"/></svg>
+              <span class="flow-top"><span class="flow-title">Onboarding call</span></span>
+            </button>
+          </li>
+          <li>
+            <button class="flow-node" type="button" data-key="calendar" aria-haspopup="dialog">
+              <svg class="flow-art" viewBox="0 0 160 90" aria-hidden="true"><defs><clipPath id="calScreen"><rect x="19" y="9" width="122" height="71" rx="1.5"/></clipPath></defs><rect x="13" y="3" width="134" height="83" rx="5"/><rect x="19" y="9" width="122" height="71" rx="1.5" fill="#d9d9d9" stroke="none"/><path d="M36.4 20 V80 M53.9 20 V80 M71.3 20 V80 M88.7 20 V80 M106.1 20 V80 M123.6 20 V80 M19 32 H141 M19 44 H141 M19 56 H141 M19 68 H141" class="a-soft" stroke="#222" opacity="0.5"/><path d="M19 20 H141" stroke="#222"/><path d="M26 14.5 H52" stroke="#222" stroke-width="2.4"/><g class="cal-posts"><rect x="41.8" y="22.7" width="6.6" height="6.6" rx="0.8" fill="#2e9b57" stroke="none" class="a-post" style="--i:0"/><path d="M80.0 21.4 L84.6 26 L80.0 30.6 L75.4 26 Z" fill="#2f6fd8" stroke="none" class="a-post" style="--i:1"/><circle cx="114.9" cy="26" r="3.6" fill="#d93a3a" stroke="none" class="a-post" style="--i:2"/><path d="M45.1 33.4 L49.7 38 L45.1 42.6 L40.5 38 Z" fill="#2f6fd8" stroke="none" class="a-post" style="--i:3"/><rect x="76.7" y="34.7" width="6.6" height="6.6" rx="0.8" fill="#2e9b57" stroke="none" class="a-post" style="--i:4"/><circle cx="114.9" cy="38" r="3.6" fill="#d93a3a" stroke="none" class="a-post" style="--i:5"/><rect x="41.8" y="46.7" width="6.6" height="6.6" rx="0.8" fill="#2e9b57" stroke="none" class="a-post" style="--i:6"/><circle cx="80.0" cy="50" r="3.6" fill="#d93a3a" stroke="none" class="a-post" style="--i:7"/><circle cx="114.9" cy="50" r="3.6" fill="#d93a3a" stroke="none" class="a-post" style="--i:8"/><path d="M45.1 57.4 L49.7 62 L45.1 66.6 L40.5 62 Z" fill="#2f6fd8" stroke="none" class="a-post" style="--i:9"/><rect x="76.7" y="58.7" width="6.6" height="6.6" rx="0.8" fill="#2e9b57" stroke="none" class="a-post" style="--i:10"/><circle cx="114.9" cy="62" r="3.6" fill="#d93a3a" stroke="none" class="a-post" style="--i:11"/><rect x="41.8" y="70.7" width="6.6" height="6.6" rx="0.8" fill="#2e9b57" stroke="none" class="a-post" style="--i:12"/><path d="M80.0 69.4 L84.6 74 L80.0 78.6 L75.4 74 Z" fill="#2f6fd8" stroke="none" class="a-post" style="--i:13"/><circle cx="114.9" cy="74" r="3.6" fill="#d93a3a" stroke="none" class="a-post" style="--i:14"/></g><rect x="19" y="9" width="122" height="71" rx="1.5"/><path d="M48 0 V7 M112 0 V7" stroke-width="3"/></svg>
+              <span class="flow-top"><span class="flow-title">Content calendar</span></span>
+            </button>
+          </li>
+          <li>
+            <button class="flow-node" type="button" data-key="creation" aria-haspopup="dialog">
+              <svg class="flow-art" viewBox="0 0 160 90" aria-hidden="true"><defs><clipPath id="phoneScreen"><rect x="61" y="8" width="38" height="74" rx="2.5"/></clipPath></defs><rect x="55" y="2" width="50" height="86" rx="9"/><rect x="61" y="8" width="38" height="74" rx="2.5" fill="#d9d9d9" stroke="none"/><path d="M65 24 V19 H70 M95 24 V19 H90 M65 59 V64 H70 M95 59 V64 H90" stroke="#222"/><circle cx="80" cy="34" r="5.5" stroke="#222"/><path d="M68 58 q0 -13 12 -13 q12 0 12 13" stroke="#222"/><circle class="a-rec" cx="68" cy="12.5" r="2"/><circle cx="80" cy="74.5" r="5" stroke="#222"/><circle cx="80" cy="74.5" r="2.4" fill="#d93a3a" stroke="none"/><rect x="61" y="8" width="38" height="74" rx="2.5"/><path d="M73 5 H87" stroke-width="2"/></svg>
+              <span class="flow-top"><span class="flow-title">Content creation</span></span>
+            </button>
+          </li>
+          <li>
+            <button class="flow-node" type="button" data-key="scheduling" aria-haspopup="dialog">
+              <svg class="flow-art" viewBox="0 0 160 90" aria-hidden="true"><circle cx="80" cy="45" r="40"/><circle cx="80" cy="45" r="34.5" fill="#d9d9d9" stroke="none"/><path d="M80 15 V20 M110 45 H105 M80 75 V70 M50 45 H55" stroke="#222"/><circle cx="80" cy="45" r="34.5"/><path d="M80 45 L93 53" stroke="#222" stroke-width="2.4"/><g class="a-sweep"><path d="M80 45 V23" stroke="#222" stroke-width="2.4"/></g><circle cx="80" cy="45" r="2.4" fill="#222" stroke="none"/><g class="a-approve"><circle cx="108" cy="73" r="12" fill="#2e9b57" stroke="var(--ap-paper)" stroke-width="2.4"/><path class="a-check" pathLength="1" d="M102.5 73.5 L106.5 77.5 L114 68.5" stroke="#fff" stroke-width="2.8"/></g></svg>
+              <span class="flow-top"><span class="flow-title">Approval &amp; scheduling</span></span>
+            </button>
+          </li>
+          <li>
+            <button class="flow-node" type="button" data-key="analyze" aria-haspopup="dialog">
+              <svg class="flow-art" viewBox="0 0 160 90" aria-hidden="true"><rect x="20" y="3" width="120" height="84" rx="5"/><rect x="26" y="9" width="108" height="72" rx="1.5" fill="#d9d9d9" stroke="none"/><path d="M26 20 H134" stroke="#222"/><path d="M33 14.5 H55" stroke="#222" stroke-width="2.4"/><rect class="a-bar" x="38" y="58" width="14" height="14" rx="1.2" fill="#2e9b57" stroke="none"/><rect class="a-bar" x="62" y="50" width="14" height="22" rx="1.2" fill="#2f6fd8" stroke="none"/><rect class="a-bar" x="86" y="42" width="14" height="30" rx="1.2" fill="#d93a3a" stroke="none"/><rect class="a-bar" x="110" y="32" width="14" height="40" rx="1.2" fill="#2e9b57" stroke="none"/><path d="M32 72 H128" stroke="#222"/><path transform="translate(0 4)" class="a-trend" pathLength="1" d="M45 50 L69 42 L93 34 L124 21.1" stroke="#222"/><path transform="translate(0 4)" class="a-trend-head" d="M118.0 20.5 L124 21.1 L120.2 25.8" stroke="#222"/><circle transform="translate(0 4)" class="a-dot" style="--i:0" cx="45" cy="50" r="1.8" fill="#222" stroke="none"/><circle transform="translate(0 4)" class="a-dot" style="--i:1" cx="69" cy="42" r="1.8" fill="#222" stroke="none"/><circle transform="translate(0 4)" class="a-dot" style="--i:2" cx="93" cy="34" r="1.8" fill="#222" stroke="none"/><rect x="26" y="9" width="108" height="72" rx="1.5"/></svg>
+              <span class="flow-top"><span class="flow-title">Analyze &amp; report</span></span>
+            </button>
+          </li>
+          <li>
+            <button class="flow-node" type="button" data-key="review" aria-haspopup="dialog">
+              <svg class="flow-art" viewBox="0 0 160 90" aria-hidden="true"><rect x="48" y="6" width="64" height="80" rx="6"/><rect x="54" y="14" width="52" height="66" rx="2" fill="#d9d9d9" stroke="none"/><rect x="60" y="26" width="8" height="8" rx="1.2" stroke="#222"/><path class="a-tick" pathLength="1" style="--i:0" d="M61.8 30 l2.2 2.6 l3.6 -5.2" stroke="#2e9b57" stroke-width="2.4"/><path d="M75 30 H98" stroke="#222" class="a-soft"/><rect x="60" y="42" width="8" height="8" rx="1.2" stroke="#222"/><path class="a-tick" pathLength="1" style="--i:1" d="M61.8 46 l2.2 2.6 l3.6 -5.2" stroke="#2e9b57" stroke-width="2.4"/><path d="M75 46 H98" stroke="#222" class="a-soft"/><rect x="60" y="58" width="8" height="8" rx="1.2" stroke="#222"/><path class="a-tick" pathLength="1" style="--i:2" d="M61.8 62 l2.2 2.6 l3.6 -5.2" stroke="#2e9b57" stroke-width="2.4"/><path d="M75 62 H98" stroke="#222" class="a-soft"/><rect x="54" y="14" width="52" height="66" rx="2"/><rect x="68" y="2" width="24" height="12" rx="3" fill="#d9d9d9" stroke="none"/><rect x="68" y="2" width="24" height="12" rx="3"/></svg>
+              <span class="flow-top"><span class="flow-title">Review &amp; plan</span></span>
+            </button>
+          </li>
+          </ol>
+        </div>
+
+        <dialog class="step-modal" id="stepModal" aria-labelledby="stepModalTitle">
+          <div class="sm-inner">
+            <button class="sm-close" id="stepClose" type="button" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+            <div class="sm-slides" id="stepSlides"></div>
+            <div class="sm-nav">
+              <button class="sm-arrow" id="stepPrev" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 2 4 8l6 6"/></svg></button>
+              <div class="sm-dots" id="stepDots" role="group" aria-label="Choose a step"></div>
+              <button class="sm-arrow" id="stepNext" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2l6 6-6 6"/></svg></button>
+            </div>
+          </div>
+        </dialog>
+      </div>
+    </section>
+
+    <!-- ============================ 3. TOOLS ============================ -->
+    <section class="ap-section" id="tools">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Tools I use</h2>
+        </div>
+        <div class="net reveal d1" id="net">
+          <div class="net-stage">
+            <svg class="net-svg" id="netSvg" role="group" aria-label="Colored lines show how each workflow moves from tool to tool."></svg>
+            <p class="net-cap" id="netCap" aria-hidden="true"></p>
+          </div>
+          <div class="net-keys" id="netKeys" role="group" aria-label="Choose a workflow"></div>
+          <div class="net-card">
+            <div class="net-card-body" id="netBody">
+              <div class="net-thumb" hidden><img alt="" /></div>
+              <p class="net-kicker"></p>
+              <h3></h3>
+              <p class="net-text"></p>
+              <ul class="net-chips" aria-label="Tools in this step"></ul>
+              <a class="net-more" hidden></a>
+            </div>
+            <div class="net-ctrl">
+              <button class="net-btn is-icon" id="netPrev" type="button" aria-label="Previous step">←</button>
+              <div class="net-dots" id="netDots"></div>
+              <button class="net-btn is-main" id="netNext" type="button">Start →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer id="connect">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col reveal">
+          <p class="eyebrow footer-label">Connect</p>
+          <div class="link-list">
+            <a href="mailto:brett@bjgcreations.com">brett@bjgcreations.com <span class="arrow">→</span></a>
+            <a href="tel:+15087453108">(508) 745-3108 <span class="arrow">→</span></a>
+            <a href="https://www.linkedin.com/in/brett-j-goldfarb/" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
+          </div>
+        </div>
+        <div class="footer-col reveal d1">
+          <p class="eyebrow footer-label">My work</p>
+          <div class="link-list">
+            <a href="../index.html#marketing">Back to portfolio <span class="arrow">→</span></a>
+            <a href="centre-music-house.html">Centre Music House <span class="arrow">→</span></a>
+            <a href="the-garden-continuum.html">The Garden Continuum <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </div>
+      <p class="footer-bottom">© <span id="year"></span> Brett Goldfarb<a class="fb-dot" href="https://site-metrics.brett-goldfarb.workers.dev/" rel="noopener nofollow" aria-hidden="true" tabindex="-1">.</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Mobile menu ----
+    var navToggle = document.getElementById('navToggle');
+    var mobileMenu = document.getElementById('mobileMenu');
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+    navToggle.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(open));
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+    });
+    mobileMenu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
+    });
+
+    // ---- Scroll reveal ----
+    var revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    }
+
+
+    // ============================================================
+    // MY APPROACH: content and data (edit here)
+    // ============================================================
+    var FLOW_CONTENT = {
+      zoom:       { title: 'Onboarding call',        text: "We talk. I learn your business, your story, and your goals. Then I set you up with a shared Google folder and the tools you need to review and approve everything.", tools: ['drive', 'asana'] },
+      calendar:   { title: 'Content calendar', text: "I study what's working for similar businesses and turn our calls into a plan. Every post has a job. Education builds trust, Reach brings new people in, and Brand shares your story and values.", tools: ['instagram', 'asana', 'claude'] },
+      creation:   { title: 'Content creation', text: "With the plan in place, we start creating. Some posts need your expertise, and some need us to film together, so we'll set aside time that works for you. I handle the rest: the scripts, the video editing, the graphics, and the captions.", tools: ['script', 'canva', 'capcut', 'claude'] },
+      scheduling: { title: 'Approval & scheduling',  text: "I send each post and caption over for your review, and you can ask for changes. Once you approve, I schedule it. Nothing goes live without your OK.", tools: ['asana', 'drive', 'meta', 'manychat'] },
+      analyze:    { title: 'Analyze & report',          text: "Each month I look at how our posts did overall and how each pillar did on its own. Then I put it all into a report we go through together.", tools: ['meta', 'drive', 'canva'] },
+      review:     { title: 'Review & plan',  text: "We meet to review last month and plan the next one. I bring 3 to 4 things to improve, each with clear next steps.", tools: ['claude', 'asana'] }
+    };
+    // `tools` below are ids from the TOOLS list further down, shown at the bottom of each step's modal.
+    var FLOW_ORDER = ['zoom', 'calendar', 'creation', 'scheduling', 'analyze', 'review'];
+
+    // Tools, clockwise around the ring from the top right. The order spreads
+    // linked tools apart so lines cross the ring (about 23 crossings) without
+    // crowding the middle or running near any logo.
+    // `logoDark` (optional) swaps in for dark mode, for marks that are solid black.
+    var LOGOS = '../assets/tool-logos/';
+    var TOOLS = [
+      { id: 'github',   label: 'GitHub',                job: 'Hosts landing pages',         logo: LOGOS + 'github.svg',   logoDark: LOGOS + 'github-dark.svg' },
+      { id: 'meta',     label: 'Meta Business\nSuite', job: 'Schedules posts, tracks results', logo: LOGOS + 'meta.svg' },
+      { id: 'asana',    label: 'Asana',                 job: 'Holds calendars and approvals',     logo: LOGOS + 'asana.svg' },
+      { id: 'canva',    label: 'Canva',                 job: 'Designs graphics and reports', logo: LOGOS + 'canva.svg' },
+      { id: 'r2',       label: 'Cloudflare\nR2',       job: 'Stores page files',           logo: LOGOS + 'cloudflare.svg' },
+      { id: 'instagram', label: 'Instagram',            job: 'Posts content and researches similar businesses', logo: LOGOS + 'instagram.svg' },
+      { id: 'script',   label: 'Video Script\nTool',   job: 'My own tool for shot lists and scripts',  logo: LOGOS + 'video-script-tool.png' },
+      { id: 'capcut',   label: 'CapCut',                job: 'Video editor',                 logo: LOGOS + 'capcut.svg',   logoDark: LOGOS + 'capcut-dark.svg' },
+      { id: 'manychat', label: 'ManyChat',              job: 'Social media lead capture',     logo: LOGOS + 'manychat.png', logoDark: LOGOS + 'manychat-dark.png' },
+      { id: 'drive',    label: 'Google Drive',          job: 'Stores content and data',     logo: LOGOS + 'google-drive.svg' },
+      { id: 'claude',   label: 'Claude',                job: 'Plans, writes, and builds',   logo: LOGOS + 'claude.svg' }
+    ];
+    // Systems. Each one is a colour of line in the web (--net-c0..2 in the CSS,
+    // in this order). Each step lists its tools in the order they're used: the
+    // web draws an arrow from one step to the next, and a plain line between
+    // tools that share a step. Per step, `img` and `more` (a link to a real example) are optional.
+    var APPROVALS = { title: 'Review & approve', tools: ['asana', 'drive'],
+      text: "I put each post in Drive and its caption in Asana, linked together, so you can review everything in one place and ask for changes." };
+    var EXAMPLE = { href: 'centre-music-house.html#lead-magnet', text: 'Example: Centre Music House →' };
+    var CAMPAIGNS = [
+      { tab: 'Monthly content',
+        steps: [
+          { title: 'Plan the month', tools: ['instagram', 'asana'],
+            text: "I combine everything we've discussed with what's working for similar businesses, then map every post into one calendar." },
+          { title: 'Film together', tools: ['script'],
+            text: "We film on site, with scripts from my own tool guiding every shot." },
+          { title: 'Create and edit', tools: ['canva', 'capcut', 'claude'],
+            text: "I edit the videos, design the graphics, and write the captions." },
+          APPROVALS,
+          { title: 'Schedule the posts', tools: ['meta'],
+            text: "Approved posts get scheduled." },
+          { title: 'Reply by DM', tools: ['manychat'],
+            text: "When a post includes a link, anyone who comments gets it by direct message." }
+        ] },
+      { tab: 'Monthly report',
+        steps: [
+          { title: 'Analyze the data', tools: ['meta', 'drive'],
+            text: "I pull the month's numbers into a shared spreadsheet, so we can see how every post and pillar did." },
+          { title: 'Plan improvements', tools: ['claude'],
+            text: "I look for what's working and what isn't, and pick the 3 to 4 things to improve next month." },
+          { title: 'Create the report', tools: ['canva'],
+            text: "I design it all into one clear report, ready for us to go through together." }
+        ] },
+      { tab: 'Lead magnet (free guide)',
+        steps: [
+          { title: 'Create the guide', tools: ['claude', 'canva'],
+            more: EXAMPLE,
+            text: "I write and design a free guide worth trading an email for, built around what your customers want to know.",
+            img: { src: '../assets/approach/parents-guide-cover.jpg', alt: 'Example: cover of A Parent\'s Guide to Starting Music Lessons' } },
+          { title: 'Build the landing page', tools: ['claude'],
+            more: EXAMPLE,
+            text: "I build a simple page where people enter their email and the guide arrives automatically.",
+            img: { src: '../assets/approach/parents-guide-landing.jpg', alt: 'Example: the Parent\'s Guide landing page' } },
+          { title: 'Host the page', tools: ['github', 'r2'],
+            text: "I publish the page on GitHub and store its files on Cloudflare R2, so it's fast and always online.",
+            img: { src: '../assets/approach/parents-guide-landing.jpg', alt: 'Example: the Parent\'s Guide landing page' } },
+          { title: 'Plan the distribution', tools: ['instagram', 'asana', 'script'],
+            text: "I research, plan, and script posts that get the guide in front of the right people." },
+          { title: 'Create and edit', tools: ['canva', 'capcut', 'claude'],
+            text: "I edit the videos, design the graphics, and write the captions." },
+          APPROVALS,
+          { title: 'Schedule the posts', tools: ['meta'],
+            text: "Approved posts get scheduled." },
+          { title: 'Reply by DM', tools: ['manychat'],
+            text: "Comment a keyword, get the guide by DM." },
+          { title: 'Track results', tools: ['meta', 'manychat', 'drive'],
+            text: "I track every sign-up and save it to a shared sheet, so you can see who downloaded the guide." }
+        ] }
+    ];
+
+    // ============================================================
+    // Flow diagram
+    // ============================================================
+    (function () {
+      var flow = document.getElementById('flow');
+      var svg = document.getElementById('flowSvg');
+      var grid = document.getElementById('flowGrid');
+      var nodes = {};
+      grid.querySelectorAll('.flow-node').forEach(function (b) { nodes[b.dataset.key] = b; });
+      var NS = 'http://www.w3.org/2000/svg';
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var wide = window.matchMedia('(min-width: 760px)');
+      var started = false, done = false, pulsePaths = [], pulseEl = null;
+
+      function rect(key) {
+        var r = nodes[key].getBoundingClientRect(), f = flow.getBoundingClientRect();
+        return { l: r.left - f.left, r: r.right - f.left, t: r.top - f.top, b: r.bottom - f.top,
+                 cx: (r.left + r.right) / 2 - f.left, cy: (r.top + r.bottom) / 2 - f.top };
+      }
+      function head(x, y, dx, dy) {
+        var px = -dy, py = dx, n = 9, w = 5;
+        return 'M' + (x - dx * n + px * w) + ' ' + (y - dy * n + py * w) + 'L' + x + ' ' + y + 'L' + (x - dx * n - px * w) + ' ' + (y - dy * n - py * w);
+      }
+      function edges() {
+        var R = {}; FLOW_ORDER.forEach(function (k) { R[k] = rect(k); });
+        var list = [];
+        if (wide.matches) {
+          var loopX = (R.review.cx + R.calendar.cx) / 2;   // centered between the two cards
+          list.push({ d: 'M' + R.zoom.r + ' ' + R.zoom.cy + 'H' + R.calendar.l, h: [R.calendar.l, R.zoom.cy, 1, 0] });
+          list.push({ d: 'M' + R.calendar.r + ' ' + R.calendar.cy + 'H' + R.creation.l, h: [R.creation.l, R.calendar.cy, 1, 0] });
+          list.push({ d: 'M' + R.creation.r + ' ' + R.creation.cy + 'H' + R.scheduling.l, h: [R.scheduling.l, R.creation.cy, 1, 0] });
+          list.push({ d: 'M' + R.scheduling.cx + ' ' + R.scheduling.b + 'V' + R.analyze.t, h: [R.scheduling.cx, R.analyze.t, 0, 1] });
+          list.push({ d: 'M' + R.analyze.l + ' ' + R.analyze.cy + 'H' + R.review.r, h: [R.review.r, R.analyze.cy, -1, 0] });
+          list.push({ d: 'M' + loopX + ' ' + R.review.t + 'V' + R.calendar.b, h: [loopX, R.calendar.b, 0, -1] });
+        } else {
+          for (var i = 0; i < 5; i++) {
+            var a = R[FLOW_ORDER[i]], b = R[FLOW_ORDER[i + 1]];
+            list.push({ d: 'M' + a.cx + ' ' + a.b + 'V' + b.t, h: [a.cx, b.t, 0, 1] });
+          }
+          var fw = flow.getBoundingClientRect().width, X = fw - 14, rv = R.review, cl = R.calendar, q = 10;
+          list.push({ d: 'M' + rv.r + ' ' + rv.cy + 'H' + (X - q) + 'Q' + X + ' ' + rv.cy + ' ' + X + ' ' + (rv.cy - q) +
+                         'V' + (cl.cy + q) + 'Q' + X + ' ' + cl.cy + ' ' + (X - q) + ' ' + cl.cy + 'H' + cl.r,
+                     h: [cl.r, cl.cy, -1, 0] });
+        }
+        return list;
+      }
+      function render() {
+        var f = flow.getBoundingClientRect();
+        var list0 = edges(), have = svg.querySelectorAll('.edge'), haveHeads = svg.querySelectorAll('.head');
+        if (have.length === list0.length) {      // resize: move the existing arrows so a running draw-in is not reset
+          svg.setAttribute('viewBox', '0 0 ' + f.width + ' ' + f.height);
+          pulsePaths = [];
+          list0.forEach(function (e, i) {
+            have[i].setAttribute('d', e.d); haveHeads[i].setAttribute('d', head.apply(null, e.h));
+            if (i > 0) pulsePaths.push(have[i]);
+          });
+          svg.classList.toggle('is-drawn', started || reduce);
+          svg.classList.toggle('is-done', done || reduce);
+          return;
+        }
+        var keep = svg.querySelectorAll('title,desc');
+        svg.innerHTML = ''; keep.forEach(function (n) { svg.appendChild(n); });
+        svg.setAttribute('viewBox', '0 0 ' + f.width + ' ' + f.height);
+        pulsePaths = [];
+        edges().forEach(function (e, i) {
+          var p = document.createElementNS(NS, 'path');
+          p.setAttribute('d', e.d); p.setAttribute('pathLength', '1'); p.setAttribute('class', 'edge');
+          p.style.setProperty('--i', i);
+          var h = document.createElementNS(NS, 'path');
+          h.setAttribute('d', head.apply(null, e.h)); h.setAttribute('class', 'head');
+          h.style.setProperty('--i', i);
+          svg.appendChild(p); svg.appendChild(h);
+          if (i > 0) pulsePaths.push(p);   // the zoom call is one-time; the rest repeats monthly
+        });
+        pulseEl = document.createElementNS(NS, 'circle');
+        pulseEl.setAttribute('r', '4.5'); pulseEl.setAttribute('class', 'pulse');
+        svg.appendChild(pulseEl);
+        svg.classList.toggle('is-drawn', started || reduce);
+        svg.classList.toggle('is-done', done || reduce);
+      }
+
+      // Choreography: the pulse arrives at a step, that step plays its animation, then the pulse travels on.
+      var pulseRunning = false, flowVisible = true;
+      function runPulse() {
+        if (reduce || pulseRunning) return;
+        pulseRunning = true;
+        var keys = FLOW_ORDER.slice(1);                 // the zoom call is one-time; these five repeat monthly
+        var DWELL = [4400, 3000, 3300, 3500, 3600], TRAVEL = 1900;
+        var i = 0, phase = 'lead', el = 0, last = null;
+        function ease(k) { return k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; }
+        function play(n) { nodes[keys[n]].classList.add('is-playing'); }
+        function stop(n) { nodes[keys[n]].classList.remove('is-playing'); }
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (en) { flowVisible = en[0].isIntersecting; }).observe(flow);
+        }
+        function tick(ts) {
+          if (last === null) last = ts;
+          var dt = Math.min(ts - last, 100); last = ts;
+          if (!flowVisible || document.hidden) return requestAnimationFrame(tick);
+          el += dt;
+          if (phase === 'lead' && el >= 700) { phase = 'dwell'; el = 0; play(i); }
+          else if (phase === 'dwell') {
+            pulseEl.style.opacity = 0;
+            if (el >= DWELL[i]) { stop(i); phase = 'travel'; el = 0; }
+          } else if (phase === 'travel') {
+            var path = pulsePaths[i];
+            if (path) {
+              var k = Math.min(el / TRAVEL, 1), pt = path.getPointAtLength(path.getTotalLength() * ease(k));
+              pulseEl.setAttribute('cx', pt.x); pulseEl.setAttribute('cy', pt.y);
+              pulseEl.style.opacity = Math.min(1, Math.sin(Math.PI * k) * 2).toFixed(2);
+            }
+            if (el >= TRAVEL) { pulseEl.style.opacity = 0; i = (i + 1) % keys.length; phase = 'dwell'; el = 0; play(i); }
+          }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      render();
+      if ('ResizeObserver' in window) new ResizeObserver(render).observe(flow); else window.addEventListener('resize', render);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+
+      if (reduce || !('IntersectionObserver' in window)) { started = done = true; render(); }
+      else {
+        flow.classList.add('is-armed');
+        document.querySelectorAll('#flowGrid > li').forEach(function (li, n) { li.style.setProperty('--n', n); });
+        var io = new IntersectionObserver(function (en) {
+          if (!en[0].isIntersecting) return;
+          io.disconnect();
+          started = true; flow.classList.add('is-started'); svg.classList.add('is-drawn');
+          setTimeout(function () { done = true; svg.classList.add('is-done'); runPulse(); }, 6 * 550 + 700);
+        }, { threshold: 0.3 });
+        io.observe(flow);
+      }
+
+      // Step modal: opens on a card, arrows (or the arrow keys) move between steps
+      var modal = document.getElementById('stepModal');
+      var mSlides = document.getElementById('stepSlides');
+      var mPrev = document.getElementById('stepPrev');
+      var mNext = document.getElementById('stepNext');
+      var mDots = document.getElementById('stepDots');
+      var openKey = null, slides = {};
+      var DARK_LOGOS = true;   // the page is always dark (see the THEME note at the top of the styles)
+
+      function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+      function artFor(key) {
+        // clone the card's drawing; rename ids so the page never has duplicates
+        return nodes[key].querySelector('.flow-art').outerHTML
+          .replace(/id="([\w-]+)"/g, 'id="$1-m"').replace(/url\(#([\w-]+)\)/g, 'url(#$1-m)');
+      }
+      function toolsFor(c) {
+        var out = (c.tools || []).map(function (id) {
+          var t = TOOLS.filter(function (x) { return x.id === id; })[0];
+          if (!t) return '';
+          return '<li><img src="' + ((DARK_LOGOS && t.logoDark) || t.logo) + '" alt="" />' + esc(t.label.replace('\n', ' ')) + '</li>';
+        }).join('');
+        return out ? '<div class="sm-tools"><p class="sm-tools-label">Tools I use here</p><ul class="sm-tool-list">' + out + '</ul></div>' : '';
+      }
+      // Build every step once. They stack in one grid cell, so the modal keeps one size.
+      FLOW_ORDER.forEach(function (k, n) {
+        var c = FLOW_CONTENT[k], el = document.createElement('section');
+        el.className = 'sm-slide'; el.id = 'stepSlide-' + k; el.setAttribute('aria-labelledby', 'stepTitle-' + k);
+        el.innerHTML =
+          '<div class="sm-art is-playing" aria-hidden="true">' + artFor(k) + '</div>' +
+          (k === 'calendar' ? '<div class="flow-tags sm-key" aria-label="Content pillars"><span class="t-edu">Education</span><span class="t-reach">Reach</span><span class="t-brand">Brand</span></div>' : '') +
+          '<h3 id="stepTitle-' + k + '">' + esc(c.title) + '</h3>' +
+          '<p>' + esc(c.text) + '</p>' +
+          toolsFor(c);
+        el.inert = true;
+        mSlides.appendChild(el); slides[k] = el;
+        var d = document.createElement('button');
+        d.type = 'button'; d.className = 'sm-dot'; d.setAttribute('aria-label', 'Go to ' + c.title);
+        d.addEventListener('click', function () { show(k); });
+        mDots.appendChild(d);
+      });
+
+      function show(key) {
+        var i = FLOW_ORDER.indexOf(key);
+        openKey = key;
+        FLOW_ORDER.forEach(function (k, n) {
+          var el = slides[k], on = k === key;
+          el.classList.toggle('is-active', on);
+          el.classList.toggle('is-before', n < i);
+          el.inert = !on;
+          if (on) {   // replay the drawing's animation
+            var art = el.querySelector('.sm-art');
+            art.classList.remove('is-playing'); void art.offsetWidth; art.classList.add('is-playing');
+          }
+        });
+        modal.setAttribute('aria-labelledby', 'stepTitle-' + key);
+        mPrev.disabled = i === 0; mNext.disabled = i === FLOW_ORDER.length - 1;
+        mPrev.setAttribute('aria-label', i > 0 ? 'Previous step: ' + FLOW_CONTENT[FLOW_ORDER[i - 1]].title : 'Previous step');
+        mNext.setAttribute('aria-label', i < FLOW_ORDER.length - 1 ? 'Next step: ' + FLOW_CONTENT[FLOW_ORDER[i + 1]].title : 'Next step');
+        Array.prototype.forEach.call(mDots.children, function (d, n) { d.setAttribute('aria-current', String(n === i)); });
+        if (document.activeElement && document.activeElement.disabled) (i === 0 ? mNext : mPrev).focus();
+      }
+      function step(dir) {
+        var i = FLOW_ORDER.indexOf(openKey) + dir;
+        if (i >= 0 && i < FLOW_ORDER.length) show(FLOW_ORDER[i]);
+      }
+      FLOW_ORDER.forEach(function (k) {
+        nodes[k].addEventListener('click', function () { show(k); modal.showModal(); queueFit(); });
+      });
+      mPrev.addEventListener('click', function () { step(-1); });
+      mNext.addEventListener('click', function () { step(1); });
+      document.getElementById('stepClose').addEventListener('click', function () { modal.close(); });
+      modal.addEventListener('click', function (e) { if (e.target === modal) modal.close(); });
+      modal.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      });
+      // Fit: shrink spacing, picture and text step by step until the modal fits the window.
+      // If a very short window still overflows, hide the picture. Scrolling stays as a last resort only.
+      var fitQueued = false;
+      function fit() {
+        fitQueued = false;
+        if (!modal.open) return;
+        function over() { return modal.scrollHeight > modal.clientHeight + 1; }
+        var stages = [[], ['no-art'], ['no-art', 'tight']];
+        for (var i = 0; i < stages.length; i++) {
+          modal.classList.remove('no-art', 'tight');
+          stages[i].forEach(function (c) { modal.classList.add(c); });
+          var s = 1; modal.style.setProperty('--s', 1);
+          while (over() && s > 0.5) { s = Math.round((s - 0.05) * 100) / 100; modal.style.setProperty('--s', s); }
+          if (!over()) return;
+        }
+      }
+      function queueFit() { if (!fitQueued) { fitQueued = true; requestAnimationFrame(fit); } }
+      window.addEventListener('resize', queueFit);
+      window.addEventListener('orientationchange', queueFit);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', queueFit);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(queueFit);
+
+      // Swipe left or right to change steps on touch screens
+      var sx = 0, sy = 0;
+      mSlides.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      mSlides.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+      }, { passive: true });
+
+      modal.addEventListener('close', function () { var k = openKey; openKey = null; if (k) nodes[k].focus(); });
+    })();
+
+    // ============================================================
+    // Tools web (rendered from TOOLS + CAMPAIGNS)
+    // ============================================================
+    (function () {
+      function $(id) { return document.getElementById(id); }
+      var root = $('net'), svg = $('netSvg'), keysEl = $('netKeys'), cap = $('netCap');
+      var body = $('netBody');
+      var prev = $('netPrev'), next = $('netNext'), dots = $('netDots');
+      var NS = 'http://www.w3.org/2000/svg';
+      var mq = window.matchMedia('(min-width: 640px)');
+      var ALWAYS_DARK = true;   // see the THEME note at the top of the styles
+      var dark = ALWAYS_DARK ? { matches: true } : window.matchMedia('(prefers-color-scheme: dark)');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var canHover = window.matchMedia('(hover: hover)').matches;
+      var CAP_DEFAULT = '';
+      var INTRO = { title: 'Pick a workflow', text: 'Choose a color to see how I use these tools, step by step.' };
+      var STEP_MS = 2600;
+
+      // ci = -1 means no project picked yet: every route shows, softly.
+      var ci = -1, si = 0, hoverP = -1, timer = null, pre = !reduce.matches && 'IntersectionObserver' in window;
+      var geo = {}, pos = {}, nodeEls = {}, legEls = [], keyEls = [];
+      var byId = {}, uses = {};
+      TOOLS.forEach(function (t) { byId[t.id] = t; });
+      CAMPAIGNS.forEach(function (c, p) {
+        uses[p] = {};
+        c.steps.forEach(function (s) { s.tools.forEach(function (id) { uses[p][id] = 1; }); });
+      });
+
+      function el(n, a, parent) {
+        var e = document.createElementNS(NS, n);
+        for (var k in a) e.setAttribute(k, a[k]);
+        if (parent) parent.appendChild(e);
+        return e;
+      }
+      function plain(t) { return t.label.replace('\n', ' '); }
+      function logoOf(t) { return (dark.matches && t.logoDark) || t.logo; }
+
+      // ---- Build the picture: every system's route, then nodes and labels ----
+      function build() {
+        var big = mq.matches;
+        geo = big ? { W: 700, H: 476, R: 32, cx: 350, cy: 234, rx: 200, ry: 170 }
+                  : { W: 400, H: 512, R: 25, cx: 200, cy: 254, rx: 128, ry: 195 };
+        var R = geo.R;
+        svg.innerHTML = '';
+        svg.setAttribute('viewBox', '0 0 ' + geo.W + ' ' + geo.H);
+        svg.classList.toggle('is-pre', pre);
+
+        // Tools sit evenly around a ring, clockwise from the top right.
+        pos = {}; nodeEls = {};
+        TOOLS.forEach(function (t, i) {
+          var a = (i + 0.5) * (2 * Math.PI / TOOLS.length);
+          pos[t.id] = { x: geo.cx + geo.rx * Math.sin(a), y: geo.cy - geo.ry * Math.cos(a), ux: Math.sin(a), uy: -Math.cos(a) };
+        });
+
+        buildLegs(el('g', {}, svg));
+
+        TOOLS.forEach(function (t) {
+          var p = pos[t.id];
+          var g = el('g', { class: 'net-node', tabindex: 0, role: 'button', 'aria-label': plain(t) + '. ' + t.job + '.' }, svg);
+          var ripple = el('circle', { class: 'net-ripple', cx: p.x, cy: p.y, r: R }, g);
+          var inner = el('g', { class: 'net-node-in' }, g);
+          el('circle', { class: 'net-circle', cx: p.x, cy: p.y, r: R }, inner);
+          var s = R * 1.1;
+          el('image', { href: logoOf(t), x: p.x - s / 2, y: p.y - s / 2, width: s, height: s }, inner);
+
+          // labels sit outside the ring so route lines never run through them
+          var lines = t.label.split('\n'), lh = big ? 17 : 15, lx = p.x, ly, anchor = 'middle';
+          if (big && Math.abs(p.ux) > 0.75) {
+            anchor = p.ux > 0 ? 'start' : 'end';
+            lx = p.x + (p.ux > 0 ? 1 : -1) * (R + 14);
+            ly = p.y + 5 - (lines.length - 1) * lh / 2;
+          } else if (big && p.uy < 0) {
+            ly = p.y - R - 14 - (lines.length - 1) * lh;
+          } else if (p.uy < -0.75) {
+            // phone, top pair: label above, leaning outward so the two never touch
+            anchor = p.ux > 0 ? 'start' : 'end';
+            lx = p.x + (p.ux > 0 ? -1 : 1) * R * 0.6;
+            ly = p.y - R - 10 - (lines.length - 1) * lh;
+          } else {
+            ly = p.y + R + 20;
+            if (!big && p.uy > 0.3 && Math.abs(p.ux) > 0.6) {
+              // phone, lower sides: lean the label outward, clear of the bottom pair
+              anchor = p.ux > 0 ? 'start' : 'end';
+              lx = p.x + (p.ux > 0 ? -1 : 1) * R * 0.6;
+            }
+          }
+          var tx = el('text', { class: 'net-label' + (big ? '' : ' is-small'), x: lx, y: ly, 'text-anchor': anchor, 'aria-hidden': 'true' }, g);
+          lines.forEach(function (line, i) { el('tspan', { x: lx, dy: i === 0 ? 0 : lh }, tx).textContent = line; });
+
+          var badge = el('g', { class: 'net-badge', 'aria-hidden': 'true' }, g);
+          el('circle', { cx: p.x + R * 0.74, cy: p.y - R * 0.74, r: 10 }, badge);
+          var num = el('text', { x: p.x + R * 0.74, y: p.y - R * 0.74 + 4 }, badge);
+
+          nodeEls[t.id] = { g: g, ripple: ripple, badge: badge, num: num };
+          g.addEventListener('click', function () { pickTool(t.id); });
+          g.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickTool(t.id); }
+          });
+          function show() { cap.innerHTML = ''; var b = document.createElement('strong'); b.textContent = plain(t); cap.appendChild(b); cap.appendChild(document.createTextNode('  ' + t.job)); }
+          function hide() { cap.textContent = CAP_DEFAULT; }
+          g.addEventListener('mouseenter', show); g.addEventListener('mouseleave', hide);
+          g.addEventListener('focus', show); g.addEventListener('blur', hide);
+        });
+      }
+
+      // Every project's route, drawn once. An arrow joins one step to the next;
+      // a plain line joins two tools that share a step.
+      function buildLegs(layer) {
+        legEls = [];
+        var R = geo.R, seen = {}, n = 0;
+        CAMPAIGNS.forEach(function (c, p) {
+          var last = null;
+          c.steps.forEach(function (s, i) {
+            var list = [];
+            if (last) list.push({ a: last, b: s.tools[0], arrow: true, d: 0 });
+            for (var k = 1; k < s.tools.length; k++) list.push({ a: s.tools[k - 1], b: s.tools[k], arrow: false, d: (last ? 0.45 : 0.1) + (k - 1) * 0.35 });
+            last = s.tools[s.tools.length - 1];
+            list.forEach(function (l) {
+              if (l.a === l.b) return;
+              var A = pos[l.a], B = pos[l.b];
+              var dx = B.x - A.x, dy = B.y - A.y, len = Math.sqrt(dx * dx + dy * dy);
+              var nx = -dy / len, ny = dx / len, mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2;
+              // Bow gently toward the middle. Each extra trip between the same two
+              // tools (any project) bows a different way, so lines never stack.
+              var inward = ((geo.cx - mx) * nx + (geo.cy - my) * ny) >= 0 ? 1 : -1;
+              var key = [l.a, l.b].sort().join('|'), k2 = seen[key] || 0;
+              seen[key] = k2 + 1;
+              var bend = Math.min(len * 0.12, 26) * (Math.floor(k2 / 2) + 1) * (k2 % 2 ? -inward : inward);
+              var C = { x: mx + nx * bend, y: my + ny * bend };
+              function toward(P, gap) {
+                var vx = C.x - P.x, vy = C.y - P.y, v = Math.sqrt(vx * vx + vy * vy);
+                return { x: P.x + vx / v * gap, y: P.y + vy / v * gap, ux: vx / v, uy: vy / v };
+              }
+              var s0 = toward(A, R + 7), e0 = toward(B, R + (l.arrow ? 10 : 7));
+              var d = 'M' + s0.x + ' ' + s0.y + ' Q' + C.x + ' ' + C.y + ' ' + e0.x + ' ' + e0.y;
+              var g = el('g', { class: 'net-leg-g net-p' + p, style: '--d:' + l.d + 's;--n:' + (n++) }, layer);
+              var base = el('g', { class: 'net-leg-base' }, g);
+              el('path', { class: 'net-leg-line', pathLength: 1, d: d }, base);
+              if (l.arrow) {
+                // e0.ux/uy points from the node back along the line
+                var bx = e0.x + e0.ux * 10, by = e0.y + e0.uy * 10, px = -e0.uy * 5.5, py = e0.ux * 5.5;
+                el('path', { class: 'net-head', d: 'M' + (bx + px) + ' ' + (by + py) + ' L' + e0.x + ' ' + e0.y + ' L' + (bx - px) + ' ' + (by - py) }, base);
+              }
+              el('path', { class: 'net-ink', pathLength: 1, d: d }, g);
+              var hit = el('path', { class: 'net-hit', d: d }, g);
+              hit.addEventListener('mouseenter', function () { hover(p); });
+              hit.addEventListener('mouseleave', function () { hover(-1); });
+              hit.addEventListener('click', function () {
+                if (p === ci) { stop(); go(p, i); } else { go(p, 0); play(); }
+              });
+              legEls.push({ g: g, p: p, step: i });
+            });
+          });
+        });
+      }
+
+      // ---- Hover: light up one project's whole route ----
+      function hover(p) {
+        hoverP = p;
+        svg.classList.toggle('has-hover', p > -1);
+        legEls.forEach(function (o) { o.g.classList.toggle('is-hover', o.p === p); });
+        TOOLS.forEach(function (t) { nodeEls[t.id].g.classList.toggle('is-hover', p > -1 && !!uses[p][t.id]); });
+        keyEls.forEach(function (k, i) { k.classList.toggle('is-hover', i === p); });
+      }
+
+      // ---- Paint the web for the current project and step ----
+      function paint() {
+        var picked = ci > -1, c = picked ? CAMPAIGNS[ci] : null;
+        if (picked) root.setAttribute('data-p', ci); else root.removeAttribute('data-p');
+        svg.classList.toggle('has-pick', picked);
+        var lastStep = {}, now = picked ? c.steps[si].tools : [];
+        if (picked) c.steps.forEach(function (s, i) { if (i <= si) s.tools.forEach(function (id) { lastStep[id] = i; }); });
+        legEls.forEach(function (o) {
+          var mine = o.p === ci;
+          o.g.classList.toggle('is-pick', mine);
+          o.g.classList.toggle('is-now', mine && o.step === si);
+          o.g.classList.toggle('is-past', mine && o.step < si);
+        });
+        TOOLS.forEach(function (t) {
+          var n = nodeEls[t.id], active = now.indexOf(t.id) > -1;
+          n.g.classList.toggle('is-off', picked && !uses[ci][t.id]);
+          n.g.classList.toggle('is-active', active);
+          n.badge.classList.toggle('is-on', lastStep[t.id] !== undefined);
+          if (lastStep[t.id] !== undefined) n.num.textContent = lastStep[t.id] + 1;
+          n.ripple.classList.remove('go');
+          if (active) { n.ripple.getBoundingClientRect(); n.ripple.classList.add('go'); }
+        });
+      }
+
+      // ---- Step card ----
+      // fill() writes one step (or the intro) into a card body. It's also used on a
+      // hidden copy to measure the tallest step, so the card never changes height.
+      function fill(box, c, i) {
+        var s = c ? c.steps[i] : null;
+        function q(sel) { return box.querySelector(sel); }
+        var k = q('.net-kicker'); k.hidden = !c; k.textContent = c ? 'Step ' + (i + 1) + ' of ' + c.steps.length : '';
+        q('h3').textContent = c ? s.title : INTRO.title;
+        q('.net-text').textContent = c ? s.text : INTRO.text;
+        var chips = q('.net-chips');
+        chips.innerHTML = ''; chips.hidden = !c;
+        (c ? s.tools : []).forEach(function (id) {
+          var li = document.createElement('li'), im = document.createElement('img');
+          im.src = logoOf(byId[id]); im.alt = '';
+          li.appendChild(im); li.appendChild(document.createTextNode(plain(byId[id])));
+          chips.appendChild(li);
+        });
+        var more = q('.net-more');
+        var ex = c && s.more;
+        more.hidden = !ex;
+        if (ex) { more.href = ex.href; more.textContent = ex.text; }
+        var thumb = q('.net-thumb'), img = c && s.img;
+        thumb.hidden = !img;
+        if (img) { var im2 = thumb.querySelector('img'); if (im2.getAttribute('src') !== img.src) im2.src = img.src; im2.alt = img.alt; }
+      }
+      function measure() {
+        var ghost = body.cloneNode(true);
+        ghost.removeAttribute('id'); ghost.removeAttribute('aria-live'); ghost.setAttribute('aria-hidden', 'true');
+        ghost.className = 'net-card-body';
+        ghost.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;min-height:0;width:' + body.offsetWidth + 'px';
+        body.parentNode.appendChild(ghost);
+        fill(ghost, null);
+        var max = ghost.offsetHeight;
+        CAMPAIGNS.forEach(function (c) {
+          c.steps.forEach(function (s, i) { fill(ghost, c, i); max = Math.max(max, ghost.offsetHeight); });
+        });
+        body.parentNode.removeChild(ghost);
+        body.style.minHeight = max + 'px';
+      }
+      function card(quiet) {
+        var picked = ci > -1, c = picked ? CAMPAIGNS[ci] : null;
+        var end = picked && si === c.steps.length - 1;
+        body.setAttribute('aria-live', quiet ? 'off' : 'polite');
+        fill(body, c, si);
+        body.classList.remove('is-in'); void body.offsetWidth; body.classList.add('is-in');
+
+        prev.disabled = !picked || si === 0;
+        next.textContent = !picked ? 'Start →' : end ? 'Replay ↺' : 'Next →';
+        dots.innerHTML = '';
+        (picked ? c.steps : []).forEach(function (st, i) {
+          var d = document.createElement('button');
+          d.type = 'button'; d.className = 'net-dot' + (i < si ? ' is-past' : '');
+          d.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' + st.title);
+          if (i === si) d.setAttribute('aria-current', 'step');
+          d.addEventListener('click', function () { stop(); go(ci, i); });
+          dots.appendChild(d);
+        });
+        keyEls.forEach(function (k, i) { k.setAttribute('aria-pressed', String(i === ci)); });
+      }
+
+      function go(c, s, quiet) { ci = c; si = s; paint(); card(quiet); }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      function play() {
+        stop();
+        if (reduce.matches) return;
+        timer = setInterval(function () {
+          if (si >= CAMPAIGNS[ci].steps.length - 1) { stop(); return; }
+          go(ci, si + 1, true);
+        }, STEP_MS);
+      }
+
+      // Tapping a tool jumps to the next step that uses it, switching project if needed.
+      function pickTool(id) {
+        stop();
+        function find(c, from) {
+          var st = CAMPAIGNS[c].steps;
+          for (var i = from; i < st.length; i++) if (st[i].tools.indexOf(id) > -1) return i;
+          return -1;
+        }
+        var hit = -1;
+        if (ci > -1) { hit = find(ci, si + 1); if (hit < 0) hit = find(ci, 0); }
+        if (hit > -1) { go(ci, hit); return; }
+        for (var c = 0; c < CAMPAIGNS.length; c++) {
+          hit = find(c, 0);
+          if (hit > -1) { go(c, hit); return; }
+        }
+      }
+
+      // ---- Colour key ----
+      CAMPAIGNS.forEach(function (c, i) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'net-key net-p' + i;
+        b.innerHTML = '<svg viewBox="0 0 34 14" aria-hidden="true"><path d="M2 9 Q13 1 25 7"/><path d="M21 2 L26.5 7.5 L19.5 10.5"/></svg>';
+        var nm = document.createElement('span'); nm.className = 'net-key-name'; nm.textContent = c.tab;
+        b.appendChild(nm);
+        b.addEventListener('click', function () { go(i, 0); play(); });
+        b.addEventListener('mouseenter', function () { hover(i); });
+        b.addEventListener('mouseleave', function () { hover(-1); });
+        b.addEventListener('focus', function () { hover(i); });
+        b.addEventListener('blur', function () { hover(-1); });
+        keysEl.appendChild(b); keyEls.push(b);
+      });
+      prev.addEventListener('click', function () { stop(); if (ci > -1 && si > 0) go(ci, si - 1); });
+      next.addEventListener('click', function () {
+        if (ci < 0) { go(0, 0); play(); }
+        else if (si >= CAMPAIGNS[ci].steps.length - 1) { go(ci, 0); play(); }
+        else { stop(); go(ci, si + 1); }
+      });
+
+      cap.textContent = CAP_DEFAULT;
+      build(); paint(); measure(); card(true);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+      var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(measure, 150); });
+
+      // The three routes sketch themselves in the first time the web scrolls into view.
+      if (pre) {
+        var seen = new IntersectionObserver(function (entries) {
+          if (!entries[0].isIntersecting) return;
+          seen.disconnect();
+          pre = false;
+          svg.getBoundingClientRect();
+          svg.classList.remove('is-pre');
+        }, { threshold: 0.3 });
+        seen.observe(svg);
+      }
+
+      [mq, dark].filter(function (m) { return m.addListener; }).forEach(function (m) {
+        var redo = function () { build(); paint(); measure(); card(true); };
+        m.addEventListener ? m.addEventListener('change', redo) : m.addListener(redo);
+      });
+    })();
+
+    // ---- Footer year ----
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---- Page-load ping ----
+    // Fires once per load. No cookies, no storage, nothing read from the
+    // visitor. Wrapped and .catch()'d so a blocked, offline, or sleeping
+    // endpoint can never throw into the page. keepalive lets it finish if
+    // the visitor navigates away immediately.
+    (function () {
+      // Served from localhost (or a file:// preview) means this is local dev,
+      // so talk to the local backend; anywhere else is the real site. Keeps
+      // one file working in both places without editing URLs before a push.
+      var local = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname)
+                  || location.protocol === 'file:';
+      // One place to change if the Workers subdomain differs. Local dev talks
+      // to `wrangler dev` on 8787; anywhere else uses the deployed Worker.
+      var base = local ? 'http://localhost:8787' : 'https://site-metrics.brett-goldfarb.workers.dev';
+
+      // Point the footer mark at whichever backend is in play. On localhost
+      // also flag the document so the mark gets a visible outline (see the
+      // html[data-local] rule); never set on the live site.
+      try {
+        var mark = document.querySelector('.fb-dot');
+        if (mark) mark.href = base + '/';
+        if (local) {
+          document.documentElement.setAttribute('data-local', '');
+          if (mark) mark.title = 'localhost only';
+        }
+      } catch (e) {}
+
+      try {
+        fetch(base + '/c', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            path: location.pathname + location.search,
+            referrer: document.referrer || ''
+          }),
+          keepalive: true,
+          mode: 'cors',
+          credentials: 'omit'
+        }).catch(function () {});
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
