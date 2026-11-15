@@ -258,7 +258,7 @@
         { icon: "ticket", delight: "spin",
           text: "While growing my business, I saw Centre Music had almost no online presence, so I offered Max a free trial in March 2025." },
         { icon: "guitar", delight: "wobble",
-          text: "After the trial, he valued my work enough to *pay above my quoted rate*. I've been on their team ever since." }
+          text: "After the trial, he signed on as a client and I've been a part of their team ever since." }
       ],
       loop: { label: "Full circle" }
     },
@@ -275,7 +275,7 @@
         { icon: "seedling", delight: "grow",
           text: "As an intern I learned how to market a small, local business from the ground up, earning a position as a part-time Marketing Assistant." },
         { icon: "bloom", delight: "grow",
-          text: "In April 2025, as I was scaling my business, TGC transitioned *from my employer to a client*." }
+          text: "In April 2025, as I was scaling my business, TGC transitioned from my employer to a client." }
       ],
       loop: null
     }
