@@ -15,7 +15,7 @@
   st.textContent = `
 /* ---------- tokens (light, then dark via prefers-color-scheme) ---------- */
 .tgs{
-  --card:#ffffff; --text:#3a3a3a; --soft:#585858; --line:#d6cfc2;
+  --card:#ffffff; --text:#3a3a3a; --soft:#585858; --line:rgb(80 50 10 / .24);
   --ac1:#5d4037; --ac2:#a9744c; --cream:#f3eac8; --chipText:#4a342c;
   --ink:#5d4037; --stroke:#a9744c; --nodeFillIcon:#f3eac8;
   --frame:#fffdf8; --tape:rgba(243,234,200,.92);
@@ -31,7 +31,7 @@
 }
 @media (prefers-color-scheme:dark){
   .tgs{
-    --card:#333333; --text:#dcdcdc; --soft:#bdbdbd; --line:#4b4640;
+    --card:#333333; --text:#dcdcdc; --soft:#bdbdbd; --line:rgb(255 225 190 / .12);
     --ac1:#e0b083; --ac2:#f0cda6; --cream:#4a4033; --chipText:#f0cda6;
     --ink:#e0b083; --stroke:#e0b083; --nodeFillIcon:#2b2b2b;
     --frame:#efe8dc; --tape:rgba(240,205,166,.55);
@@ -80,7 +80,7 @@
   width:52px;height:52px;border-radius:50%;background:var(--card);
   border:2.5px solid var(--stroke);color:var(--ink);cursor:pointer;
 }
-.tgs-node::before{content:"";position:absolute;inset:-2.5px;border-radius:50%;background:linear-gradient(135deg,var(--ac1),var(--ac2));opacity:0}
+.tgs-node::before{content:"";position:absolute;inset:-2.5px;border-radius:50%;background:linear-gradient(135deg,var(--ac1),var(--ac2));background:linear-gradient(135deg in oklch,var(--ac1),var(--ac2));opacity:0}
 .tgs-node svg{position:relative;width:30px;height:30px;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transform-origin:50% 62%;transition:transform .3s var(--spring)}
 .tgs-node:hover svg{transform:scale(1.12)}
 .tgs .fillme{fill:currentColor;fill-opacity:0}

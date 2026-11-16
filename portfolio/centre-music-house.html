@@ -42,10 +42,11 @@
 
       --bg: #f9f9f9;
       --surface: #ffffff;
+      --surface-raised: #ffffff;  /* floating + hovered surfaces; only differs in dark */
       --text: #3a3a3a;
       --text-soft: #585858;
-      --border: #d6cfc2;
-      --border-strong: #8c8578;
+      --border: rgb(80 50 10 / 0.24);
+      --border-strong: rgb(46 33 10 / 0.55);
       --accent: var(--navy);
       --accent-hover: var(--navy-2);
       --accent-soft: rgba(243, 234, 200, 0.55);
@@ -83,17 +84,29 @@
 
         --bg: #2b2b2b;
         --surface: #333333;
+        /* Elevation ladder in OKLCH, equal lightness steps: bg 0.285 → surface 0.321 → raised 0.357.
+           Shadows barely read on dark, so higher layers get lighter instead. */
+        --surface-raised: oklch(0.357 0 0);
         --text: #dcdcdc;
         --text-soft: #a8a8a8;
-        --border: #474747;
-        --border-strong: #5f5f5f;
+        --border: rgb(255 255 255 / 0.11);
+        --border-strong: rgb(255 255 255 / 0.2);
         --accent: var(--navy);
         --accent-hover: var(--navy-2);
         --accent-soft: rgba(243, 234, 200, 0.12);
         --nav-bg: rgba(43, 43, 43, 0.82);
         --paper-dot: rgba(255, 255, 255, 0.035);
-        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
-        --shadow-2: 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+        --shadow-1: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
+        --shadow-2: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+      }
+    }
+
+    /* Gradients interpolate in OKLCH where supported, so the cocoa→caramel blend
+       stays rich through the middle instead of dipping toward gray. */
+    @supports (background: linear-gradient(in oklch, red, blue)) {
+      :root { --navy-grad: linear-gradient(95deg in oklch, #5d4037 0%, #a9744c 100%); }
+      @media (prefers-color-scheme: dark) {
+        :root { --navy-grad: linear-gradient(95deg in oklch, #e0b083 0%, #f0cda6 100%); }
       }
     }
 
@@ -244,15 +257,19 @@
     .nav-burger:hover { transform: translateY(-1px); border-color: var(--accent); }
     .nav-burger:active { transform: translateY(0) scale(0.95); }
     .nav-burger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .nav-burger .icon-x { display: none; }
-    .nav-burger[aria-expanded="true"] .icon-bars { display: none; }
-    .nav-burger[aria-expanded="true"] .icon-x { display: block; }
+    /* Icon swap: both icons share one grid cell; the outgoing one blurs, shrinks
+       and fades while the incoming one sharpens in. (filter is the one non
+       transform/opacity property here, on an 18px icon, so it stays cheap.) */
+    .nav-burger svg { grid-area: 1 / 1; transition: opacity 0.2s var(--ease), transform 0.25s var(--ease), filter 0.2s var(--ease); }
+    .nav-burger .icon-x,
+    .nav-burger[aria-expanded="true"] .icon-bars { opacity: 0; transform: scale(0.6) rotate(-45deg); filter: blur(4px); }
+    .nav-burger[aria-expanded="true"] .icon-x { opacity: 1; transform: none; filter: blur(0); }
     .nav-burger svg { width: 18px; height: 18px; }
 
     .mobile-menu {
       position: absolute;
       left: 0; right: 0; top: 100%;
-      background: var(--surface);
+      background: var(--surface-raised);
       box-shadow: var(--shadow-2);
       border-bottom: 1px solid var(--border);
       opacity: 0;
@@ -301,6 +318,10 @@
       transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
       text-decoration: none;
     }
+    /* Icon strokes match the text beside them: Nunito 700 at 0.92rem has a ~1.9px stem,
+       so a 15px icon needs stroke 3 (and a 16px one 2.85) to render at the same weight. */
+    .btn svg { stroke-width: 3; }
+    .btn svg[width="16"] { stroke-width: 2.85; }
     .btn-primary {
       background: var(--navy-grad);
       color: var(--on-accent);
@@ -433,9 +454,9 @@
       border-radius: var(--radius);
       padding: var(--s-4);
       box-shadow: var(--shadow-1);
-      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), background-color 0.3s var(--ease);
     }
-    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); background-color: var(--surface-raised); }
     .card .card-icon {
       width: 44px; height: 44px;
       border-radius: 12px;
@@ -444,7 +465,7 @@
       color: var(--navy);
       margin-bottom: var(--s-3);
     }
-    .card .card-icon svg { width: 22px; height: 22px; }
+    .card .card-icon svg { width: 22px; height: 22px; stroke-width: 1.65; }  /* matches the hand-drawn heading's line weight */
     .card h3 { font-size: 1.25rem; margin-bottom: var(--s-2); }
     .card p { color: var(--text-soft); font-size: 0.96rem; }
 
@@ -485,7 +506,7 @@
       opacity: 0.92;
     }
     .stat .stat-link:hover { opacity: 1; color: var(--on-accent); }
-    .stat .stat-link svg { transition: transform 0.2s var(--ease); }
+    .stat .stat-link svg { stroke-width: 3.6; transition: transform 0.2s var(--ease); }  /* matches the 800-weight label */
     .stat .stat-link:hover svg,
     .stat .stat-link:focus-visible svg { transform: translate(2px, -2px); }
 
@@ -664,7 +685,7 @@
       border: 1px solid var(--border);
       background: var(--bg);
       box-shadow: var(--shadow-1);
-      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), background-color 0.3s var(--ease);
     }
     .cs-frame:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); border-color: var(--border-strong); }
     .cs-frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -691,6 +712,7 @@
       opacity: 0;
       transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
     }
+    .cs-pdf-badge svg, .cs-expand-badge svg { stroke-width: 3.5; }  /* matches the 800-weight badge text */
     .cs-frame:hover .cs-pdf-badge,
     .cs-frame:focus-visible .cs-pdf-badge,
     .cs-frame:hover .cs-expand-badge,
@@ -726,6 +748,7 @@
     .lightbox img {
       max-width: 100%;
       max-height: 90vh;
+      max-height: 90dvh;  /* the visible viewport, so Safari's toolbar can't cover it */
       width: auto;
       border-radius: var(--radius);
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
@@ -754,7 +777,7 @@
     /* ---- TESTIMONIAL pull quote ---- */
     .pullquote {
       position: relative;
-      background: var(--surface);
+      background: var(--surface-raised);
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: var(--s-6) var(--s-5);
@@ -987,7 +1010,7 @@
         <div class="results-grid">
           <div class="stat stat--reels reveal d1" data-reels aria-roledescription="carousel" aria-label="Top reels">
             <div class="reels-track">
-              <div class="reel-slide is-active" aria-roledescription="slide" aria-label="1 of 4">
+              <div class="reel-slide is-active" aria-roledescription="slide" aria-label="1 of 5">
                 <div class="stat-info">
                   <p class="stat-eyebrow">Record Store Day</p>
                   <p class="stat-num">265,000+</p>
@@ -998,7 +1021,7 @@
                   <iframe src="https://www.instagram.com/reel/DXKqnffAHpz/embed/" title="Instagram reel, Record Store Day" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
                 </div>
               </div>
-              <div class="reel-slide" aria-roledescription="slide" aria-label="2 of 4" aria-hidden="true" inert>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="2 of 5" aria-hidden="true" inert>
                 <div class="stat-info">
                   <p class="stat-eyebrow">Guitar strings</p>
                   <p class="stat-num">120,000+</p>
@@ -1009,7 +1032,18 @@
                   <iframe data-src="https://www.instagram.com/reel/Ddb8uHHEiIB/embed/" title="Instagram reel, guitar strings" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
                 </div>
               </div>
-              <div class="reel-slide" aria-roledescription="slide" aria-label="3 of 4" aria-hidden="true" inert>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="3 of 5" aria-hidden="true" inert>
+                <div class="stat-info">
+                  <p class="stat-eyebrow">Late for lessons</p>
+                  <p class="stat-num">47,500+</p>
+                  <p class="stat-label">This reel reached over 47,500 unique accounts.</p>
+                  <a class="stat-link" href="https://www.instagram.com/p/DfkZNTPilrz/" target="_blank" rel="noopener">Watch the reel<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+                </div>
+                <div class="stat-embed">
+                  <iframe data-src="https://www.instagram.com/reel/DfkZNTPilrz/embed/" title="Instagram reel, late for lessons" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+                </div>
+              </div>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="4 of 5" aria-hidden="true" inert>
                 <div class="stat-info">
                   <p class="stat-eyebrow">Jazz record</p>
                   <p class="stat-num">11,000+</p>
@@ -1020,7 +1054,7 @@
                   <iframe data-src="https://www.instagram.com/reel/DXFPvFzE0yR/embed/" title="Instagram reel, jazz record" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
                 </div>
               </div>
-              <div class="reel-slide" aria-roledescription="slide" aria-label="4 of 4" aria-hidden="true" inert>
+              <div class="reel-slide" aria-roledescription="slide" aria-label="5 of 5" aria-hidden="true" inert>
                 <div class="stat-info">
                   <p class="stat-eyebrow">Stressful day</p>
                   <p class="stat-num">7,500+</p>
@@ -1037,8 +1071,9 @@
               <div class="reels-dots">
                 <button type="button" class="reels-dot" aria-label="Show reel 1: Record Store Day" aria-current="true"></button>
                 <button type="button" class="reels-dot" aria-label="Show reel 2: guitar strings" aria-current="false"></button>
-                <button type="button" class="reels-dot" aria-label="Show reel 3: jazz record" aria-current="false"></button>
-                <button type="button" class="reels-dot" aria-label="Show reel 4: stressful day" aria-current="false"></button>
+                <button type="button" class="reels-dot" aria-label="Show reel 3: late for lessons" aria-current="false"></button>
+                <button type="button" class="reels-dot" aria-label="Show reel 4: jazz record" aria-current="false"></button>
+                <button type="button" class="reels-dot" aria-label="Show reel 5: stressful day" aria-current="false"></button>
               </div>
               <button type="button" class="reels-arrow" data-dir="1" aria-label="Next reel"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
             </div>

@@ -72,10 +72,11 @@
 
       --bg: #f9f9f9;
       --surface: #ffffff;
+      --surface-raised: #ffffff;  /* floating + hovered surfaces; only differs in dark */
       --text: #3a3a3a;
       --text-soft: #585858;
-      --border: #d6cfc2;
-      --border-strong: #8c8578;
+      --border: rgb(80 50 10 / 0.24);
+      --border-strong: rgb(46 33 10 / 0.55);
       --accent: var(--navy);
       --accent-hover: var(--navy-2);
       --accent-soft: rgba(243, 234, 200, 0.55);
@@ -113,17 +114,29 @@
 
         --bg: #2b2b2b;
         --surface: #333333;
+        /* Elevation ladder in OKLCH, equal lightness steps: bg 0.285 → surface 0.321 → raised 0.357.
+           Shadows barely read on dark, so higher layers get lighter instead. */
+        --surface-raised: oklch(0.357 0 0);
         --text: #dcdcdc;
         --text-soft: #a8a8a8;
-        --border: #474747;
-        --border-strong: #5f5f5f;
+        --border: rgb(255 255 255 / 0.11);
+        --border-strong: rgb(255 255 255 / 0.2);
         --accent: var(--navy);
         --accent-hover: var(--navy-2);
         --accent-soft: rgba(243, 234, 200, 0.12);
         --nav-bg: rgba(43, 43, 43, 0.82);
         --paper-dot: rgba(255, 255, 255, 0.035);
-        --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
-        --shadow-2: 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+        --shadow-1: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 14px rgba(0, 0, 0, 0.35);
+        --shadow-2: inset 0 1px 0 rgb(255 255 255 / 0.07), 0 2px 6px rgba(0, 0, 0, 0.35), 0 16px 36px rgba(0, 0, 0, 0.50);
+      }
+    }
+
+    /* Gradients interpolate in OKLCH where supported, so the cocoa→caramel blend
+       stays rich through the middle instead of dipping toward gray. */
+    @supports (background: linear-gradient(in oklch, red, blue)) {
+      :root { --navy-grad: linear-gradient(95deg in oklch, #5d4037 0%, #a9744c 100%); }
+      @media all {
+        :root { --navy-grad: linear-gradient(95deg in oklch, #e0b083 0%, #f0cda6 100%); }
       }
     }
 
@@ -274,15 +287,19 @@
     .nav-burger:hover { transform: translateY(-1px); border-color: var(--accent); }
     .nav-burger:active { transform: translateY(0) scale(0.95); }
     .nav-burger:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .nav-burger .icon-x { display: none; }
-    .nav-burger[aria-expanded="true"] .icon-bars { display: none; }
-    .nav-burger[aria-expanded="true"] .icon-x { display: block; }
+    /* Icon swap: both icons share one grid cell; the outgoing one blurs, shrinks
+       and fades while the incoming one sharpens in. (filter is the one non
+       transform/opacity property here, on an 18px icon, so it stays cheap.) */
+    .nav-burger svg { grid-area: 1 / 1; transition: opacity 0.2s var(--ease), transform 0.25s var(--ease), filter 0.2s var(--ease); }
+    .nav-burger .icon-x,
+    .nav-burger[aria-expanded="true"] .icon-bars { opacity: 0; transform: scale(0.6) rotate(-45deg); filter: blur(4px); }
+    .nav-burger[aria-expanded="true"] .icon-x { opacity: 1; transform: none; filter: blur(0); }
     .nav-burger svg { width: 18px; height: 18px; }
 
     .mobile-menu {
       position: absolute;
       left: 0; right: 0; top: 100%;
-      background: var(--surface);
+      background: var(--surface-raised);
       box-shadow: var(--shadow-2);
       border-bottom: 1px solid var(--border);
       opacity: 0;
@@ -331,6 +348,10 @@
       transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
       text-decoration: none;
     }
+    /* Icon strokes match the text beside them: Nunito 700 at 0.92rem has a ~1.9px stem,
+       so a 15px icon needs stroke 3 (and a 16px one 2.85) to render at the same weight. */
+    .btn svg { stroke-width: 3; }
+    .btn svg[width="16"] { stroke-width: 2.85; }
     .btn-primary {
       background: var(--navy-grad);
       color: var(--on-accent);
@@ -582,9 +603,9 @@
     .flow-note { text-align: center; font-size: 0.8rem; color: var(--ap-ink-soft); font-style: italic; }
     .flow-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; }
     .flow-tags span::before { content: ""; display: inline-block; width: 0.5em; height: 0.5em; margin-right: 0.35em; vertical-align: baseline; }
-    .flow-tags .t-edu::before { background: #2e9b57; border-radius: 1px; }
-    .flow-tags .t-reach::before { background: #d93a3a; border-radius: 50%; }
-    .flow-tags .t-brand::before { background: #2f6fd8; transform: rotate(45deg) scale(0.9); }
+    .flow-tags .t-edu::before { background: oklch(0.65 0.16 152); border-radius: 1px; }
+    .flow-tags .t-reach::before { background: oklch(0.65 0.16 26); border-radius: 50%; }
+    .flow-tags .t-brand::before { background: oklch(0.65 0.16 260); transform: rotate(45deg) scale(0.9); }
     .flow-tags span {
       font-size: 0.64rem; font-weight: 700; letter-spacing: 0.02em;
       padding: 2px 6px; border: var(--ap-line-thin) solid var(--ap-ink); border-radius: 999px; white-space: nowrap;
@@ -691,15 +712,15 @@
        trace it, click it to watch the work move from tool to tool. */
     .net {
       margin-top: var(--s-4);
-      --net-c0: #a9652a;   /* Lead magnet: caramel */
-      --net-c1: #3f7d68;   /* Monthly content: sage */
-      --net-c2: #5468a3;   /* Monthly report: dusty blue */
+      --net-c0: oklch(0.55 0.1 58);    /* Lead magnet: caramel (OKLCH set: same L + C, hue only) */
+      --net-c1: oklch(0.55 0.1 167);   /* Monthly content: sage */
+      --net-c2: oklch(0.55 0.1 272);   /* Monthly report: dusty blue */
       --net-accent: var(--ap-ink);
       display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-3);
       grid-template-areas: "keys" "stage" "card";
     }
     @media all {
-      .net { --net-c0: #e3a765; --net-c1: #7fc4a8; --net-c2: #9aa9e0; }
+      .net { --net-c0: oklch(0.77 0.095 68); --net-c1: oklch(0.77 0.095 167); --net-c2: oklch(0.77 0.095 272); }
     }
     .net[data-p="0"] { --net-accent: var(--net-c0); }
     .net[data-p="1"] { --net-accent: var(--net-c1); }
