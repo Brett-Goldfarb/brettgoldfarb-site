@@ -1306,7 +1306,7 @@
               <div class="card-actions">
                 <a href="https://www.loom.com/share/e4bb1106657e4002bd18f95ad370eb20" target="_blank" rel="noopener" class="btn btn-ghost" data-track="Watch demo — Ledger">Watch demo</a>
                 <a href="./assets/Ledger%20Budget%20tool/ledger-demo-v2.html" target="_blank" rel="noopener" class="btn btn-primary" data-track="Try it — Ledger">Try it</a>
-                <a href="./assets/Ledger%20Budget%20tool/ledger-demo-v2.html" class="btn btn-ghost" download data-track="Download — Ledger">Download</a>
+                <a href="./assets/Ledger%20Budget%20tool/ledger-demo-v2.html" class="btn btn-ghost" download="Ledger-Budget-Tool.html" data-track="Download — Ledger">Download</a>
               </div>
             </article>
             <article class="card">
@@ -1494,12 +1494,24 @@
       confirmBtn.addEventListener('click', function () {
         if (!pending) return;
         var link = pending;
-        var temp = document.createElement('a');
-        temp.href = link.href;
-        temp.setAttribute('download', link.getAttribute('download') || '');
-        document.body.appendChild(temp);
-        temp.click();
-        document.body.removeChild(temp);
+        var name = link.getAttribute('download') ||
+          decodeURIComponent(link.getAttribute('href').split('/').pop().split('?')[0]);
+        // Fetch the file and save it as a blob so the browser always downloads
+        // it. A plain download link can end up navigating the page to the file
+        // (it did for the Ledger HTML), which hides the button the visitor used.
+        fetch(link.href)
+          .then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); })
+          .then(function (blob) {
+            var url = URL.createObjectURL(blob);
+            var temp = document.createElement('a');
+            temp.href = url;
+            temp.download = name;
+            document.body.appendChild(temp);
+            temp.click();
+            document.body.removeChild(temp);
+            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+          })
+          .catch(function () { window.open(link.href, '_blank', 'noopener'); });
         close();
       });
       cancelBtn.addEventListener('click', close);
