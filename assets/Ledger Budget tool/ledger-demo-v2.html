@@ -1106,6 +1106,15 @@
   .hero-big { font-size: clamp(56px, 10vw, 104px); margin-top: var(--space-3); text-shadow: 0 4px 40px rgba(0,0,0,0.25); }
   .hero-sub { font-size: 15px; margin-top: var(--space-4); }
 
+  /* Spending and savings tiles sit in separate centered rows. */
+  .cat-groups { display: flex; flex-direction: column; gap: var(--space-4); }
+  .cat-row { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-4); }
+  .cat-row > .tile { flex: 0 0 calc((100% - 2 * var(--space-4)) / 3); min-width: 0; }
+  @media (max-width: 719px) {
+    .cat-groups, .cat-row { gap: var(--space-3); }
+    .cat-row > .tile { flex-basis: calc((100% - var(--space-3)) / 2); }
+  }
+
   /* ---------------- Category tiles ---------------- */
   .tile {
     align-items: center; justify-content: center; text-align: center;
@@ -1130,7 +1139,6 @@
   .category-card:hover .see { color: var(--ink); }
   .category-card::after { box-shadow: 0 0 0 1px rgba(255,255,255,0.22), 0 34px 70px -24px rgba(0,0,0,0.7); }
   @media (max-width: 719px) {
-    #categoryGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
     .tile { padding: var(--space-3); border-radius: 22px; }
     .tile .see { display: none; }
     .ring-label { padding: 0 var(--space-3); gap: 4px; }
@@ -1410,7 +1418,7 @@
       <section class="view active" id="view-dashboard">
         <div id="monthNudge"></div>
         <div class="hero" id="monthHero"></div>
-        <div class="grid cols-3" id="categoryGrid"></div>
+        <div class="cat-groups" id="categoryGrid"></div>
       </section>
 
       <section class="view" id="view-expenses">
@@ -3232,7 +3240,13 @@ function renderCategoryGrid(categories, animate) {
     grid.innerHTML = `<div class="card empty-state" style="grid-column: 1 / -1;"><h3>No categories yet</h3><p>Add your categories in Settings to start budgeting.</p></div>`;
     return;
   }
-  grid.innerHTML = categories.map((cat, i) => categoryCardHtml(cat, i, animate)).join('');
+  // Spending circles sit in their own row(s) and savings squares in the
+  // row(s) below. Each group is centered on its own, so removing a circle
+  // re-centers the rest and the savings never climb up beside them.
+  const spending = [], saving = [];
+  categories.forEach((cat, i) => (cat.type === 'spending' ? spending : saving).push(categoryCardHtml(cat, i, animate)));
+  const group = (cards) => cards.length ? `<div class="cat-row">${cards.join('')}</div>` : '';
+  grid.innerHTML = group(spending) + group(saving);
 }
 
 // The ring shows how much of the month's money is left. It empties as you
